@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingRight="16dp"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    >
+
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        card_view:cardBackgroundColor="@color/white"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardCornerRadius="8dp"
+        android:layout_gravity="right"
+        >
+
+        <TextView
+            android:id="@+id/chat_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="san-serif-thin"
+            android:layout_gravity="right|center_vertical"
+            android:gravity="center_vertical|left"
+            android:maxWidth="250dp"
+            android:text="My name is timi and I"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/black"
+            android:layout_margin="8dp"
+            />
+
+    </android.support.v7.widget.CardView>
+
+
+
+
+</FrameLayout>
