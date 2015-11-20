@@ -63,9 +63,6 @@ public class ChatViewListAdapter extends BaseAdapter {
         View row;
         TextView chatMessage;
 
-        /***
-         * @param convertView
-         */
         public ViewHolder(View convertView){
             row = convertView;
         }

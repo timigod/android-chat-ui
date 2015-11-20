@@ -17,13 +17,11 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
  */
 public class ChatView extends LinearLayout {
 
-
     ChatViewListAdapter mChatViewListAdapter;
     ListView mChatViewList;
 
     EditText mMessageBodyField;
     FloatingActionButton mSendButton;
-
 
 
     public ChatView(Context context, AttributeSet attrs) {
@@ -57,7 +55,4 @@ public class ChatView extends LinearLayout {
         mChatViewListAdapter.addSentMessage(message);
         mMessageBodyField.setText("");
     }
-
-
-
 }
