@@ -5,6 +5,7 @@
     tools:context="co.devcenter.androiduilibraryproject.MainActivity">
 
     <co.devcenter.androiduilibrary.ChatView
+        android:id='@+id/chat_view'
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

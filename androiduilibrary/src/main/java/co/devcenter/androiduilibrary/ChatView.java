@@ -1,27 +1,29 @@
 package co.devcenter.androiduilibrary;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
+import co.devcenter.androiduilibrary.models.ChatMessage;
 
 /**
  * Created by timi on 17/11/2015.
  */
 public class ChatView extends LinearLayout {
 
-    ChatViewListAdapter mChatViewListAdapter;
-    ListView mChatViewList;
+    private ChatViewListAdapter chatViewListAdapter;
+    private ListView chatListView;
 
-    EditText mMessageBodyField;
-    FloatingActionButton mSendButton;
+    private EditText inputEditText;
+    private SendButton sendButton;
+    private ChatViewEventListener eventListener;
+    private boolean previousFocusStatus = false;
 
 
     public ChatView(Context context, AttributeSet attrs) {
@@ -29,30 +31,64 @@ public class ChatView extends LinearLayout {
         LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.chat_view, this);
 
-        //retrieve views
-        mChatViewList = (ListView)findViewById(R.id.chat);
-        mMessageBodyField = (EditText)findViewById(R.id.messageBodyField);
-        mSendButton = (FloatingActionButton) findViewById(R.id.sendButton);
+        chatListView = (ListView)findViewById(R.id.chat);
+        inputEditText = (EditText)findViewById(R.id.inputEditText);
+        sendButton = (SendButton) findViewById(R.id.sendButton);
 
+        chatViewListAdapter = new ChatViewListAdapter(context);
+        chatListView.setAdapter(chatViewListAdapter);
+    }
 
-        //configure mChatListView
-        mChatViewListAdapter = new ChatViewListAdapter(context);
-        mChatViewList.setAdapter(mChatViewListAdapter);
-
-
-        //trigger message sending
-        mSendButton.setOnClickListener(new OnClickListener() {
+    public void setEventListener(final ChatViewEventListener eventListener){
+        this.eventListener = eventListener;
+        inputEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                sendMessage(mMessageBodyField.getText().toString());
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0){
+                    eventListener.userIsTyping();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 
+        inputEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    previousFocusStatus = true;
+                } else if(!hasFocus){
+                    previousFocusStatus = false;
+                } else if (previousFocusStatus && !hasFocus){
+                    eventListener.userHasStoppedTyping();
+                }
+            }
+        });
     }
 
+    public String getTypedString(){
+        return  inputEditText.getText().toString();
+    }
 
-    public void sendMessage(String message){
-        mChatViewListAdapter.addSentMessage(message);
-        mMessageBodyField.setText("");
+    public void sendMessage(ChatMessage message){
+        chatViewListAdapter.addSentMessage(message);
+        inputEditText.setText("");
+    }
+
+    public void sendMessage(){
+        ChatMessage chatMessage = new ChatMessage(inputEditText.getText().toString(), System.currentTimeMillis());
+        chatViewListAdapter.addSentMessage(chatMessage);
+    }
+
+    public SendButton getSendButton(){
+        return sendButton;
     }
 }
