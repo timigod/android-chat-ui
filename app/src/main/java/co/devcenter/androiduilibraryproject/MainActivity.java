@@ -14,21 +14,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ChatView chatView = (ChatView) findViewById(R.id.chat_view);
-        chatView.setEventListener(new ExampleListener());
-    }
+        chatView.setEventListener(new ChatViewEventListener() {
+            @Override
+            public void userIsTyping() {
 
+            }
 
+            @Override
+            public void userHasStoppedTyping() {
 
-    private class ExampleListener extends ChatViewEventListener{
-
-        @Override
-        public void userIsTyping() {
-
-        }
-
-        @Override
-        public void userHasStoppedTyping() {
-
-        }
+            }
+        });
     }
 }
