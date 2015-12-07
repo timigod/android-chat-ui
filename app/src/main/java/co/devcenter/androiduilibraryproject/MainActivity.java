@@ -1,6 +1,5 @@
 package co.devcenter.androiduilibraryproject;
 
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,15 +9,12 @@ import co.devcenter.androiduilibrary.ChatViewEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    Handler handler;
-    ChatView chatView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        chatView = (ChatView) findViewById(R.id.chat_view);
+        final ChatView chatView = (ChatView) findViewById(R.id.chat_view);
         chatView.setEventListener(new ChatViewEventListener() {
             @Override
             public void userIsTyping() {
