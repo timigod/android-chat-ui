@@ -6,8 +6,8 @@
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$USER_HOME$/Development/adt-bundle-mac-x86_64-20140321/sdk/extras/android/m2repository/com/android/support/cardview-v7/22.0.0/cardview-v7-22.0.0-sources.jar!/" />
       <root url="jar://$USER_HOME$/Library/Android/sdk/extras/android/m2repository/com/android/support/cardview-v7/22.0.0/cardview-v7-22.0.0-sources.jar!/" />
+      <root url="jar://$USER_HOME$/Development/adt-bundle-mac-x86_64-20140321/sdk/extras/android/m2repository/com/android/support/cardview-v7/22.0.0/cardview-v7-22.0.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

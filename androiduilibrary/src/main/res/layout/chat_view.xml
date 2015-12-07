@@ -56,7 +56,7 @@
 
         </android.support.v7.widget.CardView>
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
+        <co.devcenter.androiduilibrary.SendButton
             android:id="@+id/sendButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

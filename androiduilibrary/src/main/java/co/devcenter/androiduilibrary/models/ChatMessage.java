@@ -8,10 +8,16 @@ import java.util.Date;
 public class ChatMessage {
     private String message;
     private long timestamp;
+    private Status status;
 
-    public ChatMessage(String message, long timestamp){
+    public enum Status{
+        SENT, RECEIVED
+    }
+
+    public ChatMessage(String message, long timestamp, Status status){
         this.message = message;
         this.timestamp = timestamp;
+        this.status = status;
     }
 
     public long getTimestamp() {
@@ -30,4 +36,11 @@ public class ChatMessage {
         this.message = message;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 }
