@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -98,19 +97,19 @@ public class ChatView extends LinearLayout {
     }
 
     public void sendMessage(ChatMessage message){
-        chatViewListAdapter.addSentMessage(message);
+        chatViewListAdapter.addMessage(message);
         inputEditText.setText("");
     }
 
     public void sendMessage(){
         ChatMessage chatMessage = new ChatMessage(inputEditText.getText().toString(), System.currentTimeMillis(), Status.SENT);
         inputEditText.setText("");
-        chatViewListAdapter.addSentMessage(chatMessage);
+        chatViewListAdapter.addMessage(chatMessage);
     }
 
     public void receiveMessage(String message){
         ChatMessage chatMessage = new ChatMessage(message, System.currentTimeMillis(), Status.RECEIVED);
-        chatViewListAdapter.addReceivedMessage(chatMessage);
+        chatViewListAdapter.addMessage(chatMessage);
     }
 
     public SendButton getSendButton(){

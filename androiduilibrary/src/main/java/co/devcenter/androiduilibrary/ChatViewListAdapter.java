@@ -104,12 +104,7 @@ public class ChatViewListAdapter extends BaseAdapter {
     }
 
 
-    public void addSentMessage(ChatMessage message) {
-        chatMessages.add(message);
-        notifyDataSetChanged();
-    }
-
-    public void addReceivedMessage(ChatMessage message){
+    public void addMessage(ChatMessage message) {
         chatMessages.add(message);
         notifyDataSetChanged();
     }
