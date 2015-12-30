@@ -13,9 +13,6 @@ import java.util.ArrayList;
 import co.devcenter.androiduilibrary.models.ChatMessage;
 import co.devcenter.androiduilibrary.models.ChatMessage.Status;
 
-/**
- * Created by onyekachi on 11/18/15.
- */
 public class ChatViewListAdapter extends BaseAdapter {
 
     ArrayList<ChatMessage> chatMessages;
@@ -81,14 +78,16 @@ public class ChatViewListAdapter extends BaseAdapter {
         }
 
         holder.getMessageTextView().setText(chatMessages.get(position).getMessage());
-        return convertView;
+        holder.getTimestampTextView().setText(chatMessages.get(position).getFormattedTime());
 
+        return convertView;
     }
 
 
     static class ViewHolder {
         View row;
         TextView messageTextView;
+        TextView timestampTextView;
 
         public ViewHolder(View convertView) {
             row = convertView;
@@ -100,6 +99,14 @@ public class ChatViewListAdapter extends BaseAdapter {
             }
 
             return messageTextView;
+        }
+
+        public TextView getTimestampTextView() {
+            if (timestampTextView == null) {
+                timestampTextView= (TextView) row.findViewById(R.id.timestamp_text_view);
+            }
+
+            return timestampTextView;
         }
     }
 

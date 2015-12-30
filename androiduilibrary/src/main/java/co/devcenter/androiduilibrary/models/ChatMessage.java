@@ -1,6 +1,7 @@
 package co.devcenter.androiduilibrary.models;
 
-import java.util.Date;
+
+import android.text.format.DateFormat;
 
 /**
  * Created by timi on 27/11/2015.
@@ -42,5 +43,18 @@ public class ChatMessage {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getFormattedTime(){
+
+        long oneDayInMillis = 24 * 60 * 60 * 1000;
+        long timeDifference = System.currentTimeMillis() - timestamp;
+
+
+        if( timeDifference < oneDayInMillis ) {
+            return DateFormat.format("hh:mm a", timestamp).toString();
+        }else{
+            return DateFormat.format("dd MMM - hh:mm a", timestamp).toString();
+        }
     }
 }
