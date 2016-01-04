@@ -59,37 +59,8 @@ public class ChatView extends LinearLayout {
 
     public void setEventListener(final ChatViewEventListener eventListener){
         this.eventListener = eventListener;
-        inputEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 0){
-                    eventListener.userIsTyping();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        inputEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    previousFocusStatus = true;
-                } else if (!hasFocus) {
-                    previousFocusStatus = false;
-                } else if (previousFocusStatus && !hasFocus) {
-                    eventListener.userHasStoppedTyping();
-                }
-            }
-        });
+        setUserTypingListener();
+        setUserStoppedTypingListener();
     }
 
     public String getTypedString(){
@@ -114,5 +85,42 @@ public class ChatView extends LinearLayout {
 
     public SendButton getSendButton(){
         return sendButton;
+    }
+
+    private void setUserTypingListener(){
+        inputEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0){
+                    eventListener.userIsTyping();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+    }
+
+    private void setUserStoppedTypingListener(){
+        inputEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    previousFocusStatus = true;
+                } else if (!hasFocus) {
+                    previousFocusStatus = false;
+                } else if (previousFocusStatus && !hasFocus) {
+                    eventListener.userHasStoppedTyping();
+                }
+            }
+        });
     }
 }

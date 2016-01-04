@@ -30,8 +30,10 @@
             android:text="My name is timi and I"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/white"
-            android:layout_margin="8dp"
-            />
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="2dp"            />
 
         <TextView
             android:id="@+id/timestamp_text_view"
@@ -43,10 +45,10 @@
             android:text="this is the time"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/main_color_gray"
-            android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="2dp"
+            android:textSize="8sp"
             />
 
         </LinearLayout>
