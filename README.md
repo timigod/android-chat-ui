@@ -10,6 +10,12 @@ Note: This is merely a UI library, messages being actually sent and recieved by 
 ### Version
 v0.1
 
+### Installation
+
+Add this to your build.gradle file's dependencies:
+
+`compile 'co.devcenter.square:android-ui-library:0.1'`
+
 ### Usage
 Drop the `ChatView` in your XML layout as is shown below:
 ```
