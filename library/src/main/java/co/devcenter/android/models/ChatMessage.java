@@ -1,6 +1,5 @@
 package co.devcenter.android.models;
 
-
 import android.text.format.DateFormat;
 
 /**

@@ -72,10 +72,31 @@ chatView.setEventListener(new ChatViewEventListener() {
 ```
 
 ### TODO
-
 This is list of things that are in the works for this library:
-- Ability to set colours for the background, the chat bubbles, the chat bubble font, the send button and the text input field.
+
+# Theming
+- Ability to theme input area (made up of input textbox and send button and "others")
+    - backgroundColor
+    - elevation
+    - Ability to theme input textbox
+        - backgroundColor
+        - inputTextAppearnce
+    - Ability to theme send button
+        - backgroundColor
+        - sendIconTint
+- Ability to theme chat bubbles
+    - backgroundColor
+    - itemElevation (maybe?)
+    - primaryTextAppearance (For tha chat text)
+    - secondaryTextAppearance (for time stamp and other info)
+    - 
+- Ability to theme chat list
+    - backgroundColor
+
+# Functionality
 - Ability to send and recieve multimedia messages like images, embedded locations and even videos.
+- Ability to use custom item layout
+- 
 
 Of course, additions to this library aren't limited to the above.
 
