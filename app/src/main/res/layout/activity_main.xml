@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="co.devcenter.androiduilibraryproject.MainActivity">
+    tools:context="co.devcenter.android.sample.MainActivity">
 
-    <co.devcenter.androiduilibrary.ChatView
+    <co.devcenter.android.ChatView
         android:id='@+id/chat_view'
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </co.devcenter.androiduilibrary.ChatView>
+    </co.devcenter.android.ChatView>
 
 </RelativeLayout>

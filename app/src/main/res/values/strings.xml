@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Android UI Library Project</string>
+
+    <string name="app_name">Android ChatView Sample</string>
+
 </resources>
