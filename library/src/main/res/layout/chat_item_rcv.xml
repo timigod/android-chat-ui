@@ -1,62 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="16dp"
-    >
+    android:paddingRight="72dp">
 
     <android.support.v7.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:cardBackgroundColor="@color/default_bubble_color_rcv"
+        app:cardUseCompatPadding="true"
         android:layout_gravity="left"
-        card_view:cardBackgroundColor="@color/black"
-        card_view:cardCornerRadius="8dp"
-        card_view:cardUseCompatPadding="true"
-        >
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/message_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
-            android:layout_marginBottom="2dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="san-serif-thin"
-            android:gravity="center_vertical|left"
-            android:maxWidth="250dp"
-            android:text="My name is timi and I"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/white" />
-
-        <TextView
-            android:id="@+id/timestamp_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginBottom="2dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:fontFamily="san-serif-thin"
+            android:padding="8dp"
             android:gravity="left"
-            android:text="this is the time"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/main_color_gray"
-            android:textSize="8sp"
-            />
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/message_text_view"
+                tools:text="My name is Timi and I am..."
+                android:textSize="@dimen/default_message_text_size"
+                android:textColor="@color/default_message_color_rcv"
+                android:layout_gravity="left"
+                android:gravity="center_vertical|left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="4dp" />
+
+            <TextView
+                android:id="@+id/timestamp_text_view"
+                tools:text="12:10 am"
+                android:textSize="@dimen/default_timestamp_text_size"
+                android:textColor="@color/default_tstamp_color_rcv"
+                android:layout_gravity="right"
+                android:gravity="center_vertical|left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
-
-
-
 
 </FrameLayout>

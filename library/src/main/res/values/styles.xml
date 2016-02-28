@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ChatViewDefault">
+        <item name="inputBarBackgroundColor">@android:color/transparent</item>
+        <item name="inputBarInsetLeft">4dp</item>
+        <item name="inputBarInsetTop">0dp</item>
+        <item name="inputBarInsetRight">4dp</item>
+        <item name="inputBarInsetBottom">0dp</item>
+
+        <item name="inputBackgroundColor">@color/white</item>
+        <item name="inputUseEditorAction">false</item>
+
+        <!--item name="inputTextAppearance"></item-->
+        <item name="inputElevation">1dp</item>
+        <item name="inputTextSize">@dimen/default_input_text_size</item>
+        <item name="inputTextColor">@color/black</item>
+        <item name="inputHintColor">@color/main_color_gray</item>
+
+        <item name="sendBtnIcon">@drawable/ic_send_white_24dp</item>
+        <item name="sendBtnIconTint">@color/white</item>
+        <item name="sendBtnVisible">true</item>
+        <item name="sendBtnElevation">4dp</item>
+        <item name="sendBtnBackgroundTint">?attr/colorAccent</item>
+
+        <item name="bubbleElevation">2dp</item>
+        <item name="bubbleBackgroundRcv">@color/default_bubble_color_rcv</item>
+        <item name="bubbleBackgroundSend">@color/default_bubble_color_send</item>
+        <!--item name="messageTextAppearance"></item-->
+        <item name="messageTextColorSend">@color/default_message_color_send</item>
+        <item name="messageTextColorRcv">@color/default_message_color_rcv</item>
+        <item name="messageTextSize">@dimen/default_message_text_size</item>
+        <!--item name="tStampTextAppearance"></item-->
+        <item name="tStampTextColorSend">@color/default_tstamp_color_send</item>
+        <item name="tStampTextColorRcv">@color/default_tstamp_color_rcv</item>
+        <item name="tStampTextSize">@dimen/default_timestamp_text_size</item>
+    </style>
+
+</resources>

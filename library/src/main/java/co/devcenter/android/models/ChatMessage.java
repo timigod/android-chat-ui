@@ -2,18 +2,15 @@ package co.devcenter.android.models;
 
 import android.text.format.DateFormat;
 
-/**
- * Created by timi on 27/11/2015.
- */
 public class ChatMessage {
     private String message;
     private long timestamp;
-    private Status status;
+    private Type type;
 
-    public ChatMessage(String message, long timestamp, Status status){
+    public ChatMessage(String message, long timestamp, Type type){
         this.message = message;
         this.timestamp = timestamp;
-        this.status = status;
+        this.type = type;
     }
 
     public long getTimestamp() {
@@ -32,13 +29,14 @@ public class ChatMessage {
         this.message = message;
     }
 
-    public Status getStatus() {
-        return status;
+    public Type getType() {
+        return type;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setType(Type type) {
+        this.type = type;
     }
+
 
     public String getFormattedTime(){
 
@@ -53,7 +51,7 @@ public class ChatMessage {
         }
     }
 
-    public enum Status {
+    public enum Type {
         SENT, RECEIVED
     }
 }
