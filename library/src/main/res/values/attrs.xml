@@ -24,6 +24,7 @@
         <attr name="sendBtnElevation" format="dimension" />
         <attr name="sendBtnBackgroundTint" format="color" />
 
+        <!-- These are still yet unimplemented-->
         <attr name="bubbleElevation" format="dimension" />
         <attr name="bubbleBackgroundRcv" format="reference|color" />
         <attr name="bubbleBackgroundSend" format="reference|color" />

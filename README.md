@@ -37,6 +37,48 @@ Drop the `ChatView` in your XML layout as is shown below:
 </RelativeLayout>
 ```
 
+ChatView xml attributes you can set include:
+```
+<co.devcenter.android.ChatView
+    xmlns:chatview="http://schemas.android.com/apk/res-auto"
+    ...
+    chatview:inputBarBackgroundColor=""    <!--format="color" /-->
+    chatview:inputBarInsetLeft=""          <!--format="dimension" /-->
+    chatview:inputBarInsetTop=""           <!--format="dimension" /-->
+    chatview:inputBarInsetRight=""         <!--format="dimension" /-->
+    chatview:inputBarInsetBottom=""        <!--format="dimension" /-->
+
+    chatview:inputElevation=""             <!--format="dimension" /-->
+    chatview:inputBackgroundColor=""       <!--format="color" /-->
+    chatview:inputUseEditorAction=""       <!--format="boolean" /-->
+
+    chatview:inputTextAppearance=""        <!--format="reference" /-->
+    chatview:inputTextSize=""              <!--format="dimension" /-->
+    chatview:inputTextColor=""             <!--format="color" /-->
+    chatview:inputHintColor=""             <!--format="color" /-->
+
+    chatview:sendBtnIcon=""                <!--format="reference" /-->
+    chatview:sendBtnIconTint=""            <!--format="color" /-->
+    chatview:sendBtnVisible=""             <!--format="boolean" /-->
+    chatview:sendBtnElevation=""           <!--format="dimension" /-->
+    chatview:sendBtnBackgroundTint=""      <!--format="color" /-->
+
+    <!-- These are still yet unimplemented-->
+    chatview:bubbleElevation"              <!--format="dimension" /-->
+    chatview:bubbleBackgroundRcv"          <!--format="reference|color" /-->
+    chatview:bubbleBackgroundSend"         <!--format="reference|color" /-->
+    chatview:messageTextAppearance"        <!--format="reference" /-->
+    chatview:messageTextColorSend"         <!--format="color" /-->
+    chatview:messageTextColorRcv"          <!--format="color" /-->
+    chatview:messageTextSize"              <!--format="dimension" /-->
+    chatview:tStampTextAppearance"         <!--format="reference" /-->
+    chatview:tStampTextColorSend"          <!--format="color" /-->
+    chatview:tStampTextColorRcv"           <!--format="color" /-->
+    chatview:tStampTextSize"               <!--format="dimension" /-->
+    ...
+    />
+```
+
 And then in your `Activity` or `Fragment` you can get the instance of the `ChatView` by doing:
 
 ```
