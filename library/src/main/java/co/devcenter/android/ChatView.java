@@ -38,28 +38,23 @@ import co.devcenter.android.models.ChatMessage.Type;
  */
 public class ChatView extends LinearLayout {
 
-    private CardView inputBar;
-    private CardView inputFrame;
+    private CardView inputBar, inputFrame;
     private ListView chatListView;
     private EditText inputEditText;
 
     private FloatingActionButton sendButton;
-
-    private boolean previousFocusState = false;
-
+    private boolean previousFocusState = false, sendButtonVisible, useEditorAction;
     private ChatListener chatListener;
     private ChatViewListAdapter chatViewListAdapter;
 
-    // Fields controlling chat list items
-    int bubbleElevation;
-    Drawable bubbleBackgroundRcv;
-    Drawable bubbleBackgroundSend;
-    int messageTextSize;
-    int messageTextColorRcv;
-    int messageTextColorSend;
-    int tStampTextSize;
-    int tStampTextColorRcv;
-    int tStampTextColorSend;
+    private int bubbleElevation, messageTextSize, recievedMessageTextColor, sentMessageTextColor, timeStampTextSize, recievedTimeStampTextColor, sentTimeStampTextColor;
+    private int inputBarBackgroundColor, inputBarInsetLeft, inputBarInsetTop, inputBarInsetRight, inputBarInsetBottom, inputFrameBackgroundColor;
+    private int inputTextSize, inputTextColor, inputHintColor;
+    private int sendButtonBackgroundTint, sendButtonIconTint, sendButtonElevation;
+    private float inputElevation;
+    private Drawable bubbleBackgroundRcv, bubbleBackgroundSend, sendButtonIcon, buttonDrawable;
+    private TypedArray attributes, textAppearanceAttributes;
+    private Context context;
 
 
     public ChatView(Context context) {
@@ -79,127 +74,154 @@ public class ChatView extends LinearLayout {
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
 
         setOrientation(VERTICAL);
-
         LayoutInflater.from(getContext()).inflate(R.layout.chat_view, this, true);
+        this.context = context;
+        initializeViews();
+        getXMLAttributes(attrs, defStyleAttr);
+        setViewAttributes();
+        chatViewListAdapter = new ChatViewListAdapter(context);
+        chatListView.setAdapter(chatViewListAdapter);
 
+
+        setButtonOnClickListener();
+        setUserTypingListener();
+        setUserStoppedTypingListener();
+    }
+
+    private void initializeViews() {
         chatListView = (ListView) findViewById(R.id.chat_list);
         inputBar = (CardView) findViewById(R.id.input_bar);
         inputFrame = (CardView) findViewById(R.id.input_frame);
         inputEditText = (EditText) findViewById(R.id.input_edit_text);
         sendButton = (FloatingActionButton) findViewById(R.id.sendButton);
+    }
 
+    private void getXMLAttributes(AttributeSet attrs, int defStyleAttr) {
+        attributes = context.obtainStyledAttributes(attrs, R.styleable.ChatView, defStyleAttr, R.style.ChatViewDefault);
+        getAttributesForInputBar();
+        getAttributesForInputFrame();
+        getAttributesForInputText();
+        getAttributesForSendButton();
+        getUseEditorAction();
+        attributes.recycle();
+    }
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ChatView, defStyleAttr,
-                R.style.ChatViewDefault);
+    private void setViewAttributes() {
+        setInputBarAttributes();
+        setInputFrameAttributes();
+        setInputTextAttributes();
+        setSendButtonAttributes();
+    }
 
+    private void getAttributesForInputBar() {
+        inputBarBackgroundColor = attributes.getColor(R.styleable.ChatView_inputBarBackgroundColor, -1);
+        inputBarInsetLeft = attributes.getDimensionPixelSize(R.styleable.ChatView_inputBarInsetLeft, 0);
+        inputBarInsetTop = attributes.getDimensionPixelSize(R.styleable.ChatView_inputBarInsetTop, 0);
+        inputBarInsetRight = attributes.getDimensionPixelSize(R.styleable.ChatView_inputBarInsetRight, 0);
+        inputBarInsetBottom = attributes.getDimensionPixelSize(R.styleable.ChatView_inputBarInsetBottom, 0);
+    }
 
-        int inputBarBackgroundColor = a.getColor(R.styleable.ChatView_inputBarBackgroundColor, -1);
-        int inputBarInsetLeft = a.getDimensionPixelSize(R.styleable.ChatView_inputBarInsetLeft, 0);
-        int inputBarInsetTop = a.getDimensionPixelSize(R.styleable.ChatView_inputBarInsetTop, 0);
-        int inputBarInsetRight = a.getDimensionPixelSize(R.styleable.ChatView_inputBarInsetRight, 0);
-        int inputBarInsetBottom = a.getDimensionPixelSize(R.styleable.ChatView_inputBarInsetBottom, 0);
-
+    private void setInputBarAttributes() {
         inputBar.setCardBackgroundColor(inputBarBackgroundColor);
-        inputBar.setContentPadding(inputBarInsetLeft,
-                inputBarInsetTop, inputBarInsetRight, inputBarInsetBottom);
+        inputBar.setContentPadding(inputBarInsetLeft, inputBarInsetTop, inputBarInsetRight, inputBarInsetBottom);
+    }
 
-        int inputBackground = a.getColor(R.styleable.ChatView_inputBackgroundColor, -1);
-        float inputElevation = a.getDimension(R.styleable.ChatView_inputElevation, 0f);
-        inputFrame.setCardBackgroundColor(inputBackground);
+    private void getAttributesForInputFrame() {
+        inputFrameBackgroundColor = attributes.getColor(R.styleable.ChatView_inputBackgroundColor, -1);
+        inputElevation = attributes.getDimension(R.styleable.ChatView_inputElevation, 0f);
+    }
+
+    private void setInputFrameAttributes() {
+        inputFrame.setCardBackgroundColor(inputFrameBackgroundColor);
         inputFrame.setCardElevation(inputElevation);
+    }
 
-        int inputTextSize = context.getResources().getDimensionPixelSize(R.dimen.default_input_text_size);
-        int inputTextColor = ContextCompat.getColor(context, R.color.black);
-        int inputHintColor = ContextCompat.getColor(context, R.color.main_color_gray);
-
-        if (a.hasValue(R.styleable.ChatView_inputTextAppearance)) {
-
-            // Get id of the resource that holds the textAppearance
-            final int textAppearanceId = a.getResourceId(
-                    R.styleable.ChatView_inputTextAppearance, 0);
-
-            TypedArray atp = getContext().obtainStyledAttributes(textAppearanceId,
-                    R.styleable.ChatViewInputTextAppearance);
-
-            if (atp.hasValue(R.styleable.ChatView_inputTextSize)) {
-                inputTextSize = a.getDimensionPixelSize(R.styleable.ChatView_inputTextSize, inputTextSize);
-            }
-
-            if (atp.hasValue(R.styleable.ChatView_inputTextColor)) {
-                inputTextColor = a.getColor(R.styleable.ChatView_inputTextColor, inputTextColor);
-            }
-
-            if (atp.hasValue(R.styleable.ChatView_inputHintColor)) {
-                inputHintColor = a.getColor(R.styleable.ChatView_inputHintColor, inputHintColor);
-            }
-
-            atp.recycle();
+    private void getAttributesForInputText() {
+        setInputTextDefaults();
+        if (hasStyleResourceSet()) {
+            final int textAppearanceId = attributes.getResourceId(R.styleable.ChatView_inputTextAppearance, 0);
+            textAppearanceAttributes = getContext().obtainStyledAttributes(textAppearanceId, R.styleable.ChatViewInputTextAppearance);
+            setInputTextSize();
+            setInputTextColor();
+            setInputHintColor();
+            textAppearanceAttributes.recycle();
         }
+        overrideTextStylesIfSetIndividually();
+    }
 
-        inputTextSize = (int) a.getDimension(R.styleable.ChatView_inputTextSize, inputTextSize);
-        inputTextColor = a.getColor(R.styleable.ChatView_inputTextColor, inputTextColor);
-        inputHintColor = a.getColor(R.styleable.ChatView_inputHintColor, inputHintColor);
-
+    private void setInputTextAttributes() {
         inputEditText.setTextColor(inputTextColor);
         inputEditText.setHintTextColor(inputHintColor);
         inputEditText.setTextSize(TypedValue.COMPLEX_UNIT_PX, inputTextSize);
+    }
 
-        boolean sendButtonVisible = a.getBoolean(R.styleable.ChatView_sendBtnVisible, true);
+    private void getAttributesForSendButton() {
+        sendButtonVisible = attributes.getBoolean(R.styleable.ChatView_sendBtnVisible, true);
+        sendButtonBackgroundTint = attributes.getColor(R.styleable.ChatView_sendBtnBackgroundTint, -1);
+        sendButtonIconTint = attributes.getColor(R.styleable.ChatView_sendBtnIconTint, Color.WHITE);
+        sendButtonElevation = attributes.getDimensionPixelSize(R.styleable.ChatView_sendBtnElevation, 0);
+        sendButtonIcon = attributes.getDrawable(R.styleable.ChatView_sendBtnIcon);
+        buttonDrawable = DrawableCompat.wrap(sendButton.getDrawable());
+    }
+
+    private void setSendButtonAttributes() {
         if (!sendButtonVisible) sendButton.setVisibility(GONE);
-
-        int sendButtonBgTint = a.getColor(R.styleable.ChatView_sendBtnBackgroundTint, -1);
-        int sendButtonIconTint = a.getColor(R.styleable.ChatView_sendBtnIconTint, Color.WHITE);
-        int sendButtonElevation = a.getDimensionPixelSize(R.styleable.ChatView_sendBtnElevation, 0);
-        Drawable sendButtonIcon = a.getDrawable(R.styleable.ChatView_sendBtnIcon);
-
-        sendButton.setBackgroundTintList(ColorStateList.valueOf(sendButtonBgTint));
+        sendButton.setBackgroundTintList(ColorStateList.valueOf(sendButtonBackgroundTint));
         sendButton.setImageDrawable(sendButtonIcon);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             sendButton.setElevation(sendButtonElevation);
         }
-        Drawable d = DrawableCompat.wrap(sendButton.getDrawable());
-        d.setColorFilter(sendButtonIconTint, PorterDuff.Mode.SRC_IN);
+        buttonDrawable.setColorFilter(sendButtonIconTint, PorterDuff.Mode.SRC_IN);
+    }
 
-        boolean useEditorAction = a.getBoolean(R.styleable.ChatView_inputUseEditorAction, false);
+    private void getUseEditorAction() {
+        useEditorAction = attributes.getBoolean(R.styleable.ChatView_inputUseEditorAction, false);
+    }
 
-        a.recycle();
-
+    private void setUseEditorAction() {
         if (useEditorAction) {
             setupEditorAction();
         } else {
-            inputEditText.setInputType(InputType.TYPE_CLASS_TEXT
-                    | InputType.TYPE_TEXT_FLAG_MULTI_LINE
-                    | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT
-                    | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
-            );
+            inputEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         }
+    }
 
-        chatViewListAdapter = new ChatViewListAdapter(context);
-        chatListView.setAdapter(chatViewListAdapter);
+    private boolean hasStyleResourceSet() {
+        return attributes.hasValue(R.styleable.ChatView_inputTextAppearance);
+    }
 
-        sendButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    private void setInputTextDefaults() {
+        inputTextSize = context.getResources().getDimensionPixelSize(R.dimen.default_input_text_size);
+        inputTextColor = ContextCompat.getColor(context, R.color.black);
+        inputHintColor = ContextCompat.getColor(context, R.color.main_color_gray);
+    }
 
-                long stamp = System.currentTimeMillis();
-                String message = inputEditText.getText().toString();
+    private void setInputTextSize() {
+        if (textAppearanceAttributes.hasValue(R.styleable.ChatView_inputTextSize)) {
+            inputTextSize = attributes.getDimensionPixelSize(R.styleable.ChatView_inputTextSize, inputTextSize);
+        }
+    }
 
-                if (!TextUtils.isEmpty(message)) {
-                    sendMessage(message, stamp);
-                }
+    private void setInputTextColor() {
+        if (textAppearanceAttributes.hasValue(R.styleable.ChatView_inputTextColor)) {
+            inputTextColor = attributes.getColor(R.styleable.ChatView_inputTextColor, inputTextColor);
+        }
+    }
 
-            }
-        });
+    private void setInputHintColor() {
+        if (textAppearanceAttributes.hasValue(R.styleable.ChatView_inputHintColor)) {
+            inputHintColor = attributes.getColor(R.styleable.ChatView_inputHintColor, inputHintColor);
+        }
+    }
 
-        setUserTypingListener();
-        setUserStoppedTypingListener();
+    private void overrideTextStylesIfSetIndividually() {
+        inputTextSize = (int) attributes.getDimension(R.styleable.ChatView_inputTextSize, inputTextSize);
+        inputTextColor = attributes.getColor(R.styleable.ChatView_inputTextColor, inputTextColor);
+        inputHintColor = attributes.getColor(R.styleable.ChatView_inputHintColor, inputHintColor);
     }
 
     private void setupEditorAction() {
-        inputEditText.setInputType(InputType.TYPE_CLASS_TEXT
-                | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT
-                | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
-        );
+        inputEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         inputEditText.setImeOptions(EditorInfo.IME_ACTION_SEND);
         inputEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -218,23 +240,35 @@ public class ChatView extends LinearLayout {
         });
     }
 
+    private void setButtonOnClickListener() {
+        sendButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long stamp = System.currentTimeMillis();
+                String message = inputEditText.getText().toString();
+                if (!TextUtils.isEmpty(message)) {
+                    sendMessage(message, stamp);
+                }
+
+            }
+        });
+    }
+
     private void setUserTypingListener() {
         inputEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 0 && chatListener != null){
+                if (s.length() > 0 && chatListener != null) {
                     chatListener.userIsTyping();
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
 
@@ -244,11 +278,9 @@ public class ChatView extends LinearLayout {
         inputEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-
                 if (previousFocusState && !hasFocus && chatListener != null) {
                     chatListener.userHasStoppedTyping();
                 }
-
                 previousFocusState = hasFocus;
             }
         });
@@ -261,67 +293,51 @@ public class ChatView extends LinearLayout {
     }
 
     public String getTypedMessage() {
-
         return inputEditText.getText().toString();
     }
 
     public void setChatListener(ChatListener chatListener) {
-
         this.chatListener = chatListener;
     }
 
     public void sendMessage(String message, long stamp) {
-
         ChatMessage chatMessage = new ChatMessage(message, stamp, Type.SENT);
-
         if (chatListener != null && chatListener.sendMessage(message, stamp)) {
-
             chatViewListAdapter.addMessage(chatMessage);
             inputEditText.setText("");
         }
     }
 
     public void newMessage(String message) {
-        ChatMessage chatMessage = new ChatMessage(message,
-            System.currentTimeMillis(), Type.RECEIVED);
-
+        ChatMessage chatMessage = new ChatMessage(message, System.currentTimeMillis(), Type.RECEIVED);
         chatViewListAdapter.addMessage(chatMessage);
-
-        // notify listener
-        if (chatListener != null)
-            chatListener.onMessageReceived(chatMessage.getMessage(), chatMessage.getTimestamp());
+        notifyMessageRecievedListener(chatMessage);
     }
 
     public void newMessage(ChatMessage chatMessage) {
-
         chatViewListAdapter.addMessage(chatMessage);
+        notifyMessageRecievedListener(chatMessage);
+    }
 
-        // notify listener
+    public void notifyMessageRecievedListener(ChatMessage chatMessage) {
         if (chatListener != null)
             chatListener.onMessageReceived(chatMessage.getMessage(), chatMessage.getTimestamp());
     }
 
 
-
     public EditText getInputEditText() {
-
         return inputEditText;
     }
 
     public FloatingActionButton getSendButton() {
-
         return sendButton;
     }
 
 
-
     public class ChatViewListAdapter extends BaseAdapter {
-
         public final int STATUS_SENT = 0;
         public final int STATUS_RECEIVED = 1;
-
         ArrayList<ChatMessage> chatMessages;
-
         Context context;
         LayoutInflater inflater;
 
@@ -333,43 +349,34 @@ public class ChatView extends LinearLayout {
 
         @Override
         public int getCount() {
-
             return chatMessages.size();
         }
 
         @Override
         public Object getItem(int position) {
-
             return chatMessages.get(position);
         }
 
         @Override
         public long getItemId(int position) {
-
             return position;
         }
 
         @Override
         public int getItemViewType(int position) {
-
             return chatMessages.get(position).getType().ordinal();
         }
 
         @Override
         public int getViewTypeCount() {
-
             return 2;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-
             ViewHolder holder;
-
             int type = getItemViewType(position);
-
             if (convertView == null) {
-
                 switch (type) {
                     case STATUS_SENT:
                         convertView = inflater.inflate(R.layout.chat_item_sent, parent, false);
@@ -381,9 +388,7 @@ public class ChatView extends LinearLayout {
 
                 holder = new ViewHolder(convertView);
                 convertView.setTag(holder);
-
             } else {
-
                 holder = (ViewHolder) convertView.getTag();
             }
 
@@ -404,7 +409,6 @@ public class ChatView extends LinearLayout {
             TextView timestampTextView;
 
             public ViewHolder(View convertView) {
-
                 row = convertView;
             }
 
@@ -412,20 +416,18 @@ public class ChatView extends LinearLayout {
                 if (messageTextView == null) {
                     messageTextView = (TextView) row.findViewById(R.id.message_text_view);
                 }
-
                 return messageTextView;
             }
 
             public TextView getTimestampTextView() {
                 if (timestampTextView == null) {
-                    timestampTextView= (TextView) row.findViewById(R.id.timestamp_text_view);
+                    timestampTextView = (TextView) row.findViewById(R.id.timestamp_text_view);
                 }
 
                 return timestampTextView;
             }
         }
     }
-
 
 
     public interface ChatListener {
@@ -436,22 +438,10 @@ public class ChatView extends LinearLayout {
 
         void onMessageReceived(String message, long timestamp);
 
-        /**
-         * Called when the user hits the send button
-         *
-         * @param message The message that was typed as a String
-         * @param timestamp The timestamp in seconds since Jan 01 1970, 12:00am
-         * @return true to display the message in the chat list, false to ignore it
-         */
         boolean sendMessage(String message, long timestamp);
     }
 
-    /**
-     * A {@link ChatListener} ChatListener that provides no operations
-     * for methods. Only override what you need to.
-     *
-     * <p>You should override sendMessage() and handle when the user hits send</p>
-     */
+
     public static class SimpleChatListener implements ChatListener {
 
         @Override
