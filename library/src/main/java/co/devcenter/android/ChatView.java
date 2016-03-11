@@ -161,13 +161,13 @@ public class ChatView extends LinearLayout {
         sendButtonIconTint = attributes.getColor(R.styleable.ChatView_sendBtnIconTint, Color.WHITE);
         sendButtonElevation = attributes.getDimensionPixelSize(R.styleable.ChatView_sendBtnElevation, 0);
         sendButtonIcon = attributes.getDrawable(R.styleable.ChatView_sendBtnIcon);
-        buttonDrawable = DrawableCompat.wrap(sendButton.getDrawable());
     }
 
     private void setSendButtonAttributes() {
         if (!sendButtonVisible) sendButton.setVisibility(GONE);
         sendButton.setBackgroundTintList(ColorStateList.valueOf(sendButtonBackgroundTint));
         sendButton.setImageDrawable(sendButtonIcon);
+        buttonDrawable = DrawableCompat.wrap(sendButton.getDrawable());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             sendButton.setElevation(sendButtonElevation);
         }
