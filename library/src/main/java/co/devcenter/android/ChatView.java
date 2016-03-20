@@ -47,7 +47,7 @@ public class ChatView extends LinearLayout {
     private ChatListener chatListener;
     private ChatViewListAdapter chatViewListAdapter;
 
-    private int bubbleElevation, messageTextSize, recievedMessageTextColor, sentMessageTextColor, timeStampTextSize, recievedTimeStampTextColor, sentTimeStampTextColor;
+    private int bubbleElevation, messageTextSize, receivedMessageTextColor, sentMessageTextColor, timeStampTextSize, receivedTimeStampTextColor, sentTimeStampTextColor;
     private int inputBarBackgroundColor, inputBarInsetLeft, inputBarInsetTop, inputBarInsetRight, inputBarInsetBottom, inputFrameBackgroundColor;
     private int inputTextSize, inputTextColor, inputHintColor;
     private int sendButtonBackgroundTint, sendButtonIconTint, sendButtonElevation;
@@ -311,15 +311,15 @@ public class ChatView extends LinearLayout {
     public void newMessage(String message) {
         ChatMessage chatMessage = new ChatMessage(message, System.currentTimeMillis(), Type.RECEIVED);
         chatViewListAdapter.addMessage(chatMessage);
-        notifyMessageRecievedListener(chatMessage);
+        notifyMessageReceivedListener(chatMessage);
     }
 
     public void newMessage(ChatMessage chatMessage) {
         chatViewListAdapter.addMessage(chatMessage);
-        notifyMessageRecievedListener(chatMessage);
+        notifyMessageReceivedListener(chatMessage);
     }
 
-    public void notifyMessageRecievedListener(ChatMessage chatMessage) {
+    public void notifyMessageReceivedListener(ChatMessage chatMessage) {
         if (chatListener != null)
             chatListener.onMessageReceived(chatMessage.getMessage(), chatMessage.getTimestamp());
     }
