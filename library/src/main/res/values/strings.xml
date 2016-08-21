@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Android UI Library</string>
+
+    <string name="default_input_hint">Type your message</string>
+</resources>

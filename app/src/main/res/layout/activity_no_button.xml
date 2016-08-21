@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="co.devcenter.android.sample.NoButtonActivity">
+
+    <co.devcenter.android.ChatView
+        android:id="@+id/chat_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:bubbleBackgroundRcv="@color/bubble_background_rcv"
+        app:bubbleBackgroundSend="@color/bubble_background_send"
+        app:inputBackgroundColor="@android:color/transparent"
+        app:inputBarBackgroundColor="@color/white"
+        app:inputElevation="0dp"
+        app:inputTextSize="20sp"
+        app:inputUseEditorAction="true"
+        app:sendBtnVisible="false" />
+
+</RelativeLayout>

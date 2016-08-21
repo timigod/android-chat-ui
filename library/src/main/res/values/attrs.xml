@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ChatView">
+
+        <!--attr name="inputBarElevation" format="dimension" /-->
+        <attr name="inputBarBackgroundColor" format="color" />
+        <attr name="inputBarInsetLeft" format="dimension" />
+        <attr name="inputBarInsetTop" format="dimension" />
+        <attr name="inputBarInsetRight" format="dimension" />
+        <attr name="inputBarInsetBottom" format="dimension" />
+
+        <attr name="inputBackgroundColor" format="color" />
+        <attr name="inputUseEditorAction" format="boolean" />
+
+        <attr name="inputElevation" format="dimension" />
+        <attr name="inputTextAppearance" format="reference" />
+        <attr name="inputTextSize" format="dimension" />
+        <attr name="inputTextColor" format="color" />
+        <attr name="inputHintColor" format="color" />
+
+        <attr name="sendBtnIcon" format="reference" />
+        <attr name="sendBtnIconTint" format="color" />
+        <attr name="sendBtnVisible" format="boolean" />
+        <attr name="sendBtnElevation" format="dimension" />
+        <attr name="sendBtnBackgroundTint" format="color" />
+
+        <!-- These are still yet unimplemented-->
+        <attr name="bubbleElevation" format="dimension" />
+        <attr name="bubbleBackgroundRcv" format="reference|color" />
+        <attr name="bubbleBackgroundSend" format="reference|color" />
+        <attr name="messageTextAppearance" format="reference" />
+        <attr name="messageTextColorSend" format="color" />
+        <attr name="messageTextColorRcv" format="color" />
+        <attr name="messageTextSize" format="dimension" />
+        <attr name="tStampTextAppearance" format="reference" />
+        <attr name="tStampTextColorSend" format="color" />
+        <attr name="tStampTextColorRcv" format="color" />
+        <attr name="tStampTextSize" format="dimension" />
+
+    </declare-styleable>
+
+    <declare-styleable name="ChatViewInputTextAppearance">
+        <attr name="inputTextSize" />
+        <attr name="inputTextColor" />
+        <attr name="inputHintColor" />
+    </declare-styleable>
+
+    <declare-styleable name="ChatViewMessageTextAppearance">
+        <attr name="messageTextSize" />
+        <attr name="messageTextColorSend" />
+        <attr name="messageTextColorRcv" />
+    </declare-styleable>
+
+    <declare-styleable name="ChatViewTStampTextAppearance">
+        <attr name="tStampTextSize" />
+        <attr name="tStampTextColorSend" />
+        <attr name="tStampTextColorRcv" />
+    </declare-styleable>
+</resources>

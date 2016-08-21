@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="whatsapp_green">#00897b</color>
+    <color name="bubble_background_rcv">#f3ffd2</color>
+    <color name="bubble_background_send">#d2ffdb</color>
+
+</resources>
