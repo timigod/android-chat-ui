@@ -260,8 +260,6 @@ public class ChatView extends RelativeLayout {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(context, "Hello I'm Timigod", Toast.LENGTH_SHORT).show();
-
                 if (actionsMenu.isExpanded()) {
                     actionsMenu.collapse();
                     return;
@@ -281,7 +279,6 @@ public class ChatView extends RelativeLayout {
             @Override
             public boolean onLongClick(View v) {
                 actionsMenu.expand();
-                Toast.makeText(context, "Hello I'm Timi", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
