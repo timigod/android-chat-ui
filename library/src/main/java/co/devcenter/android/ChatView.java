@@ -23,7 +23,9 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -34,7 +36,7 @@ import co.devcenter.android.models.ChatMessage.Type;
 /**
  * Created by timi on 17/11/2015.
  */
-public class ChatView extends LinearLayout {
+public class ChatView extends RelativeLayout {
 
     private CardView inputFrame;
     private ListView chatListView;
@@ -70,7 +72,6 @@ public class ChatView extends LinearLayout {
 
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        setOrientation(VERTICAL);
         LayoutInflater.from(getContext()).inflate(R.layout.chat_view, this, true);
         this.context = context;
         initializeViews();
@@ -134,8 +135,8 @@ public class ChatView extends LinearLayout {
             setInputTextSize();
             setInputTextColor();
             setInputHintColor();
+            textAppearanceAttributes.recycle();
         }
-        textAppearanceAttributes.recycle();
         overrideTextStylesIfSetIndividually();
     }
 
@@ -158,10 +159,10 @@ public class ChatView extends LinearLayout {
     }
 
     private void setSendButtonAttributes() {
-        actionsMenu.setBackgroundColor(sendButtonBackgroundTint);
+        actionsMenu.getSendButton().setBackgroundColor(sendButtonBackgroundTint);
         actionsMenu.setIconDrawable(sendButtonIcon);
 
-        ViewCompat.setElevation(actionsMenu, sendButtonElevation);
+        ViewCompat.setElevation(actionsMenu.getSendButton(), sendButtonElevation);
 
         buttonDrawable = actionsMenu.getIconDrawable();
         buttonDrawable.setColorFilter(sendButtonIconTint, PorterDuff.Mode.SRC_IN);
@@ -239,6 +240,8 @@ public class ChatView extends LinearLayout {
             @Override
             public void onClick(View v) {
 
+                Toast.makeText(context, "Hello I'm Timigod", Toast.LENGTH_SHORT).show();
+
                 if (actionsMenu.isExpanded()) {
                     actionsMenu.collapse();
                     return;
@@ -257,9 +260,9 @@ public class ChatView extends LinearLayout {
 
             @Override
             public boolean onLongClick(View v) {
-
                 actionsMenu.expand();
-                return false;
+                Toast.makeText(context, "Hello I'm Timi", Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
     }
