@@ -32,6 +32,8 @@ import android.widget.TextView;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import co.devcenter.android.R;
+
 public class FloatingActionButton extends ImageButton {
 
   public static final int SIZE_NORMAL = 0;

@@ -6,6 +6,8 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 
+import co.devcenter.android.R;
+
 public class SendFloatingActionButton extends FloatingActionButton {
   int mPlusColor;
 

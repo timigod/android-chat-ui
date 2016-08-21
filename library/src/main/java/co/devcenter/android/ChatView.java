@@ -21,9 +21,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -34,21 +35,32 @@ import co.devcenter.android.models.ChatMessage.Type;
 /**
  * Created by timi on 17/11/2015.
  */
-public class ChatView extends LinearLayout {
+public class ChatView extends RelativeLayout {
 
     private CardView inputFrame;
     private ListView chatListView;
     private EditText inputEditText;
 
     private FloatingActionsMenu actionsMenu;
-    private boolean previousFocusState = false, useEditorAction;
-    private ChatListener chatListener;
+    private boolean previousFocusState = false, useEditorAction, isTyping;
+    private Runnable typingTimerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (isTyping) {
+                isTyping = false;
+                if (typingListener != null)
+                    typingListener.userStoppedTyping();
+            }
+        }
+    };
+    private TypingListener typingListener;
+    private OnSentMessageListener onSentMessageListener;
     private ChatViewListAdapter chatViewListAdapter;
 
-    private int inputFrameBackgroundColor;
+    private int inputFrameBackgroundColor, backgroundColor;
     private int inputTextSize, inputTextColor, inputHintColor;
     private int sendButtonBackgroundTint, sendButtonIconTint, sendButtonElevation;
-    private float inputElevation;
+    private float inputElevation, bubbleElevation;
     private int bubbleBackgroundRcv, bubbleBackgroundSend; // Drawables cause cardRadius issues. Better to use background color
     private Drawable sendButtonIcon, buttonDrawable;
     private TypedArray attributes, textAppearanceAttributes;
@@ -70,7 +82,6 @@ public class ChatView extends LinearLayout {
 
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        setOrientation(VERTICAL);
         LayoutInflater.from(getContext()).inflate(R.layout.chat_view, this, true);
         this.context = context;
         initializeViews();
@@ -86,11 +97,12 @@ public class ChatView extends LinearLayout {
         chatListView = (ListView) findViewById(R.id.chat_list);
         inputFrame = (CardView) findViewById(R.id.input_frame);
         inputEditText = (EditText) findViewById(R.id.input_edit_text);
-        actionsMenu = (FloatingActionsMenu) findViewById(R.id.actionsMenu);
+        actionsMenu = (FloatingActionsMenu) findViewById(R.id.sendButton);
     }
 
     private void getXMLAttributes(AttributeSet attrs, int defStyleAttr) {
         attributes = context.obtainStyledAttributes(attrs, R.styleable.ChatView, defStyleAttr, R.style.ChatViewDefault);
+        getChatViewBackgroundColor();
         getAttributesForInputFrame();
         getAttributesForInputText();
         getAttributesForSendButton();
@@ -104,12 +116,17 @@ public class ChatView extends LinearLayout {
         chatListView.setAdapter(chatViewListAdapter);
     }
 
+
     private void setViewAttributes() {
+        setChatViewBackground();
         setInputFrameAttributes();
         setInputTextAttributes();
         setSendButtonAttributes();
     }
 
+    private void getChatViewBackgroundColor() {
+        backgroundColor = attributes.getColor(R.styleable.ChatView_backgroundColor, -1);
+    }
 
     private void getAttributesForBubbles() {
         bubbleBackgroundRcv = attributes.getColor(R.styleable.ChatView_bubbleBackgroundRcv, ContextCompat.getColor(context, R.color.default_bubble_color_rcv));
@@ -127,6 +144,10 @@ public class ChatView extends LinearLayout {
         inputFrame.setCardElevation(inputElevation);
     }
 
+    private void setChatViewBackground() {
+        this.setBackgroundColor(backgroundColor);
+    }
+
     private void getAttributesForInputText() {
         setInputTextDefaults();
         if (hasStyleResourceSet()) {
@@ -134,8 +155,8 @@ public class ChatView extends LinearLayout {
             setInputTextSize();
             setInputTextColor();
             setInputHintColor();
+            textAppearanceAttributes.recycle();
         }
-        textAppearanceAttributes.recycle();
         overrideTextStylesIfSetIndividually();
     }
 
@@ -158,10 +179,10 @@ public class ChatView extends LinearLayout {
     }
 
     private void setSendButtonAttributes() {
-        actionsMenu.setBackgroundColor(sendButtonBackgroundTint);
+        actionsMenu.getSendButton().setBackgroundColor(sendButtonBackgroundTint);
         actionsMenu.setIconDrawable(sendButtonIcon);
 
-        ViewCompat.setElevation(actionsMenu, sendButtonElevation);
+        ViewCompat.setElevation(actionsMenu.getSendButton(), sendButtonElevation);
 
         buttonDrawable = actionsMenu.getIconDrawable();
         buttonDrawable.setColorFilter(sendButtonIconTint, PorterDuff.Mode.SRC_IN);
@@ -239,6 +260,8 @@ public class ChatView extends LinearLayout {
             @Override
             public void onClick(View v) {
 
+                Toast.makeText(context, "Hello I'm Timigod", Toast.LENGTH_SHORT).show();
+
                 if (actionsMenu.isExpanded()) {
                     actionsMenu.collapse();
                     return;
@@ -257,9 +280,9 @@ public class ChatView extends LinearLayout {
 
             @Override
             public boolean onLongClick(View v) {
-
                 actionsMenu.expand();
-                return false;
+                Toast.makeText(context, "Hello I'm Timi", Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
     }
@@ -268,17 +291,25 @@ public class ChatView extends LinearLayout {
         inputEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 0 && chatListener != null) {
-                    chatListener.userIsTyping();
+                if (s.length() > 0) {
+                    if (!isTyping) {
+                        isTyping = true;
+                        if (typingListener != null)
+                            typingListener.userStartedTyping();
+                    }
+                    removeCallbacks(typingTimerRunnable);
+                    postDelayed(typingTimerRunnable, 1500);
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+
             }
         });
 
@@ -288,8 +319,8 @@ public class ChatView extends LinearLayout {
         inputEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (previousFocusState && !hasFocus && chatListener != null) {
-                    chatListener.userHasStoppedTyping();
+                if (previousFocusState && !hasFocus && typingListener != null) {
+                    typingListener.userStoppedTyping();
                 }
                 previousFocusState = hasFocus;
             }
@@ -306,34 +337,29 @@ public class ChatView extends LinearLayout {
         return inputEditText.getText().toString();
     }
 
-    public void setChatListener(ChatListener chatListener) {
-        this.chatListener = chatListener;
+    public void setTypingListener(TypingListener typingListener) {
+        this.typingListener = typingListener;
     }
 
-    public void sendMessage(String message, long stamp) {
+    public void setOnSentMessageListener(OnSentMessageListener onSentMessageListener) {
+        this.onSentMessageListener = onSentMessageListener;
+    }
+
+    private void sendMessage(String message, long stamp) {
 
         ChatMessage chatMessage = new ChatMessage(message, stamp, Type.SENT);
-
-        if (chatListener != null && chatListener.sendMessage(message, stamp)) {
+        if (onSentMessageListener != null && onSentMessageListener.sendMessage(chatMessage)) {
             chatViewListAdapter.addMessage(chatMessage);
             inputEditText.setText("");
         }
     }
 
-    public void newMessage(String message) {
-        ChatMessage chatMessage = new ChatMessage(message, System.currentTimeMillis(), Type.RECEIVED);
+    public void addMessage(ChatMessage chatMessage) {
         chatViewListAdapter.addMessage(chatMessage);
-        notifyMessageReceivedListener(chatMessage);
     }
 
-    public void newMessage(ChatMessage chatMessage) {
-        chatViewListAdapter.addMessage(chatMessage);
-        notifyMessageReceivedListener(chatMessage);
-    }
-
-    public void notifyMessageReceivedListener(ChatMessage chatMessage) {
-        if (chatListener != null)
-            chatListener.onMessageReceived(chatMessage.getMessage(), chatMessage.getTimestamp());
+    public void addMessages(ArrayList<ChatMessage> messages) {
+        chatViewListAdapter.addMessages(messages);
     }
 
 
@@ -346,42 +372,19 @@ public class ChatView extends LinearLayout {
     }
 
 
-    public interface ChatListener {
+    public interface TypingListener {
 
-        void userIsTyping();
+        void userStartedTyping();
 
-        void userHasStoppedTyping();
+        void userStoppedTyping();
 
-        void onMessageReceived(String message, long timestamp);
-
-        boolean sendMessage(String message, long timestamp);
     }
 
-    public static class SimpleChatListener implements ChatListener {
-
-        @Override
-        public void userIsTyping() {
-            // No - op
-        }
-
-        @Override
-        public void userHasStoppedTyping() {
-            // No - op
-        }
-
-        @Override
-        public void onMessageReceived(String message, long timestamp) {
-            // No - op
-        }
-
-        @Override
-        public boolean sendMessage(String message, long timestamp) {
-            // No - op
-            return false;
-        }
+    public interface OnSentMessageListener {
+        boolean sendMessage(ChatMessage chatMessage);
     }
 
-    public class ChatViewListAdapter extends BaseAdapter {
+    private class ChatViewListAdapter extends BaseAdapter {
         public final int STATUS_SENT = 0;
         public final int STATUS_RECEIVED = 1;
         ArrayList<ChatMessage> chatMessages;
@@ -446,8 +449,13 @@ public class ChatView extends LinearLayout {
             return convertView;
         }
 
-        public void addMessage(ChatMessage message) {
+        private void addMessage(ChatMessage message) {
             chatMessages.add(message);
+            notifyDataSetChanged();
+        }
+
+        private void addMessages(ArrayList<ChatMessage> chatMessages) {
+            chatMessages.addAll(chatMessages);
             notifyDataSetChanged();
         }
 
@@ -457,19 +465,19 @@ public class ChatView extends LinearLayout {
             TextView messageTextView;
             TextView timestampTextView;
 
-            public ViewHolder(View convertView) {
+            private ViewHolder(View convertView) {
                 row = convertView;
                 bubble = (CardView) convertView.findViewById(R.id.bubble);
             }
 
-            public TextView getMessageTextView() {
+            private TextView getMessageTextView() {
                 if (messageTextView == null) {
                     messageTextView = (TextView) row.findViewById(R.id.message_text_view);
                 }
                 return messageTextView;
             }
 
-            public TextView getTimestampTextView() {
+            private TextView getTimestampTextView() {
                 if (timestampTextView == null) {
                     timestampTextView = (TextView) row.findViewById(R.id.timestamp_text_view);
                 }
@@ -477,7 +485,7 @@ public class ChatView extends LinearLayout {
                 return timestampTextView;
             }
 
-            public void setBackground(int messageType) {
+            private void setBackground(int messageType) {
                 int background = ContextCompat.getColor(context, R.color.cardview_light_background);
                 switch (messageType) {
                     case STATUS_RECEIVED:
