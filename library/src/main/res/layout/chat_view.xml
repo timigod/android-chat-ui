@@ -59,7 +59,7 @@
 
         </android.support.v7.widget.CardView>
 
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
+        <co.devcenter.android.fab.FloatingActionsMenu
             android:id="@+id/sendButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
 
             
 
-        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+        </co.devcenter.android.fab.FloatingActionsMenu>
 
     </LinearLayout>
 

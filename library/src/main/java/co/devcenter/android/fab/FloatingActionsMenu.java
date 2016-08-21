@@ -1,4 +1,4 @@
-package com.getbase.floatingactionbutton;
+package co.devcenter.android.fab;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -52,7 +52,7 @@ public class FloatingActionsMenu extends ViewGroup {
 
   private AnimatorSet mExpandAnimation = new AnimatorSet().setDuration(ANIMATION_DURATION);
   private AnimatorSet mCollapseAnimation = new AnimatorSet().setDuration(ANIMATION_DURATION);
-  private AddFloatingActionButton mAddButton;
+  private SendFloatingActionButton mSendButton;
   private RotatingDrawable mRotatingDrawable;
   private int mMaxButtonWidth;
   private int mMaxButtonHeight;
@@ -64,7 +64,19 @@ public class FloatingActionsMenu extends ViewGroup {
 
   private OnFloatingActionsMenuUpdateListener mListener;
 
-  public interface OnFloatingActionsMenuUpdateListener {
+  public void setIconDrawable(Drawable iconDrawable) {
+    mSendButton.setIconDrawable(iconDrawable);
+  }
+
+  public Drawable getIconDrawable() {
+    return mSendButton.getIconDrawable();
+  }
+
+    public SendFloatingActionButton getSendButton() {
+        return mSendButton;
+    }
+
+    public interface OnFloatingActionsMenuUpdateListener {
     void onMenuExpanded();
     void onMenuCollapsed();
   }
@@ -106,7 +118,7 @@ public class FloatingActionsMenu extends ViewGroup {
       throw new IllegalStateException("Action labels in horizontal expand orientation is not supported.");
     }
 
-    createAddButton(context);
+    createSendButton(context);
   }
 
   public void setOnFloatingActionsMenuUpdateListener(OnFloatingActionsMenuUpdateListener listener) {
@@ -144,8 +156,8 @@ public class FloatingActionsMenu extends ViewGroup {
     }
   }
 
-  private void createAddButton(Context context) {
-    mAddButton = new AddFloatingActionButton(context) {
+  private void createSendButton(Context context) {
+    mSendButton = new SendFloatingActionButton(context) {
       @Override
       void updateBackground() {
         mPlusColor = mAddButtonPlusColor;
@@ -154,37 +166,11 @@ public class FloatingActionsMenu extends ViewGroup {
         mStrokeVisible = mAddButtonStrokeVisible;
         super.updateBackground();
       }
-
-      @Override
-      Drawable getIconDrawable() {
-        final RotatingDrawable rotatingDrawable = new RotatingDrawable(super.getIconDrawable());
-        mRotatingDrawable = rotatingDrawable;
-
-        final OvershootInterpolator interpolator = new OvershootInterpolator();
-
-        final ObjectAnimator collapseAnimator = ObjectAnimator.ofFloat(rotatingDrawable, "rotation", EXPANDED_PLUS_ROTATION, COLLAPSED_PLUS_ROTATION);
-        final ObjectAnimator expandAnimator = ObjectAnimator.ofFloat(rotatingDrawable, "rotation", COLLAPSED_PLUS_ROTATION, EXPANDED_PLUS_ROTATION);
-
-        collapseAnimator.setInterpolator(interpolator);
-        expandAnimator.setInterpolator(interpolator);
-
-        mExpandAnimation.play(expandAnimator);
-        mCollapseAnimation.play(collapseAnimator);
-
-        return rotatingDrawable;
-      }
     };
 
-    mAddButton.setId(R.id.fab_expand_menu_button);
-    mAddButton.setSize(mAddButtonSize);
-    mAddButton.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        toggle();
-      }
-    });
-
-    addView(mAddButton, super.generateDefaultLayoutParams());
+    mSendButton.setId(R.id.fab_expand_menu_button);
+    mSendButton.setSize(mAddButtonSize);
+    addView(mSendButton, super.generateDefaultLayoutParams());
     mButtonsCount++;
   }
 
@@ -284,13 +270,13 @@ public class FloatingActionsMenu extends ViewGroup {
         mTouchDelegateGroup.clearTouchDelegates();
       }
 
-      int addButtonY = expandUp ? b - t - mAddButton.getMeasuredHeight() : 0;
-      // Ensure mAddButton is centered on the line where the buttons should be
+      int addButtonY = expandUp ? b - t - mSendButton.getMeasuredHeight() : 0;
+      // Ensure mSendButton is centered on the line where the buttons should be
       int buttonsHorizontalCenter = mLabelsPosition == LABELS_ON_LEFT_SIDE
           ? r - l - mMaxButtonWidth / 2
           : mMaxButtonWidth / 2;
-      int addButtonLeft = buttonsHorizontalCenter - mAddButton.getMeasuredWidth() / 2;
-      mAddButton.layout(addButtonLeft, addButtonY, addButtonLeft + mAddButton.getMeasuredWidth(), addButtonY + mAddButton.getMeasuredHeight());
+      int addButtonLeft = buttonsHorizontalCenter - mSendButton.getMeasuredWidth() / 2;
+      mSendButton.layout(addButtonLeft, addButtonY, addButtonLeft + mSendButton.getMeasuredWidth(), addButtonY + mSendButton.getMeasuredHeight());
 
       int labelsOffset = mMaxButtonWidth / 2 + mLabelsMargin;
       int labelsXNearButton = mLabelsPosition == LABELS_ON_LEFT_SIDE
@@ -299,12 +285,12 @@ public class FloatingActionsMenu extends ViewGroup {
 
       int nextY = expandUp ?
           addButtonY - mButtonSpacing :
-          addButtonY + mAddButton.getMeasuredHeight() + mButtonSpacing;
+          addButtonY + mSendButton.getMeasuredHeight() + mButtonSpacing;
 
       for (int i = mButtonsCount - 1; i >= 0; i--) {
         final View child = getChildAt(i);
 
-        if (child == mAddButton || child.getVisibility() == GONE) continue;
+        if (child == mSendButton || child.getVisibility() == GONE) continue;
 
         int childX = buttonsHorizontalCenter - child.getMeasuredWidth() / 2;
         int childY = expandUp ? nextY - child.getMeasuredHeight() : nextY;
@@ -365,22 +351,22 @@ public class FloatingActionsMenu extends ViewGroup {
     case EXPAND_RIGHT:
       boolean expandLeft = mExpandDirection == EXPAND_LEFT;
 
-      int addButtonX = expandLeft ? r - l - mAddButton.getMeasuredWidth() : 0;
-      // Ensure mAddButton is centered on the line where the buttons should be
-      int addButtonTop = b - t - mMaxButtonHeight + (mMaxButtonHeight - mAddButton.getMeasuredHeight()) / 2;
-      mAddButton.layout(addButtonX, addButtonTop, addButtonX + mAddButton.getMeasuredWidth(), addButtonTop + mAddButton.getMeasuredHeight());
+      int addButtonX = expandLeft ? r - l - mSendButton.getMeasuredWidth() : 0;
+      // Ensure mSendButton is centered on the line where the buttons should be
+      int addButtonTop = b - t - mMaxButtonHeight + (mMaxButtonHeight - mSendButton.getMeasuredHeight()) / 2;
+      mSendButton.layout(addButtonX, addButtonTop, addButtonX + mSendButton.getMeasuredWidth(), addButtonTop + mSendButton.getMeasuredHeight());
 
       int nextX = expandLeft ?
           addButtonX - mButtonSpacing :
-          addButtonX + mAddButton.getMeasuredWidth() + mButtonSpacing;
+          addButtonX + mSendButton.getMeasuredWidth() + mButtonSpacing;
 
       for (int i = mButtonsCount - 1; i >= 0; i--) {
         final View child = getChildAt(i);
 
-        if (child == mAddButton || child.getVisibility() == GONE) continue;
+        if (child == mSendButton || child.getVisibility() == GONE) continue;
 
         int childX = expandLeft ? nextX - child.getMeasuredWidth() : nextX;
-        int childY = addButtonTop + (mAddButton.getMeasuredHeight() - child.getMeasuredHeight()) / 2;
+        int childY = addButtonTop + (mSendButton.getMeasuredHeight() - child.getMeasuredHeight()) / 2;
         child.layout(childX, childY, childX + child.getMeasuredWidth(), childY + child.getMeasuredHeight());
 
         float collapsedTranslation = addButtonX - childX;
@@ -501,7 +487,7 @@ public class FloatingActionsMenu extends ViewGroup {
   protected void onFinishInflate() {
     super.onFinishInflate();
 
-    bringChildToFront(mAddButton);
+    bringChildToFront(mSendButton);
     mButtonsCount = getChildCount();
 
     if (mLabelsStyle != 0) {
@@ -516,7 +502,7 @@ public class FloatingActionsMenu extends ViewGroup {
       FloatingActionButton button = (FloatingActionButton) getChildAt(i);
       String title = button.getTitle();
 
-      if (button == mAddButton || title == null ||
+      if (button == mSendButton || title == null ||
           button.getTag(R.id.fab_label) != null) continue;
 
       TextView label = new TextView(context);
@@ -579,7 +565,7 @@ public class FloatingActionsMenu extends ViewGroup {
   public void setEnabled(boolean enabled) {
     super.setEnabled(enabled);
 
-    mAddButton.setEnabled(enabled);
+    mSendButton.setEnabled(enabled);
   }
 
   @Override

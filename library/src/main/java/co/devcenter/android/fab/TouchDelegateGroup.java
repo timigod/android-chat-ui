@@ -1,4 +1,4 @@
-package com.getbase.floatingactionbutton;
+package co.devcenter.android.fab;
 
 import android.graphics.Rect;
 import android.support.annotation.NonNull;

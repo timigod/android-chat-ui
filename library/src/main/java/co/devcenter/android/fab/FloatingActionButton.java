@@ -1,4 +1,4 @@
-package com.getbase.floatingactionbutton;
+package co.devcenter.android.fab;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

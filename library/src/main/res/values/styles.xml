@@ -2,11 +2,6 @@
 <resources>
 
     <style name="ChatViewDefault">
-        <item name="inputBarBackgroundColor">@android:color/transparent</item>
-        <item name="inputBarInsetLeft">4dp</item>
-        <item name="inputBarInsetTop">0dp</item>
-        <item name="inputBarInsetRight">4dp</item>
-        <item name="inputBarInsetBottom">0dp</item>
 
         <item name="inputBackgroundColor">@color/white</item>
         <item name="inputUseEditorAction">false</item>
@@ -19,7 +14,6 @@
 
         <item name="sendBtnIcon">@drawable/ic_send_white_24dp</item>
         <item name="sendBtnIconTint">@color/white</item>
-        <item name="sendBtnVisible">true</item>
         <item name="sendBtnElevation">4dp</item>
         <item name="sendBtnBackgroundTint">?attr/colorAccent</item>
 

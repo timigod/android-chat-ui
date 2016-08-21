@@ -2,13 +2,6 @@
 <resources>
     <declare-styleable name="ChatView">
 
-        <!--attr name="inputBarElevation" format="dimension" /-->
-        <attr name="inputBarBackgroundColor" format="color" />
-        <attr name="inputBarInsetLeft" format="dimension" />
-        <attr name="inputBarInsetTop" format="dimension" />
-        <attr name="inputBarInsetRight" format="dimension" />
-        <attr name="inputBarInsetBottom" format="dimension" />
-
         <attr name="inputBackgroundColor" format="color" />
         <attr name="inputUseEditorAction" format="boolean" />
 
