@@ -330,6 +330,10 @@ public class ChatView extends RelativeLayout {
         chatViewListAdapter.addMessage(chatMessage);
     }
 
+    public void addMessages(ArrayList<ChatMessage> messages){
+        chatViewListAdapter.addMessages(messages);
+    }
+
 
     public EditText getInputEditText() {
         return inputEditText;
@@ -351,7 +355,7 @@ public class ChatView extends RelativeLayout {
         boolean sendMessage(ChatMessage chatMessage);
     }
 
-    public class ChatViewListAdapter extends BaseAdapter {
+    private class ChatViewListAdapter extends BaseAdapter {
         public final int STATUS_SENT = 0;
         public final int STATUS_RECEIVED = 1;
         ArrayList<ChatMessage> chatMessages;
@@ -416,8 +420,13 @@ public class ChatView extends RelativeLayout {
             return convertView;
         }
 
-        public void addMessage(ChatMessage message) {
+        private void addMessage(ChatMessage message) {
             chatMessages.add(message);
+            notifyDataSetChanged();
+        }
+
+        private void addMessages(ArrayList<ChatMessage> chatMessages) {
+            chatMessages.addAll(chatMessages);
             notifyDataSetChanged();
         }
 
@@ -427,19 +436,19 @@ public class ChatView extends RelativeLayout {
             TextView messageTextView;
             TextView timestampTextView;
 
-            public ViewHolder(View convertView) {
+            private ViewHolder(View convertView) {
                 row = convertView;
                 bubble = (CardView) convertView.findViewById(R.id.bubble);
             }
 
-            public TextView getMessageTextView() {
+            private TextView getMessageTextView() {
                 if (messageTextView == null) {
                     messageTextView = (TextView) row.findViewById(R.id.message_text_view);
                 }
                 return messageTextView;
             }
 
-            public TextView getTimestampTextView() {
+            private TextView getTimestampTextView() {
                 if (timestampTextView == null) {
                     timestampTextView = (TextView) row.findViewById(R.id.timestamp_text_view);
                 }
@@ -447,7 +456,7 @@ public class ChatView extends RelativeLayout {
                 return timestampTextView;
             }
 
-            public void setBackground(int messageType) {
+            private void setBackground(int messageType) {
                 int background = ContextCompat.getColor(context, R.color.cardview_light_background);
                 switch (messageType) {
                     case STATUS_RECEIVED:
