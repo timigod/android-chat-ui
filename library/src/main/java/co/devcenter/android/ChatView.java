@@ -159,13 +159,13 @@ public class ChatView extends RelativeLayout {
     }
 
     private void setSendButtonAttributes() {
-        actionsMenu.getSendButton().setBackgroundColor(sendButtonBackgroundTint);
+        actionsMenu.getSendButton().setColorNormal(sendButtonBackgroundTint);
         actionsMenu.setIconDrawable(sendButtonIcon);
 
         ViewCompat.setElevation(actionsMenu.getSendButton(), sendButtonElevation);
 
         buttonDrawable = actionsMenu.getIconDrawable();
-        buttonDrawable.setColorFilter(sendButtonIconTint, PorterDuff.Mode.SRC_IN);
+        actionsMenu.setButtonIconTint(sendButtonIconTint);
     }
 
     private void getUseEditorAction() {
