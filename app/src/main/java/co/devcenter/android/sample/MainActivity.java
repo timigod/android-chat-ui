@@ -26,12 +26,12 @@ public class MainActivity extends AppCompatActivity {
         chatView.setTypingListener(new ChatView.TypingListener() {
             @Override
             public void userStartedTyping() {
-                Toast.makeText(MainActivity.this, "User is Typing", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void userStoppedTyping() {
-                Toast.makeText(MainActivity.this, "User has stopped Typing", Toast.LENGTH_SHORT).show();
+
             }
         });
     }

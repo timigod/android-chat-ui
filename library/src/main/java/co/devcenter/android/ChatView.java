@@ -60,7 +60,7 @@ public class ChatView extends RelativeLayout {
     private int inputFrameBackgroundColor, backgroundColor;
     private int inputTextSize, inputTextColor, inputHintColor;
     private int sendButtonBackgroundTint, sendButtonIconTint, sendButtonElevation;
-    private float inputElevation;
+    private float inputElevation, bubbleElevation;
     private int bubbleBackgroundRcv, bubbleBackgroundSend; // Drawables cause cardRadius issues. Better to use background color
     private Drawable sendButtonIcon, buttonDrawable;
     private TypedArray attributes, textAppearanceAttributes;
@@ -116,6 +116,7 @@ public class ChatView extends RelativeLayout {
         chatListView.setAdapter(chatViewListAdapter);
     }
 
+
     private void setViewAttributes() {
         setChatViewBackground();
         setInputFrameAttributes();
@@ -143,7 +144,7 @@ public class ChatView extends RelativeLayout {
         inputFrame.setCardElevation(inputElevation);
     }
 
-    private void setChatViewBackground(){
+    private void setChatViewBackground() {
         this.setBackgroundColor(backgroundColor);
     }
 
