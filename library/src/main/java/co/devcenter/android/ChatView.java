@@ -42,7 +42,17 @@ public class ChatView extends RelativeLayout {
     private EditText inputEditText;
 
     private FloatingActionsMenu actionsMenu;
-    private boolean previousFocusState = false, useEditorAction;
+    private boolean previousFocusState = false, useEditorAction, isTyping;
+    private Runnable typingTimerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (isTyping) {
+                isTyping = false;
+                if(typingListener != null)
+                    typingListener.userStoppedTyping();
+            }
+        }
+    };
     private TypingListener typingListener;
     private OnSentMessageListener onSentMessageListener;
     private ChatViewListAdapter chatViewListAdapter;
@@ -271,17 +281,25 @@ public class ChatView extends RelativeLayout {
         inputEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 0 && typingListener != null) {
-                    typingListener.userIsTyping();
+                if (s.length() > 0) {
+                    if (!isTyping) {
+                        isTyping = true;
+                        if (typingListener != null)
+                            typingListener.userStartedTyping();
+                    }
+                    removeCallbacks(typingTimerRunnable);
+                    postDelayed(typingTimerRunnable, 1500);
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+
             }
         });
 
@@ -292,7 +310,7 @@ public class ChatView extends RelativeLayout {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (previousFocusState && !hasFocus && typingListener != null) {
-                    typingListener.userHasStoppedTyping();
+                    typingListener.userStoppedTyping();
                 }
                 previousFocusState = hasFocus;
             }
@@ -330,7 +348,7 @@ public class ChatView extends RelativeLayout {
         chatViewListAdapter.addMessage(chatMessage);
     }
 
-    public void addMessages(ArrayList<ChatMessage> messages){
+    public void addMessages(ArrayList<ChatMessage> messages) {
         chatViewListAdapter.addMessages(messages);
     }
 
@@ -346,8 +364,9 @@ public class ChatView extends RelativeLayout {
 
     public interface TypingListener {
 
-        void userIsTyping();
-        void userHasStoppedTyping();
+        void userStartedTyping();
+
+        void userStoppedTyping();
 
     }
 

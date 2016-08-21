@@ -90,13 +90,13 @@ To send a message anytime a user of your application taps the send button, you'l
 ```
 chatView.setChatListener(new ChatView.ChatListener() {
     @Override
-    public void userIsTyping() {
+    public void userStartedTyping() {
 
         // do something while user is typing
     }
 
     @Override
-    public void userHasStoppedTyping() {
+    public void userStoppedTyping() {
 
         // do something when user has stopped typing
     }
