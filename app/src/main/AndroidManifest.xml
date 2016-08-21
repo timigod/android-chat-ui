@@ -18,23 +18,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SeperateActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="Seperate">
-
-        </activity>
-
-        <activity android:name=".NoButtonActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="No Button">
-
-        </activity>
-
-        <activity android:name=".InBarActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="Inside Bar">
-
-        </activity>
 
     </application>
 

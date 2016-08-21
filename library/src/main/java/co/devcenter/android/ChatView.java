@@ -86,7 +86,7 @@ public class ChatView extends LinearLayout {
         chatListView = (ListView) findViewById(R.id.chat_list);
         inputFrame = (CardView) findViewById(R.id.input_frame);
         inputEditText = (EditText) findViewById(R.id.input_edit_text);
-        actionsMenu = (FloatingActionsMenu) findViewById(R.id.sendButton);
+        actionsMenu = (FloatingActionsMenu) findViewById(R.id.actionsMenu);
     }
 
     private void getXMLAttributes(AttributeSet attrs, int defStyleAttr) {
