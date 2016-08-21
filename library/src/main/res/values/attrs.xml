@@ -20,7 +20,6 @@
 
         <attr name="sendBtnIcon" format="reference" />
         <attr name="sendBtnIconTint" format="color" />
-        <attr name="sendBtnVisible" format="boolean" />
         <attr name="sendBtnElevation" format="dimension" />
         <attr name="sendBtnBackgroundTint" format="color" />
 

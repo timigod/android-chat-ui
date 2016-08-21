@@ -28,6 +28,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
+
 import java.util.ArrayList;
 
 import co.devcenter.android.models.ChatMessage;
@@ -38,17 +40,16 @@ import co.devcenter.android.models.ChatMessage.Type;
  */
 public class ChatView extends LinearLayout {
 
-    private CardView inputBar, inputFrame;
+    private CardView inputFrame;
     private ListView chatListView;
     private EditText inputEditText;
 
-    private FloatingActionButton sendButton;
-    private boolean previousFocusState = false, sendButtonVisible, useEditorAction;
+    private FloatingActionsMenu sendButton;
+    private boolean previousFocusState = false, useEditorAction;
     private ChatListener chatListener;
     private ChatViewListAdapter chatViewListAdapter;
 
-    private int bubbleElevation, messageTextSize, receivedMessageTextColor, sentMessageTextColor, timeStampTextSize, receivedTimeStampTextColor, sentTimeStampTextColor;
-    private int inputBarBackgroundColor, inputBarInsetLeft, inputBarInsetTop, inputBarInsetRight, inputBarInsetBottom, inputFrameBackgroundColor;
+    private int inputFrameBackgroundColor;
     private int inputTextSize, inputTextColor, inputHintColor;
     private int sendButtonBackgroundTint, sendButtonIconTint, sendButtonElevation;
     private float inputElevation;
@@ -73,17 +74,13 @@ public class ChatView extends LinearLayout {
 
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
-
         setOrientation(VERTICAL);
         LayoutInflater.from(getContext()).inflate(R.layout.chat_view, this, true);
         this.context = context;
         initializeViews();
         getXMLAttributes(attrs, defStyleAttr);
         setViewAttributes();
-        chatViewListAdapter = new ChatViewListAdapter(context);
-        chatListView.setAdapter(chatViewListAdapter);
-
-
+        setAdapter();
         setButtonOnClickListener();
         setUserTypingListener();
         setUserStoppedTypingListener();
@@ -93,12 +90,11 @@ public class ChatView extends LinearLayout {
         chatListView = (ListView) findViewById(R.id.chat_list);
         inputFrame = (CardView) findViewById(R.id.input_frame);
         inputEditText = (EditText) findViewById(R.id.input_edit_text);
-        sendButton = (FloatingActionButton) findViewById(R.id.sendButton);
+        sendButton = (FloatingActionsMenu) findViewById(R.id.sendButton);
     }
 
     private void getXMLAttributes(AttributeSet attrs, int defStyleAttr) {
         attributes = context.obtainStyledAttributes(attrs, R.styleable.ChatView, defStyleAttr, R.style.ChatViewDefault);
-        getAttributesForInputBar();
         getAttributesForInputFrame();
         getAttributesForInputText();
         getAttributesForSendButton();
@@ -107,31 +103,23 @@ public class ChatView extends LinearLayout {
         attributes.recycle();
     }
 
+    private void setAdapter() {
+        chatViewListAdapter = new ChatViewListAdapter(context);
+        chatListView.setAdapter(chatViewListAdapter);
+    }
 
     private void setViewAttributes() {
-        setInputBarAttributes();
         setInputFrameAttributes();
         setInputTextAttributes();
         setSendButtonAttributes();
     }
+
 
     private void getAttributesForBubbles() {
         bubbleBackgroundRcv = attributes.getColor(R.styleable.ChatView_bubbleBackgroundRcv, ContextCompat.getColor(context, R.color.default_bubble_color_rcv));
         bubbleBackgroundSend = attributes.getColor(R.styleable.ChatView_bubbleBackgroundSend, ContextCompat.getColor(context, R.color.default_bubble_color_send));
     }
 
-    private void getAttributesForInputBar() {
-        inputBarBackgroundColor = attributes.getColor(R.styleable.ChatView_inputBarBackgroundColor, -1);
-        inputBarInsetLeft = attributes.getDimensionPixelSize(R.styleable.ChatView_inputBarInsetLeft, 0);
-        inputBarInsetTop = attributes.getDimensionPixelSize(R.styleable.ChatView_inputBarInsetTop, 0);
-        inputBarInsetRight = attributes.getDimensionPixelSize(R.styleable.ChatView_inputBarInsetRight, 0);
-        inputBarInsetBottom = attributes.getDimensionPixelSize(R.styleable.ChatView_inputBarInsetBottom, 0);
-    }
-
-    private void setInputBarAttributes() {
-        inputBar.setCardBackgroundColor(inputBarBackgroundColor);
-        inputBar.setContentPadding(inputBarInsetLeft, inputBarInsetTop, inputBarInsetRight, inputBarInsetBottom);
-    }
 
     private void getAttributesForInputFrame() {
         inputFrameBackgroundColor = attributes.getColor(R.styleable.ChatView_inputBackgroundColor, -1);
@@ -146,14 +134,18 @@ public class ChatView extends LinearLayout {
     private void getAttributesForInputText() {
         setInputTextDefaults();
         if (hasStyleResourceSet()) {
-            final int textAppearanceId = attributes.getResourceId(R.styleable.ChatView_inputTextAppearance, 0);
-            textAppearanceAttributes = getContext().obtainStyledAttributes(textAppearanceId, R.styleable.ChatViewInputTextAppearance);
+            setTextAppearanceAttributes();
             setInputTextSize();
             setInputTextColor();
             setInputHintColor();
-            textAppearanceAttributes.recycle();
         }
+        textAppearanceAttributes.recycle();
         overrideTextStylesIfSetIndividually();
+    }
+
+    private void setTextAppearanceAttributes() {
+        final int textAppearanceId = attributes.getResourceId(R.styleable.ChatView_inputTextAppearance, 0);
+        textAppearanceAttributes = getContext().obtainStyledAttributes(textAppearanceId, R.styleable.ChatViewInputTextAppearance);
     }
 
     private void setInputTextAttributes() {
@@ -163,7 +155,6 @@ public class ChatView extends LinearLayout {
     }
 
     private void getAttributesForSendButton() {
-        sendButtonVisible = attributes.getBoolean(R.styleable.ChatView_sendBtnVisible, true);
         sendButtonBackgroundTint = attributes.getColor(R.styleable.ChatView_sendBtnBackgroundTint, -1);
         sendButtonIconTint = attributes.getColor(R.styleable.ChatView_sendBtnIconTint, Color.WHITE);
         sendButtonElevation = attributes.getDimensionPixelSize(R.styleable.ChatView_sendBtnElevation, 0);
@@ -171,7 +162,6 @@ public class ChatView extends LinearLayout {
     }
 
     private void setSendButtonAttributes() {
-        if (!sendButtonVisible) sendButton.setVisibility(GONE);
         sendButton.setBackgroundTintList(ColorStateList.valueOf(sendButtonBackgroundTint));
         sendButton.setImageDrawable(sendButtonIcon);
         buttonDrawable = DrawableCompat.wrap(sendButton.getDrawable());
