@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import co.devcenter.android.ChatView;
+import co.devcenter.android.models.ChatMessage;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,25 +16,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ChatView chatView = (ChatView) findViewById(R.id.chat_view);
-        chatView.setChatListener(new ChatView.ChatListener() {
+        chatView.setOnSentMessageListener(new ChatView.OnSentMessageListener() {
             @Override
-            public void userIsTyping() {
-
-            }
-
-            @Override
-            public void userHasStoppedTyping() {
-
-            }
-
-            @Override
-            public void onMessageReceived(String message, long timestamp) {
-
-            }
-
-            @Override
-            public boolean sendMessage(String message, long timestamp) {
+            public boolean sendMessage(ChatMessage chatMessage) {
                 return true;
+            }
+        });
+
+        chatView.setTypingListener(new ChatView.TypingListener() {
+            @Override
+            public void userStartedTyping() {
+
+            }
+
+            @Override
+            public void userStoppedTyping() {
+
             }
         });
     }

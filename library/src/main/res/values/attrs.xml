@@ -2,6 +2,8 @@
 <resources>
     <declare-styleable name="ChatView">
 
+        <attr name="backgroundColor" format="color"/>
+
         <attr name="inputBackgroundColor" format="color" />
         <attr name="inputUseEditorAction" format="boolean" />
 
@@ -16,10 +18,11 @@
         <attr name="sendBtnElevation" format="dimension" />
         <attr name="sendBtnBackgroundTint" format="color" />
 
+        <attr name="bubbleBackgroundRcv" format="color" />
+        <attr name="bubbleBackgroundSend" format="color" />
+        
         <!-- These are still yet unimplemented-->
         <attr name="bubbleElevation" format="dimension" />
-        <attr name="bubbleBackgroundRcv" format="reference|color" />
-        <attr name="bubbleBackgroundSend" format="reference|color" />
         <attr name="messageTextAppearance" format="reference" />
         <attr name="messageTextColorSend" format="color" />
         <attr name="messageTextColorRcv" format="color" />
