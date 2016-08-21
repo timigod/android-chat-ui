@@ -52,7 +52,8 @@ public class ChatView extends LinearLayout {
     private int inputTextSize, inputTextColor, inputHintColor;
     private int sendButtonBackgroundTint, sendButtonIconTint, sendButtonElevation;
     private float inputElevation;
-    private Drawable bubbleBackgroundRcv, bubbleBackgroundSend, sendButtonIcon, buttonDrawable;
+    private int bubbleBackgroundRcv, bubbleBackgroundSend; // Drawables cause cardRadius issues. Better to use background color
+    private Drawable sendButtonIcon, buttonDrawable;
     private TypedArray attributes, textAppearanceAttributes;
     private Context context;
 
@@ -103,14 +104,21 @@ public class ChatView extends LinearLayout {
         getAttributesForInputText();
         getAttributesForSendButton();
         getUseEditorAction();
+        getAttributesForBubbles();
         attributes.recycle();
     }
+
 
     private void setViewAttributes() {
         setInputBarAttributes();
         setInputFrameAttributes();
         setInputTextAttributes();
         setSendButtonAttributes();
+    }
+
+    private void getAttributesForBubbles() {
+        bubbleBackgroundRcv = attributes.getColor(R.styleable.ChatView_bubbleBackgroundRcv, ContextCompat.getColor(context, R.color.default_bubble_color_rcv));
+        bubbleBackgroundSend = attributes.getColor(R.styleable.ChatView_bubbleBackgroundSend, ContextCompat.getColor(context, R.color.default_bubble_color_send));
     }
 
     private void getAttributesForInputBar() {
@@ -334,6 +342,41 @@ public class ChatView extends LinearLayout {
     }
 
 
+    public interface ChatListener {
+
+        void userIsTyping();
+
+        void userHasStoppedTyping();
+
+        void onMessageReceived(String message, long timestamp);
+
+        boolean sendMessage(String message, long timestamp);
+    }
+
+    public static class SimpleChatListener implements ChatListener {
+
+        @Override
+        public void userIsTyping() {
+            // No - op
+        }
+
+        @Override
+        public void userHasStoppedTyping() {
+            // No - op
+        }
+
+        @Override
+        public void onMessageReceived(String message, long timestamp) {
+            // No - op
+        }
+
+        @Override
+        public boolean sendMessage(String message, long timestamp) {
+            // No - op
+            return false;
+        }
+    }
+
     public class ChatViewListAdapter extends BaseAdapter {
         public final int STATUS_SENT = 0;
         public final int STATUS_RECEIVED = 1;
@@ -394,6 +437,7 @@ public class ChatView extends LinearLayout {
 
             holder.getMessageTextView().setText(chatMessages.get(position).getMessage());
             holder.getTimestampTextView().setText(chatMessages.get(position).getFormattedTime());
+            holder.setBackground(type);
 
             return convertView;
         }
@@ -405,11 +449,13 @@ public class ChatView extends LinearLayout {
 
         class ViewHolder {
             View row;
+            CardView bubble;
             TextView messageTextView;
             TextView timestampTextView;
 
             public ViewHolder(View convertView) {
                 row = convertView;
+                bubble = (CardView) convertView.findViewById(R.id.bubble);
             }
 
             public TextView getMessageTextView() {
@@ -426,43 +472,20 @@ public class ChatView extends LinearLayout {
 
                 return timestampTextView;
             }
-        }
-    }
 
+            public void setBackground(int messageType) {
+                int background = ContextCompat.getColor(context, R.color.cardview_light_background);
+                switch (messageType) {
+                    case STATUS_RECEIVED:
+                        background = bubbleBackgroundRcv;
+                        break;
+                    case STATUS_SENT:
+                        background = bubbleBackgroundSend;
+                        break;
+                }
 
-    public interface ChatListener {
-
-        void userIsTyping();
-
-        void userHasStoppedTyping();
-
-        void onMessageReceived(String message, long timestamp);
-
-        boolean sendMessage(String message, long timestamp);
-    }
-
-
-    public static class SimpleChatListener implements ChatListener {
-
-        @Override
-        public void userIsTyping() {
-            // No - op
-        }
-
-        @Override
-        public void userHasStoppedTyping() {
-            // No - op
-        }
-
-        @Override
-        public void onMessageReceived(String message, long timestamp) {
-            // No - op
-        }
-
-        @Override
-        public boolean sendMessage(String message, long timestamp) {
-            // No - op
-            return false;
+                bubble.setCardBackgroundColor(background);
+            }
         }
     }
 }
