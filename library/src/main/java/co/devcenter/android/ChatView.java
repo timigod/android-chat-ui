@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -44,7 +43,8 @@ public class ChatView extends RelativeLayout {
 
     private FloatingActionsMenu actionsMenu;
     private boolean previousFocusState = false, useEditorAction;
-    private ChatListener chatListener;
+    private TypingListener typingListener;
+    private OnSentMessageListener onSentMessageListener;
     private ChatViewListAdapter chatViewListAdapter;
 
     private int inputFrameBackgroundColor;
@@ -275,8 +275,8 @@ public class ChatView extends RelativeLayout {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 0 && chatListener != null) {
-                    chatListener.userIsTyping();
+                if (s.length() > 0 && typingListener != null) {
+                    typingListener.userIsTyping();
                 }
             }
 
@@ -291,8 +291,8 @@ public class ChatView extends RelativeLayout {
         inputEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (previousFocusState && !hasFocus && chatListener != null) {
-                    chatListener.userHasStoppedTyping();
+                if (previousFocusState && !hasFocus && typingListener != null) {
+                    typingListener.userHasStoppedTyping();
                 }
                 previousFocusState = hasFocus;
             }
@@ -309,34 +309,25 @@ public class ChatView extends RelativeLayout {
         return inputEditText.getText().toString();
     }
 
-    public void setChatListener(ChatListener chatListener) {
-        this.chatListener = chatListener;
+    public void setTypingListener(TypingListener typingListener) {
+        this.typingListener = typingListener;
     }
 
-    public void sendMessage(String message, long stamp) {
+    public void setOnSentMessageListener(OnSentMessageListener onSentMessageListener) {
+        this.onSentMessageListener = onSentMessageListener;
+    }
+
+    private void sendMessage(String message, long stamp) {
 
         ChatMessage chatMessage = new ChatMessage(message, stamp, Type.SENT);
-
-        if (chatListener != null && chatListener.sendMessage(message, stamp)) {
+        if (onSentMessageListener != null && onSentMessageListener.sendMessage(chatMessage)) {
             chatViewListAdapter.addMessage(chatMessage);
             inputEditText.setText("");
         }
     }
 
-    public void newMessage(String message) {
-        ChatMessage chatMessage = new ChatMessage(message, System.currentTimeMillis(), Type.RECEIVED);
+    public void addMessage(ChatMessage chatMessage) {
         chatViewListAdapter.addMessage(chatMessage);
-        notifyMessageReceivedListener(chatMessage);
-    }
-
-    public void newMessage(ChatMessage chatMessage) {
-        chatViewListAdapter.addMessage(chatMessage);
-        notifyMessageReceivedListener(chatMessage);
-    }
-
-    public void notifyMessageReceivedListener(ChatMessage chatMessage) {
-        if (chatListener != null)
-            chatListener.onMessageReceived(chatMessage.getMessage(), chatMessage.getTimestamp());
     }
 
 
@@ -349,39 +340,15 @@ public class ChatView extends RelativeLayout {
     }
 
 
-    public interface ChatListener {
+    public interface TypingListener {
 
         void userIsTyping();
-
         void userHasStoppedTyping();
 
-        void onMessageReceived(String message, long timestamp);
-
-        boolean sendMessage(String message, long timestamp);
     }
 
-    public static class SimpleChatListener implements ChatListener {
-
-        @Override
-        public void userIsTyping() {
-            // No - op
-        }
-
-        @Override
-        public void userHasStoppedTyping() {
-            // No - op
-        }
-
-        @Override
-        public void onMessageReceived(String message, long timestamp) {
-            // No - op
-        }
-
-        @Override
-        public boolean sendMessage(String message, long timestamp) {
-            // No - op
-            return false;
-        }
+    public interface OnSentMessageListener {
+        boolean sendMessage(ChatMessage chatMessage);
     }
 
     public class ChatViewListAdapter extends BaseAdapter {
