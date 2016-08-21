@@ -2,6 +2,8 @@
 <resources>
     <declare-styleable name="ChatView">
 
+        <attr name="backgroundColor" format="color"/>
+
         <attr name="inputBackgroundColor" format="color" />
         <attr name="inputUseEditorAction" format="boolean" />
 

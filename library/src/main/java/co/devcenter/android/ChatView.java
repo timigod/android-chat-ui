@@ -48,7 +48,7 @@ public class ChatView extends RelativeLayout {
         public void run() {
             if (isTyping) {
                 isTyping = false;
-                if(typingListener != null)
+                if (typingListener != null)
                     typingListener.userStoppedTyping();
             }
         }
@@ -57,7 +57,7 @@ public class ChatView extends RelativeLayout {
     private OnSentMessageListener onSentMessageListener;
     private ChatViewListAdapter chatViewListAdapter;
 
-    private int inputFrameBackgroundColor;
+    private int inputFrameBackgroundColor, backgroundColor;
     private int inputTextSize, inputTextColor, inputHintColor;
     private int sendButtonBackgroundTint, sendButtonIconTint, sendButtonElevation;
     private float inputElevation;
@@ -102,6 +102,7 @@ public class ChatView extends RelativeLayout {
 
     private void getXMLAttributes(AttributeSet attrs, int defStyleAttr) {
         attributes = context.obtainStyledAttributes(attrs, R.styleable.ChatView, defStyleAttr, R.style.ChatViewDefault);
+        getChatViewBackgroundColor();
         getAttributesForInputFrame();
         getAttributesForInputText();
         getAttributesForSendButton();
@@ -116,11 +117,15 @@ public class ChatView extends RelativeLayout {
     }
 
     private void setViewAttributes() {
+        setChatViewBackground();
         setInputFrameAttributes();
         setInputTextAttributes();
         setSendButtonAttributes();
     }
 
+    private void getChatViewBackgroundColor() {
+        backgroundColor = attributes.getColor(R.styleable.ChatView_backgroundColor, -1);
+    }
 
     private void getAttributesForBubbles() {
         bubbleBackgroundRcv = attributes.getColor(R.styleable.ChatView_bubbleBackgroundRcv, ContextCompat.getColor(context, R.color.default_bubble_color_rcv));
@@ -136,6 +141,10 @@ public class ChatView extends RelativeLayout {
     private void setInputFrameAttributes() {
         inputFrame.setCardBackgroundColor(inputFrameBackgroundColor);
         inputFrame.setCardElevation(inputElevation);
+    }
+
+    private void setChatViewBackground(){
+        this.setBackgroundColor(backgroundColor);
     }
 
     private void getAttributesForInputText() {

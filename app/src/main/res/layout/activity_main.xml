@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:chatview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     style="@style/Widget.AppCompat.ButtonBar"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
     tools:context="co.devcenter.android.sample.MainActivity">
 
     <co.devcenter.android.ChatView
         android:id="@+id/chat_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        chatview:backgroundColor="#000000" />
 
 </LinearLayout>
