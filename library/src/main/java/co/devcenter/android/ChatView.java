@@ -91,7 +91,6 @@ public class ChatView extends LinearLayout {
 
     private void initializeViews() {
         chatListView = (ListView) findViewById(R.id.chat_list);
-        inputBar = (CardView) findViewById(R.id.input_bar);
         inputFrame = (CardView) findViewById(R.id.input_frame);
         inputEditText = (EditText) findViewById(R.id.input_edit_text);
         sendButton = (FloatingActionButton) findViewById(R.id.sendButton);
