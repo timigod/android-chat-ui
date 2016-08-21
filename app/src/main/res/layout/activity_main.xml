@@ -14,7 +14,8 @@
         android:id="@+id/chat_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        chatview:backgroundColor="#000000"
+        chatview:backgroundColor="@color/white"
+        chatview:bubbleElevation="8dp"
         chatview:bubbleBackgroundRcv="@color/blue"
         chatview:bubbleBackgroundSend="@color/sinch_purple"
         />

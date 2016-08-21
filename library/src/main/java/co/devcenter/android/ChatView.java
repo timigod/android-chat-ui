@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
@@ -131,6 +132,7 @@ public class ChatView extends RelativeLayout {
     private void getAttributesForBubbles() {
         bubbleBackgroundRcv = attributes.getColor(R.styleable.ChatView_bubbleBackgroundRcv, ContextCompat.getColor(context, R.color.default_bubble_color_rcv));
         bubbleBackgroundSend = attributes.getColor(R.styleable.ChatView_bubbleBackgroundSend, ContextCompat.getColor(context, R.color.default_bubble_color_send));
+        bubbleElevation = attributes.getDimension(R.styleable.ChatView_bubbleElevation, 8);
     }
 
 
@@ -442,6 +444,9 @@ public class ChatView extends RelativeLayout {
             holder.getMessageTextView().setText(chatMessages.get(position).getMessage());
             holder.getTimestampTextView().setText(chatMessages.get(position).getFormattedTime());
             holder.setBackground(type);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                holder.bubble.setCardElevation(bubbleElevation);
+            }
 
             return convertView;
         }
