@@ -104,11 +104,11 @@ public class ChatView extends RelativeLayout {
     private void getXMLAttributes(AttributeSet attrs, int defStyleAttr) {
         attributes = context.obtainStyledAttributes(attrs, R.styleable.ChatView, defStyleAttr, R.style.ChatViewDefault);
         getChatViewBackgroundColor();
+        getAttributesForBubbles();
         getAttributesForInputFrame();
         getAttributesForInputText();
         getAttributesForSendButton();
         getUseEditorAction();
-        getAttributesForBubbles();
         attributes.recycle();
     }
 
@@ -130,9 +130,9 @@ public class ChatView extends RelativeLayout {
     }
 
     private void getAttributesForBubbles() {
+        bubbleElevation = attributes.getDimension(R.styleable.ChatView_bubbleElevation, 4);
         bubbleBackgroundRcv = attributes.getColor(R.styleable.ChatView_bubbleBackgroundRcv, ContextCompat.getColor(context, R.color.default_bubble_color_rcv));
         bubbleBackgroundSend = attributes.getColor(R.styleable.ChatView_bubbleBackgroundSend, ContextCompat.getColor(context, R.color.default_bubble_color_send));
-        bubbleElevation = attributes.getDimension(R.styleable.ChatView_bubbleElevation, 8);
     }
 
 
@@ -444,9 +444,7 @@ public class ChatView extends RelativeLayout {
             holder.getMessageTextView().setText(chatMessages.get(position).getMessage());
             holder.getTimestampTextView().setText(chatMessages.get(position).getFormattedTime());
             holder.setBackground(type);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                holder.bubble.setCardElevation(bubbleElevation);
-            }
+            holder.bubble.setCardElevation(bubbleElevation);
 
             return convertView;
         }
