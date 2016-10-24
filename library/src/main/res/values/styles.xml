@@ -5,6 +5,7 @@
 
         <item name="inputBackgroundColor">@color/white</item>
         <item name="inputUseEditorAction">false</item>
+        <item name="backgroundColor">@color/white</item>
 
         <!--item name="inputTextAppearance"></item-->
         <item name="inputElevation">1dp</item>

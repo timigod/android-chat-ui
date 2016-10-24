@@ -16,7 +16,6 @@ v0.1
 
 Add this to your build.gradle file's dependencies:
 
-`compile 'co.devcenter.square:android-ui-library:0.1'`
 
 ### Usage
 Drop the `ChatView` in your XML layout as is shown below:
@@ -29,7 +28,7 @@ Drop the `ChatView` in your XML layout as is shown below:
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     
-    <co.devcenter.android.ChatView
+    <co.intentservice.chatui.ChatView
         android:id='@+id/chat_view'
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
@@ -39,7 +38,7 @@ Drop the `ChatView` in your XML layout as is shown below:
 
 ChatView xml attributes you can set include:
 ```
-<co.devcenter.android.ChatView
+<co.intentservice.chatui.ChatView
     xmlns:chatview="http://schemas.android.com/apk/res-auto"
     ...
     chatview:inputBarBackgroundColor=""    <!--format="color" /-->

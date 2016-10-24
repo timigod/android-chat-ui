@@ -1,13 +1,10 @@
-package co.devcenter.android.sample;
+package co.intentservice.chatui.sample;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Toast;
 
-import co.devcenter.android.ChatView;
-import co.devcenter.android.models.ChatMessage;
+import co.intentservice.chatui.ChatView;
+import co.intentservice.chatui.models.ChatMessage;
 
 public class MainActivity extends AppCompatActivity {
 

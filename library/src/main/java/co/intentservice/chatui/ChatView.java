@@ -1,11 +1,9 @@
-package co.devcenter.android;
+package co.intentservice.chatui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
@@ -25,13 +23,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import co.devcenter.android.fab.FloatingActionsMenu;
-import co.devcenter.android.models.ChatMessage;
-import co.devcenter.android.models.ChatMessage.Type;
+import co.intentservice.chatui.fab.FloatingActionsMenu;
+import co.intentservice.chatui.models.ChatMessage;
+import co.intentservice.chatui.models.ChatMessage.Type;
 
 /**
  * Created by timi on 17/11/2015.

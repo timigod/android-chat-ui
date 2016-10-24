@@ -8,9 +8,9 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="co.devcenter.android.sample.MainActivity">
+    tools:context="co.intentservice.chatui.sample.MainActivity">
 
-    <co.devcenter.android.ChatView
+    <co.intentservice.chatui.ChatView
         android:id="@+id/chat_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

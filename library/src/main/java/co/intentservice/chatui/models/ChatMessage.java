@@ -1,4 +1,4 @@
-package co.devcenter.android.models;
+package co.intentservice.chatui.models;
 
 import android.text.format.DateFormat;
 
