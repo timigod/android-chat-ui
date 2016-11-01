@@ -12,6 +12,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -120,6 +121,7 @@ public class ChatView extends RelativeLayout {
         setInputFrameAttributes();
         setInputTextAttributes();
         setSendButtonAttributes();
+        setUseEditorAction();
     }
 
     private void getChatViewBackgroundColor() {
@@ -234,6 +236,7 @@ public class ChatView extends RelativeLayout {
     }
 
     private void setupEditorAction() {
+        Log.d("LOL", "getting here");
         inputEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         inputEditText.setImeOptions(EditorInfo.IME_ACTION_SEND);
         inputEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {

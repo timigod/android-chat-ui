@@ -15,9 +15,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         chatview:backgroundColor="@color/white"
-        chatview:bubbleElevation="16dp"
         chatview:bubbleBackgroundRcv="@color/blue"
         chatview:bubbleBackgroundSend="@color/sinch_purple"
+        chatview:inputUseEditorAction="true"
         />
 
 </LinearLayout>
