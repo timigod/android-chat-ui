@@ -2,6 +2,8 @@ package co.intentservice.chatui.models;
 
 import android.text.format.DateFormat;
 
+import java.util.concurrent.TimeUnit;
+
 public class ChatMessage {
     private String message;
     private long timestamp;
@@ -40,15 +42,13 @@ public class ChatMessage {
 
     public String getFormattedTime(){
 
-        long oneDayInMillis = 24 * 60 * 60 * 1000;
+        long oneDayInMillis = TimeUnit.DAYS.toMillis(1); // 24 * 60 * 60 * 1000;
+
         long timeDifference = System.currentTimeMillis() - timestamp;
 
-
-        if( timeDifference < oneDayInMillis ) {
-            return DateFormat.format("hh:mm a", timestamp).toString();
-        }else{
-            return DateFormat.format("dd MMM - hh:mm a", timestamp).toString();
-        }
+        return timeDifference < oneDayInMillis
+                ? DateFormat.format("hh:mm a", timestamp).toString()
+                : DateFormat.format("dd MMM - hh:mm a", timestamp).toString();
     }
 
     public enum Type {
