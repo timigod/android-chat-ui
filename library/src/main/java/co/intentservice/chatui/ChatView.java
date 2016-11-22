@@ -1,4 +1,4 @@
-package co.devcenter.android;
+package co.intentservice.chatui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,6 +11,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -25,9 +26,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import co.devcenter.android.fab.FloatingActionsMenu;
-import co.devcenter.android.models.ChatMessage;
-import co.devcenter.android.models.ChatMessage.Type;
+import co.intentservice.chatui.fab.FloatingActionsMenu;
+import co.intentservice.chatui.models.ChatMessage;
+import co.intentservice.chatui.models.ChatMessage.Type;
 
 /**
  * Created by timi on 17/11/2015.
@@ -69,7 +70,8 @@ public class ChatView extends RelativeLayout {
     private Context context;
 
 
-    public ChatView(Context context) {
+
+     ChatView(Context context) {
         this(context, null);
     }
 
@@ -124,6 +126,7 @@ public class ChatView extends RelativeLayout {
         setInputFrameAttributes();
         setInputTextAttributes();
         setSendButtonAttributes();
+        setUseEditorAction();
     }
 
     private void getChatViewBackgroundColor() {
@@ -132,9 +135,9 @@ public class ChatView extends RelativeLayout {
 
     private void getAttributesForBubbles() {
 
-        float dip8 = context.getResources().getDisplayMetrics().density * 8.0f;
+        float dip4 = context.getResources().getDisplayMetrics().density * 4.0f;
         int elevation = attributes.getInt(R.styleable.ChatView_bubbleElevation, ELEVATED);
-        bubbleElevation = elevation == ELEVATED ? dip8 : 0;
+        bubbleElevation = elevation == ELEVATED ? dip4 : 0;
 
         bubbleBackgroundRcv = attributes.getColor(R.styleable.ChatView_bubbleBackgroundRcv, ContextCompat.getColor(context, R.color.default_bubble_color_rcv));
         bubbleBackgroundSend = attributes.getColor(R.styleable.ChatView_bubbleBackgroundSend, ContextCompat.getColor(context, R.color.default_bubble_color_send));

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "co.devcenter.android.sample"
+        applicationId "co.intentservice.chatui.sample"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1

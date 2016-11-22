@@ -8,15 +8,15 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="co.devcenter.android.sample.MainActivity">
+    tools:context="co.intentservice.chatui.sample.MainActivity">
 
-    <co.devcenter.android.ChatView
+    <co.intentservice.chatui.ChatView
         android:id="@+id/chat_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        chatview:backgroundColor="@color/white"
+        chatview:backgroundColor="@color/off_white"
         chatview:bubbleElevation="elevated"
         chatview:bubbleBackgroundRcv="@color/blue"
-        chatview:bubbleBackgroundSend="@color/sinch_purple" />
+        chatview:bubbleBackgroundSend="@color/white" />
 
 </LinearLayout>

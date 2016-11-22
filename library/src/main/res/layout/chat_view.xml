@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,37 +10,37 @@
         android:id="@+id/chat_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@android:color/transparent"
         android:clipToPadding="false"
+        android:divider="@android:color/transparent"
         android:paddingBottom="96dp"
         android:paddingTop="8dp"
         android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll" />
 
-    <co.devcenter.android.fab.FloatingActionsMenu
+    <co.intentservice.chatui.fab.FloatingActionsMenu
         android:id="@+id/sendButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:borderWidth="0dp"
-        tools:src="@drawable/ic_send_white_24dp"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        app:borderWidth="0dp"
+        tools:src="@drawable/ic_send_white_24dp">
 
-    </co.devcenter.android.fab.FloatingActionsMenu>
+    </co.intentservice.chatui.fab.FloatingActionsMenu>
 
     <android.support.v7.widget.CardView
         android:id="@+id/input_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginBottom="12dp"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="12dp"
         android:layout_toLeftOf="@id/sendButton"
+        android:descendantFocusability="beforeDescendants"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:descendantFocusability="beforeDescendants"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="2dp"
         app:cardElevation="1dp"
@@ -54,6 +53,7 @@
             android:layout_gravity="center_vertical"
             android:background="@null"
             android:hint="@string/default_input_hint"
+            android:inputType="text"
             android:maxLines="5"
             android:minHeight="48dp"
             android:paddingBottom="4dp"
