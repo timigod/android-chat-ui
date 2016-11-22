@@ -70,7 +70,8 @@ public class ChatView extends RelativeLayout {
     private Context context;
 
 
-    public ChatView(Context context) {
+
+     ChatView(Context context) {
         this(context, null);
     }
 
@@ -134,9 +135,9 @@ public class ChatView extends RelativeLayout {
 
     private void getAttributesForBubbles() {
 
-        float dip8 = context.getResources().getDisplayMetrics().density * 8.0f;
+        float dip4 = context.getResources().getDisplayMetrics().density * 4.0f;
         int elevation = attributes.getInt(R.styleable.ChatView_bubbleElevation, ELEVATED);
-        bubbleElevation = elevation == ELEVATED ? dip8 : 0;
+        bubbleElevation = elevation == ELEVATED ? dip4 : 0;
 
         bubbleBackgroundRcv = attributes.getColor(R.styleable.ChatView_bubbleBackgroundRcv, ContextCompat.getColor(context, R.color.default_bubble_color_rcv));
         bubbleBackgroundSend = attributes.getColor(R.styleable.ChatView_bubbleBackgroundSend, ContextCompat.getColor(context, R.color.default_bubble_color_send));
@@ -239,7 +240,6 @@ public class ChatView extends RelativeLayout {
     }
 
     private void setupEditorAction() {
-        Log.d("LOL", "getting here");
         inputEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         inputEditText.setImeOptions(EditorInfo.IME_ACTION_SEND);
         inputEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {

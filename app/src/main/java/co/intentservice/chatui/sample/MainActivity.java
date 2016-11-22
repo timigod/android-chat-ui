@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ChatView chatView = (ChatView) findViewById(R.id.chat_view);
+        chatView.addMessage(new ChatMessage("Message received", System.currentTimeMillis(), ChatMessage.Type.RECEIVED));
         chatView.setOnSentMessageListener(new ChatView.OnSentMessageListener() {
             @Override
             public boolean sendMessage(ChatMessage chatMessage) {

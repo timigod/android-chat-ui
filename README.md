@@ -61,20 +61,6 @@ ChatView xml attributes you can set include:
     chatview:sendBtnVisible=""             <!--format="boolean" /-->
     chatview:sendBtnElevation=""           <!--format="dimension" /-->
     chatview:sendBtnBackgroundTint=""      <!--format="color" /-->
-
-    <!-- These are still yet unimplemented-->
-    chatview:bubbleElevation"              <!--format="dimension" /-->
-    chatview:bubbleBackgroundRcv"          <!--format="reference|color" /-->
-    chatview:bubbleBackgroundSend"         <!--format="reference|color" /-->
-    chatview:messageTextAppearance"        <!--format="reference" /-->
-    chatview:messageTextColorSend"         <!--format="color" /-->
-    chatview:messageTextColorRcv"          <!--format="color" /-->
-    chatview:messageTextSize"              <!--format="dimension" /-->
-    chatview:tStampTextAppearance"         <!--format="reference" /-->
-    chatview:tStampTextColorSend"          <!--format="color" /-->
-    chatview:tStampTextColorRcv"           <!--format="color" /-->
-    chatview:tStampTextSize"               <!--format="dimension" /-->
-    ...
     />
 ```
 
