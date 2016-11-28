@@ -15,6 +15,7 @@ v0.1.1
 
 Add this to your build.gradle file's dependencies:
 
+// TODO
 
 ## Usage
 Drop the ChatView in your XML layout as is shown below:
