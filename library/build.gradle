@@ -1,5 +1,29 @@
 apply plugin: 'com.android.library'
 
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'android-chat-ui'
+
+    publishedGroupId = 'co.intentservice'
+    libraryName = 'android-chat-ui'
+    artifact = 'android-chat-ui'
+
+    libraryDescription = 'A UI Chat Interface Library for Android Applications'
+
+    siteUrl = 'https://github.com/IntentService/android-chat-ui'
+    gitUrl = 'https://github.com/IntentService/android-chat-ui'
+
+    libraryVersion = '0.1.1'
+
+    developerId = 'timigod'
+    developerName = 'Timi Ajiboye'
+    developerEmail = 'trypio00@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -32,3 +56,7 @@ dependencies {
 
     compile 'pl.tajchert:waitingdots:0.2.0'
 }
+
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
