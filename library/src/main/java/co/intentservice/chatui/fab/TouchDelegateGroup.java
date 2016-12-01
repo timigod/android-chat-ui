@@ -1,4 +1,4 @@
-package co.devcenter.android.fab;
+package co.intentservice.chatui.fab;
 
 import android.graphics.Rect;
 import android.support.annotation.NonNull;

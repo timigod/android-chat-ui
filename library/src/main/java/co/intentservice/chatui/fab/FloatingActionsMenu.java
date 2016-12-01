@@ -1,4 +1,4 @@
-package co.devcenter.android.fab;
+package co.intentservice.chatui.fab;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -7,6 +7,8 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -14,6 +16,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
 import android.view.TouchDelegate;
@@ -24,7 +27,7 @@ import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
-import co.devcenter.android.R;
+import co.intentservice.chatui.R;
 
 public class FloatingActionsMenu extends ViewGroup {
   public static final int EXPAND_UP = 0;
@@ -62,17 +65,31 @@ public class FloatingActionsMenu extends ViewGroup {
   private int mLabelsPosition;
   private int mButtonsCount;
 
+    private Drawable mCloseDrawable;
+    private Drawable mIconDrawable;
+
   private TouchDelegateGroup mTouchDelegateGroup;
 
   private OnFloatingActionsMenuUpdateListener mListener;
+    private int mIconColorTint;
 
-  public void setIconDrawable(Drawable iconDrawable) {
-    mSendButton.setIconDrawable(iconDrawable);
+    public void setIconDrawable(Drawable iconDrawable) {
+        mIconDrawable = iconDrawable;
+        mSendButton.setIconDrawable(iconDrawable);
   }
+
+    public void setButtonIconTint(int colorTint) {
+        mIconColorTint = colorTint;
+        mSendButton.getIconDrawable().setColorFilter(colorTint, PorterDuff.Mode.SRC_IN);
+    }
 
   public Drawable getIconDrawable() {
-    return mSendButton.getIconDrawable();
+    return mIconDrawable; //mSendButton.getIconDrawable();
   }
+
+    public Drawable getCloseDrawable() {
+        return mCloseDrawable;
+    }
 
     public SendFloatingActionButton getSendButton() {
         return mSendButton;
@@ -120,6 +137,7 @@ public class FloatingActionsMenu extends ViewGroup {
       throw new IllegalStateException("Action labels in horizontal expand orientation is not supported.");
     }
 
+      mCloseDrawable = ContextCompat.getDrawable(getContext(), R.drawable.ic_close_drawable);
     createSendButton(context);
   }
 
@@ -163,8 +181,8 @@ public class FloatingActionsMenu extends ViewGroup {
       @Override
       void updateBackground() {
         mPlusColor = mAddButtonPlusColor;
-        mColorNormal = mAddButtonColorNormal;
-        mColorPressed = mAddButtonColorPressed;
+        mColorNormal = darkenColor(1.0, mColorNormal);
+        mColorPressed = darkenColor(0.8, mColorNormal);
         mStrokeVisible = mAddButtonStrokeVisible;
         super.updateBackground();
       }
@@ -532,6 +550,11 @@ public class FloatingActionsMenu extends ViewGroup {
       mCollapseAnimation.start();
       mExpandAnimation.cancel();
 
+        if (getIconDrawable() != null) {
+            getIconDrawable().setColorFilter(mIconColorTint, PorterDuff.Mode.SRC_IN);
+            mSendButton.setIconDrawable(getIconDrawable());
+        }
+
       if (mListener != null) {
         mListener.onMenuCollapsed();
       }
@@ -552,6 +575,11 @@ public class FloatingActionsMenu extends ViewGroup {
       mTouchDelegateGroup.setEnabled(true);
       mCollapseAnimation.cancel();
       mExpandAnimation.start();
+
+        if (getCloseDrawable() != null) {
+            mCloseDrawable.setColorFilter(mIconColorTint, PorterDuff.Mode.SRC_IN);
+            mSendButton.setIconDrawable(mCloseDrawable);
+        }
 
       if (mListener != null) {
         mListener.onMenuExpanded();
@@ -626,5 +654,17 @@ public class FloatingActionsMenu extends ViewGroup {
         return new SavedState[size];
       }
     };
+  }
+
+    static int darkenColor(double factor, int color) {
+    int a = Color.alpha( color );
+    int r = Color.red( color );
+    int g = Color.green( color );
+    int b = Color.blue( color );
+
+    return Color.argb( a,
+            Math.max( (int)(r * factor), 0 ),
+            Math.max( (int)(g * factor), 0 ),
+            Math.max( (int)(b * factor), 0 ) );
   }
 }

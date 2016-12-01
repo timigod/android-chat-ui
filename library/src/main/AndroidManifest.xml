@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="co.devcenter.android">
+    package="co.intentservice.chatui">
 
     <application
         android:allowBackup="true"

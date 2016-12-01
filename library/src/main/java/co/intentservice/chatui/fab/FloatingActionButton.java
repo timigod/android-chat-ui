@@ -1,4 +1,4 @@
-package co.devcenter.android.fab;
+package co.intentservice.chatui.fab;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -32,7 +32,7 @@ import android.widget.TextView;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import co.devcenter.android.R;
+import co.intentservice.chatui.R;
 
 public class FloatingActionButton extends ImageButton {
 

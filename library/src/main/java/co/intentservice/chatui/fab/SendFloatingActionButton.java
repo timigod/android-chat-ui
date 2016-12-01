@@ -1,4 +1,4 @@
-package co.devcenter.android.fab;
+package co.intentservice.chatui.fab;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -6,7 +6,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 
-import co.devcenter.android.R;
+import co.intentservice.chatui.R;
 
 public class SendFloatingActionButton extends FloatingActionButton {
   int mPlusColor;

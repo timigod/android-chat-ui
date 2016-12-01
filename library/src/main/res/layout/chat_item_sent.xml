@@ -12,6 +12,7 @@
     <android.support.v7.widget.CardView
         android:id="@+id/bubble"
         app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
         app:cardBackgroundColor="@color/default_bubble_color_send"
         app:cardUseCompatPadding="true"
         android:layout_gravity="right"

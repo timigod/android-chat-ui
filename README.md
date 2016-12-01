@@ -6,136 +6,121 @@ This library is still in it's very early stages, but improvements would come ove
 
 **Note**: This is merely a UI library, messages being actually sent and recieved by your application still needs to be implemented.
 
-![Image of Library in action]
-(https://files.slack.com/files-tmb/T08K70NPN-F0HKRMB9V-4a3862e88f/screen_shot_2016-01-04_at_3.26.25_am_1024.png)
+![Image of Library in action] (http://res.cloudinary.com/duswj2lve/image/upload/v1479837904/chatui_k3diqq.png)
 
 ### Version
-v0.1
+v0.1.1
 
 ### Installation
 
 Add this to your build.gradle file's dependencies:
 
-`compile 'co.devcenter.square:android-ui-library:0.1'`
+// TODO
 
-### Usage
-Drop the `ChatView` in your XML layout as is shown below:
+## Usage
+Drop the ChatView in your XML layout as is shown below:
+
 ```
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    
-    <co.devcenter.android.ChatView
-        android:id='@+id/chat_view'
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-        
-</RelativeLayout>
+<co.intentservice.chatui.ChatView
+	android:id="@+id/chat_view"
+	android:layout_width="match_parent"
+	android:layout_height="match_parents"
+	<!-- Insert customisation options here -->
+/>
 ```
 
-ChatView xml attributes you can set include:
+Remember to add this attribute to your root layout.
+
 ```
-<co.devcenter.android.ChatView
-    xmlns:chatview="http://schemas.android.com/apk/res-auto"
-    ...
-    chatview:inputBarBackgroundColor=""    <!--format="color" /-->
-    chatview:inputBarInsetLeft=""          <!--format="dimension" /-->
-    chatview:inputBarInsetTop=""           <!--format="dimension" /-->
-    chatview:inputBarInsetRight=""         <!--format="dimension" /-->
-    chatview:inputBarInsetBottom=""        <!--format="dimension" /-->
-
-    chatview:inputElevation=""             <!--format="dimension" /-->
-    chatview:inputBackgroundColor=""       <!--format="color" /-->
-    chatview:inputUseEditorAction=""       <!--format="boolean" /-->
-
-    chatview:inputTextAppearance=""        <!--format="reference" /-->
-    chatview:inputTextSize=""              <!--format="dimension" /-->
-    chatview:inputTextColor=""             <!--format="color" /-->
-    chatview:inputHintColor=""             <!--format="color" /-->
-
-    chatview:sendBtnIcon=""                <!--format="reference" /-->
-    chatview:sendBtnIconTint=""            <!--format="color" /-->
-    chatview:sendBtnVisible=""             <!--format="boolean" /-->
-    chatview:sendBtnElevation=""           <!--format="dimension" /-->
-    chatview:sendBtnBackgroundTint=""      <!--format="color" /-->
-
-    <!-- These are still yet unimplemented-->
-    chatview:bubbleElevation"              <!--format="dimension" /-->
-    chatview:bubbleBackgroundRcv"          <!--format="reference|color" /-->
-    chatview:bubbleBackgroundSend"         <!--format="reference|color" /-->
-    chatview:messageTextAppearance"        <!--format="reference" /-->
-    chatview:messageTextColorSend"         <!--format="color" /-->
-    chatview:messageTextColorRcv"          <!--format="color" /-->
-    chatview:messageTextSize"              <!--format="dimension" /-->
-    chatview:tStampTextAppearance"         <!--format="reference" /-->
-    chatview:tStampTextColorSend"          <!--format="color" /-->
-    chatview:tStampTextColorRcv"           <!--format="color" /-->
-    chatview:tStampTextSize"               <!--format="dimension" /-->
-    ...
-    />
+xmlns:chatview="http://schemes.android.com/apk/res-auto"
 ```
 
-And then in your `Activity` or `Fragment` you can get the instance of the `ChatView` by doing:
+And then in your Activity or Fragment you can get the instance of the ChatView by doing:
 
 ```
 ChatView chatView = (ChatView) findViewById(R.id.chat_view);
 ```
 
-To send a message anytime a user of your application taps the send button, you'll need to supply an instance of `ChatView.ChatListener` an override the `sendMessage()` callback.
+### Customization
+
+You can customize the appearance of this view by using the following attributes.
 
 ```
-chatView.setChatListener(new ChatView.ChatListener() {
-    @Override
-    public void userStartedTyping() {
+chatview:backgroundColor=""
+chatview:inputBackgroundColor=""
+chatview:inputUseEditorAction="" // true or false
+chatview:inputTextAppearance=""
+chatview:inputTextSize=""
+chatview:inputTextColor=""
+chatview:inputHintColor=""
+chatview:sendBtnIcon="" 
+chatview:sendBtnIconTint=""
+chatview:sendBtnBackgroundTint=""
 
-        // do something while user is typing
-    }
+chatview:bubbleBackgroundRcv="" // color
+chatview:bubbleBackgroundSend="" //color
+chatview:bubbleElevation="" // "flat" or "elevated"
 
-    @Override
-    public void userStoppedTyping() {
+```
 
-        // do something when user has stopped typing
-    }
+### Sending messages
 
-    @Override
-    public void onMessageReceived(String message, long timestamp) {
+You can detect when a user clicks the "send" action button by using the `OnSentMessageListener`.
 
-        // do something when chat view receives a message
-    }
-
-    @Override
-    public boolean sendMessage(String message, long timestamp) {
-
-        // do something when the user hits the send button
-
-        sendMessageToMyAwesomeServer();
-        return true;
-    }
+```
+chatView.setOnSentMessageListener(new ChatView.OnSentMessageListener(){
+	@Override
+	public boolean sendMessage(ChatMessage chatMessage){
+		// perform actual message sending 
+		return true;
+	}
 });
 ```
 
-You can also execute some functionality when a user is typing or when the user has stopped typing.
 
-For conveinence a `ChatView.SimpleChatListener` is provided. Override only the methods you need.
+In the method `sendMessage()`, you can now perform whatever logic  to send messages i.e make an HTTP request or send the message over a socket connection. 
 
-Finally, messages can be "receieved" using `newMessage()` as shown:
+Depending on whatever logic or validation you put in place, you may return `true` or `false`. `true` will update the `ChatView` with the message bubble and `false` will do the opposite.
+
+### Receiving messages
+
+You can use the `chatView.addMessage(ChatMessage message)` to add a "received" message to the UI. This obviously should be done after whatever mechanisms you have in place have actually received a message. 
+
+You can use this method or `chatView.addMessages(ArrayList<ChatMessage> messages)` to add messages to the UI. 
+
+The side the chat bubble will appear on is determined by the `Type` of the `ChatMessage`.
+
+### The ChatMessage class
+
+`ChatMessage` holds all the relevant data about your message: `String message`, `long timestamp` and `Type type`. `Type` is an enum that can either be `SENT` or `RECEIVED`.
+
+It is the `Type` that determines what side of the UI the bubble will appear.
+
+### Typing Listener
+
+You can detect different states of the user's typing activity by using `TypingListener`.
+
 ```
-chatView.newMessage("Hahaha"); // this will update to display the sent message in a chat bubble on the left of the screen.
+chatView.setTypingListener(new ChatView.TypingListener(){
+	@Override
+	public void userStartedTyping(){
+		// will be called when the user starts typing
+	}
+	
+	@Override
+	public void userStoppedTyping(){
+		// will be called when the user stops typing
+	}
+});
 ```
 
 ### TODO
 This is list of things that are in the works for this library:
 
 # Theming
-- Ability to theme chat bubbles
-    - bubble Color (sent / received messages)
-    - bubble Elevation
-    - message TextAppearance (sent / received messages)
-    - time stamp TextAppearance (sent / received messages)
+- message TextAppearance (sent / received messages)
+- timestamp TextAppearance (sent / received messages)
+- The ability to use an image as the background for the ChatView
 
 # Functionality
 - Ability to use custom item layout
@@ -150,4 +135,3 @@ We welcome any and all contributions, code cleanups and feature requests.
 1. Check for open issues or open a fresh issue to start a discussion around a feature idea or a bug.
 2. Fork the repository on GitHub to start making your changes to the master branch (or branch off of it).
 3. Send a pull request and bug the maintainer until it gets merged and published. :).
-
