@@ -4,9 +4,9 @@ ext {
     bintrayRepo = 'maven'
     bintrayName = 'android-chat-ui'
 
-    publishedGroupId = 'co.intentservice'
-    libraryName = 'android-chat-ui'
-    artifact = 'android-chat-ui'
+    publishedGroupId = 'co.intentservice.android-chat-ui'
+    libraryName = 'chat-ui'
+    artifact = 'chat-ui'
 
     libraryDescription = 'A UI Chat Interface Library for Android Applications'
 
