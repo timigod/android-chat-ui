@@ -15,7 +15,7 @@ v0.1.1
 
 Add this to your build.gradle file's dependencies:
 
-    compile 'co.intentservice:android-chat-ui:0.1.1'
+    compile 'co.intentservice.android-chat-ui:chat-ui:0.1.1'
 
 ## Usage
 Drop the ChatView in your XML layout as is shown below:
