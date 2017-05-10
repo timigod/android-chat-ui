@@ -11,7 +11,6 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -364,6 +363,13 @@ public class ChatView extends RelativeLayout {
         chatViewListAdapter.addMessages(messages);
     }
 
+    public void removeMessage(int position) {
+        chatViewListAdapter.removeMessage(position);
+    }
+
+    public void clearMessages() {
+        chatViewListAdapter.clearMessages();
+    }
 
     public EditText getInputEditText() {
         return inputEditText;
@@ -462,6 +468,17 @@ public class ChatView extends RelativeLayout {
 
         private void addMessages(ArrayList<ChatMessage> chatMessages) {
             this.chatMessages.addAll(chatMessages);
+            notifyDataSetChanged();
+        }
+
+        private void removeMessage(int position) {
+            if (this.chatMessages.size() > position) {
+                this.chatMessages.remove(position);
+            }
+        }
+
+        private void clearMessages() {
+            this.chatMessages.clear();
             notifyDataSetChanged();
         }
 
