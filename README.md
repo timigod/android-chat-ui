@@ -92,7 +92,7 @@ The side the chat bubble will appear on is determined by the `Type` of the `Chat
 
 ### Deleting messages
 
-You can remove messages using `chatView.removeMessage(int position) or chatView.clearMessages()`
+You can remove messages using `chatView.removeMessage(int position)` or `chatView.clearMessages()`
 
 ### The ChatMessage class
 
