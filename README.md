@@ -9,7 +9,7 @@ This library is still in it's very early stages, but improvements would come ove
 ![Image of Library in action] (http://res.cloudinary.com/duswj2lve/image/upload/v1479837904/chatui_k3diqq.png)
 
 ### Version
-v0.1.1
+v0.1.2
 
 ### Installation
 
@@ -89,6 +89,10 @@ You can use the `chatView.addMessage(ChatMessage message)` to add a "received" m
 You can use this method or `chatView.addMessages(ArrayList<ChatMessage> messages)` to add messages to the UI. 
 
 The side the chat bubble will appear on is determined by the `Type` of the `ChatMessage`.
+
+### Deleting messages
+
+You can remove messages using `chatView.removeMessage(int position)` or `chatView.clearMessages()`
 
 ### The ChatMessage class
 
