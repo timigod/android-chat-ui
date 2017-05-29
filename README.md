@@ -6,7 +6,7 @@ This library is still in it's very early stages, but improvements would come ove
 
 **Note**: This is merely a UI library, messages being actually sent and recieved by your application still needs to be implemented.
 
-![Image of Library in action] (http://res.cloudinary.com/duswj2lve/image/upload/v1479837904/chatui_k3diqq.png)
+![Image of Library in action](http://res.cloudinary.com/duswj2lve/image/upload/v1479837904/chatui_k3diqq.png)
 
 ### Version
 v0.1.2
