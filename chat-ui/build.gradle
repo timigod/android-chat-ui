@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/IntentService/android-chat-ui'
     gitUrl = 'https://github.com/IntentService/android-chat-ui'
 
-    libraryVersion = '0.1.1'
+    libraryVersion = '0.1.2'
 
     developerId = 'timigod'
     developerName = 'Timi Ajiboye'
