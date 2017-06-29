@@ -52,8 +52,9 @@ chatview:inputUseEditorAction="" // true or false
 chatview:inputTextAppearance=""
 chatview:inputTextSize=""
 chatview:inputTextColor=""
+chatview:inputHint=""
 chatview:inputHintColor=""
-chatview:sendBtnIcon="" 
+chatview:sendBtnIcon=""
 chatview:sendBtnIconTint=""
 chatview:sendBtnBackgroundTint=""
 
