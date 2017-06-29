@@ -11,7 +11,6 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -44,7 +43,7 @@ public class ChatView extends RelativeLayout {
 
     private FloatingActionsMenu actionsMenu;
     private boolean previousFocusState = false, useEditorAction, isTyping;
-
+    private TypingListener typingListener;
     private Runnable typingTimerRunnable = new Runnable() {
         @Override
         public void run() {
@@ -54,10 +53,10 @@ public class ChatView extends RelativeLayout {
             }
         }
     };
-    private TypingListener typingListener;
     private OnSentMessageListener onSentMessageListener;
     private ChatViewListAdapter chatViewListAdapter;
 
+    private String inputHint;
     private int inputFrameBackgroundColor, backgroundColor;
     private int inputTextSize, inputTextColor, inputHintColor;
     private int sendButtonBackgroundTint, sendButtonIconTint;
@@ -69,9 +68,7 @@ public class ChatView extends RelativeLayout {
     private TypedArray attributes, textAppearanceAttributes;
     private Context context;
 
-
-
-     ChatView(Context context) {
+    ChatView(Context context) {
         this(context, null);
     }
 
@@ -83,7 +80,6 @@ public class ChatView extends RelativeLayout {
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr);
     }
-
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         LayoutInflater.from(getContext()).inflate(R.layout.chat_view, this, true);
@@ -120,7 +116,6 @@ public class ChatView extends RelativeLayout {
         chatListView.setAdapter(chatViewListAdapter);
     }
 
-
     private void setViewAttributes() {
         setChatViewBackground();
         setInputFrameAttributes();
@@ -134,7 +129,6 @@ public class ChatView extends RelativeLayout {
     }
 
     private void getAttributesForBubbles() {
-
         float dip4 = context.getResources().getDisplayMetrics().density * 4.0f;
         int elevation = attributes.getInt(R.styleable.ChatView_bubbleElevation, ELEVATED);
         bubbleElevation = elevation == ELEVATED ? dip4 : 0;
@@ -168,12 +162,16 @@ public class ChatView extends RelativeLayout {
         overrideTextStylesIfSetIndividually();
     }
 
+
     private void setTextAppearanceAttributes() {
         final int textAppearanceId = attributes.getResourceId(R.styleable.ChatView_inputTextAppearance, 0);
         textAppearanceAttributes = getContext().obtainStyledAttributes(textAppearanceId, R.styleable.ChatViewInputTextAppearance);
     }
 
     private void setInputTextAttributes() {
+        if (inputHint != null) {
+            inputEditText.setHint(inputHint);
+        }
         inputEditText.setTextColor(inputTextColor);
         inputEditText.setHintTextColor(inputHintColor);
         inputEditText.setTextSize(TypedValue.COMPLEX_UNIT_PX, inputTextSize);
@@ -213,6 +211,7 @@ public class ChatView extends RelativeLayout {
         inputTextSize = context.getResources().getDimensionPixelSize(R.dimen.default_input_text_size);
         inputTextColor = ContextCompat.getColor(context, R.color.black);
         inputHintColor = ContextCompat.getColor(context, R.color.main_color_gray);
+        setInputHint();
     }
 
     private void setInputTextSize() {
@@ -224,6 +223,12 @@ public class ChatView extends RelativeLayout {
     private void setInputTextColor() {
         if (textAppearanceAttributes.hasValue(R.styleable.ChatView_inputTextColor)) {
             inputTextColor = attributes.getColor(R.styleable.ChatView_inputTextColor, inputTextColor);
+        }
+    }
+
+    public void setInputHint() {
+        if (attributes.hasValue(R.styleable.ChatView_inputHint)) {
+            inputHint = attributes.getString(R.styleable.ChatView_inputHint);
         }
     }
 
@@ -368,6 +373,7 @@ public class ChatView extends RelativeLayout {
     public EditText getInputEditText() {
         return inputEditText;
     }
+
 
     public FloatingActionsMenu getActionsMenu() {
         return actionsMenu;
