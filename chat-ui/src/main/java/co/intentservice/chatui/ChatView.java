@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import co.intentservice.chatui.fab.FloatingActionsMenu;
 import co.intentservice.chatui.models.ChatMessage;
 import co.intentservice.chatui.models.ChatMessage.Type;
+import co.intentservice.chatui.viewholders.MessageViewHolder;
 
 /**
  * Created by timi on 17/11/2015.
@@ -435,7 +436,7 @@ public class ChatView extends RelativeLayout {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
+            MessageViewHolder holder;
             int type = getItemViewType(position);
             if (convertView == null) {
                 switch (type) {
@@ -447,10 +448,10 @@ public class ChatView extends RelativeLayout {
                         break;
                 }
 
-                holder = new ViewHolder(convertView);
+                holder = new MessageViewHolder(convertView);
                 convertView.setTag(holder);
             } else {
-                holder = (ViewHolder) convertView.getTag();
+                holder = (MessageViewHolder) convertView.getTag();
             }
 
             holder.getMessageTextView().setText(chatMessages.get(position).getMessage());
@@ -480,57 +481,6 @@ public class ChatView extends RelativeLayout {
         private void clearMessages() {
             this.chatMessages.clear();
             notifyDataSetChanged();
-        }
-
-        class ViewHolder {
-            View row;
-            CardView bubble;
-            TextView messageTextView;
-            TextView timestampTextView;
-
-            private ViewHolder(View convertView) {
-                row = convertView;
-                bubble = (CardView) convertView.findViewById(R.id.bubble);
-            }
-
-            private TextView getMessageTextView() {
-                if (messageTextView == null) {
-                    messageTextView = (TextView) row.findViewById(R.id.message_text_view);
-                }
-                return messageTextView;
-            }
-
-            private TextView getTimestampTextView() {
-                if (timestampTextView == null) {
-                    timestampTextView = (TextView) row.findViewById(R.id.timestamp_text_view);
-                }
-
-                return timestampTextView;
-            }
-
-            private CardView getChatBubble() {
-                if (bubble == null) {
-                    bubble = (CardView) row.findViewById(R.id.bubble);
-                }
-
-                return bubble;
-            }
-
-            private void setBackground(int messageType) {
-
-                int background = ContextCompat.getColor(context, R.color.cardview_light_background);
-
-                switch (messageType) {
-                    case STATUS_RECEIVED:
-                        background = bubbleBackgroundRcv;
-                        break;
-                    case STATUS_SENT:
-                        background = bubbleBackgroundSend;
-                        break;
-                }
-
-                bubble.setCardBackgroundColor(background);
-            }
         }
     }
 }
