@@ -29,6 +29,7 @@ import co.intentservice.chatui.fab.FloatingActionsMenu;
 import co.intentservice.chatui.models.ChatMessage;
 import co.intentservice.chatui.models.ChatMessage.Type;
 import co.intentservice.chatui.viewholders.MessageViewHolder;
+import co.intentservice.chatui.adapters.ChatViewListAdapter;
 
 /**
  * Created by timi on 17/11/2015.
@@ -116,7 +117,7 @@ public class ChatView extends RelativeLayout {
     }
 
     private void setListAdapter() {
-        chatViewListAdapter = new ChatViewListAdapter(context);
+        chatViewListAdapter = new ChatViewListAdapter(context,bubbleBackgroundRcv,bubbleBackgroundSend,bubbleElevation);
         chatListView.setAdapter(chatViewListAdapter);
     }
 
@@ -393,94 +394,4 @@ public class ChatView extends RelativeLayout {
         boolean sendMessage(ChatMessage chatMessage);
     }
 
-    private class ChatViewListAdapter extends BaseAdapter {
-
-        public final int STATUS_SENT = 0;
-        public final int STATUS_RECEIVED = 1;
-
-        ArrayList<ChatMessage> chatMessages;
-
-        Context context;
-        LayoutInflater inflater;
-
-        public ChatViewListAdapter(Context context) {
-            this.chatMessages = new ArrayList<>();
-            this.context = context;
-            this.inflater = LayoutInflater.from(context);
-        }
-
-        @Override
-        public int getCount() {
-            return chatMessages.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return chatMessages.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            return chatMessages.get(position).getType().ordinal();
-        }
-
-        @Override
-        public int getViewTypeCount() {
-            return 2;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            MessageViewHolder holder;
-            int type = getItemViewType(position);
-            if (convertView == null) {
-                switch (type) {
-                    case STATUS_SENT:
-                        convertView = inflater.inflate(R.layout.chat_item_sent, parent, false);
-                        break;
-                    case STATUS_RECEIVED:
-                        convertView = inflater.inflate(R.layout.chat_item_rcv, parent, false);
-                        break;
-                }
-
-                holder = new MessageViewHolder(convertView, bubbleBackgroundRcv, bubbleBackgroundSend);
-                convertView.setTag(holder);
-            } else {
-                holder = (MessageViewHolder) convertView.getTag();
-            }
-
-            holder.getMessageTextView().setText(chatMessages.get(position).getMessage());
-            holder.getTimestampTextView().setText(chatMessages.get(position).getFormattedTime());
-            holder.getChatBubble().setCardElevation(bubbleElevation);
-            holder.setBackground(type);
-
-            return convertView;
-        }
-
-        private void addMessage(ChatMessage message) {
-            chatMessages.add(message);
-            notifyDataSetChanged();
-        }
-
-        private void addMessages(ArrayList<ChatMessage> chatMessages) {
-            this.chatMessages.addAll(chatMessages);
-            notifyDataSetChanged();
-        }
-
-        private void removeMessage(int position) {
-            if (this.chatMessages.size() > position) {
-                this.chatMessages.remove(position);
-            }
-        }
-
-        private void clearMessages() {
-            this.chatMessages.clear();
-            notifyDataSetChanged();
-        }
-    }
 }
