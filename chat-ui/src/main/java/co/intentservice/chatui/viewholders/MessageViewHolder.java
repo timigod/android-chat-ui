@@ -1,5 +1,6 @@
 package co.intentservice.chatui.viewholders;
 
+import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.view.View;
@@ -13,53 +14,61 @@ import co.intentservice.chatui.R;
 
 public class MessageViewHolder {
 
-        View row;
-        CardView bubble;
-        TextView messageTextView;
-        TextView timestampTextView;
+    public final int STATUS_SENT = 0;
+    public final int STATUS_RECEIVED = 1;
 
-        public MessageViewHolder(View convertView) {
-            row = convertView;
-            bubble = (CardView) convertView.findViewById(R.id.bubble);
+    View row;
+    Context context;
+    CardView bubble;
+    TextView messageTextView;
+    TextView timestampTextView;
+    private int bubbleBackgroundRcv, bubbleBackgroundSend;
+
+    public MessageViewHolder(View convertView, int bubbleBackgroundRcv, int bubbleBackgroundSend) {
+        row = convertView;
+        bubble = (CardView) convertView.findViewById(R.id.bubble);
+        context = row.getContext();
+        this.bubbleBackgroundSend = bubbleBackgroundSend;
+        this.bubbleBackgroundRcv = bubbleBackgroundRcv;
+    }
+
+    public TextView getMessageTextView() {
+        if (messageTextView == null) {
+            messageTextView = (TextView) row.findViewById(R.id.message_text_view);
+        }
+        return messageTextView;
+    }
+
+    public TextView getTimestampTextView() {
+        if (timestampTextView == null) {
+            timestampTextView = (TextView) row.findViewById(R.id.timestamp_text_view);
         }
 
-        public TextView getMessageTextView() {
-            if (messageTextView == null) {
-                messageTextView = (TextView) row.findViewById(R.id.message_text_view);
-            }
-            return messageTextView;
+        return timestampTextView;
+    }
+
+    public CardView getChatBubble() {
+        if (bubble == null) {
+            bubble = (CardView) row.findViewById(R.id.bubble);
         }
 
-        public TextView getTimestampTextView() {
-            if (timestampTextView == null) {
-                timestampTextView = (TextView) row.findViewById(R.id.timestamp_text_view);
-            }
+        return bubble;
+    }
 
-            return timestampTextView;
+    public void setBackground(int messageType) {
+
+        int background = ContextCompat.getColor(context, R.color.cardview_light_background);
+
+        switch (messageType) {
+            case STATUS_RECEIVED:
+                background = bubbleBackgroundRcv;
+                break;
+            case STATUS_SENT:
+                background = bubbleBackgroundSend;
+                break;
         }
 
-        public CardView getChatBubble() {
-            if (bubble == null) {
-                bubble = (CardView) row.findViewById(R.id.bubble);
-            }
-
-            return bubble;
-        }
-
-        public void setBackground(int messageType) {
-
-            int background = ContextCompat.getColor(context, R.color.cardview_light_background);
-
-            switch (messageType) {
-                case STATUS_RECEIVED:
-                    background = bubbleBackgroundRcv;
-                    break;
-                case STATUS_SENT:
-                    background = bubbleBackgroundSend;
-                    break;
-            }
-
-            bubble.setCardBackgroundColor(background);
-        }
+        bubble.setCardBackgroundColor(background);
+    }
 
 }

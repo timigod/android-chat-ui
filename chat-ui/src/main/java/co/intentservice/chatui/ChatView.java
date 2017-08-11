@@ -448,7 +448,7 @@ public class ChatView extends RelativeLayout {
                         break;
                 }
 
-                holder = new MessageViewHolder(convertView);
+                holder = new MessageViewHolder(convertView, bubbleBackgroundRcv, bubbleBackgroundSend);
                 convertView.setTag(holder);
             } else {
                 holder = (MessageViewHolder) convertView.getTag();
