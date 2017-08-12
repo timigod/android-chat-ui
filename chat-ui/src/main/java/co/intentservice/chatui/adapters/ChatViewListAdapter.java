@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import co.intentservice.chatui.R;
 import co.intentservice.chatui.models.ChatMessage;
 import co.intentservice.chatui.viewholders.MessageViewHolder;
+import co.intentservice.chatui.views.ViewBuilder;
+import co.intentservice.chatui.views.ViewBuilderInterface;
 
 /**
  * Created by james.lendrem on 11/08/2017.
@@ -23,19 +25,21 @@ public class ChatViewListAdapter extends BaseAdapter {
 
     private int bubbleBackgroundRcv, bubbleBackgroundSend;
     private float bubbleElevation;
+    private ViewBuilderInterface viewBuilder = new ViewBuilder();
 
     ArrayList<ChatMessage> chatMessages;
 
     Context context;
     LayoutInflater inflater;
 
-    public ChatViewListAdapter(Context context, int bubbleBackgroundRcv, int bubbleBackgroundSend, float bubbleElevation) {
+    public ChatViewListAdapter(Context context, ViewBuilderInterface viewBuilder, int bubbleBackgroundRcv, int bubbleBackgroundSend, float bubbleElevation) {
         this.chatMessages = new ArrayList<>();
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.bubbleBackgroundRcv = bubbleBackgroundRcv;
         this.bubbleBackgroundSend = bubbleBackgroundSend;
         this.bubbleElevation = bubbleElevation;
+        this.viewBuilder = viewBuilder;
     }
 
     @Override
@@ -70,10 +74,10 @@ public class ChatViewListAdapter extends BaseAdapter {
         if (convertView == null) {
             switch (type) {
                 case STATUS_SENT:
-                    convertView = inflater.inflate(R.layout.chat_item_sent, parent, false);
+                    convertView = viewBuilder.buildSentView(context);
                     break;
                 case STATUS_RECEIVED:
-                    convertView = inflater.inflate(R.layout.chat_item_rcv, parent, false);
+                    convertView = viewBuilder.buildRecvView(context);
                     break;
             }
 

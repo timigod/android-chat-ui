@@ -30,6 +30,8 @@ import co.intentservice.chatui.models.ChatMessage;
 import co.intentservice.chatui.models.ChatMessage.Type;
 import co.intentservice.chatui.viewholders.MessageViewHolder;
 import co.intentservice.chatui.adapters.ChatViewListAdapter;
+import co.intentservice.chatui.views.ViewBuilder;
+import co.intentservice.chatui.views.ViewBuilderInterface;
 
 /**
  * Created by timi on 17/11/2015.
@@ -43,6 +45,7 @@ public class ChatView extends RelativeLayout {
     private ListView chatListView;
     private EditText inputEditText;
 
+    private ViewBuilderInterface viewBuilder;
     private FloatingActionsMenu actionsMenu;
     private boolean previousFocusState = false, useEditorAction, isTyping;
 
@@ -81,8 +84,15 @@ public class ChatView extends RelativeLayout {
     }
 
     public ChatView(Context context, AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, new ViewBuilder());
+    }
+
+    public ChatView(Context context, AttributeSet attrs, int defStyleAttr, ViewBuilderInterface viewBuilder) {
+
         super(context, attrs, defStyleAttr);
+        this.viewBuilder = viewBuilder;
         init(context, attrs, defStyleAttr);
+
     }
 
 
@@ -117,7 +127,7 @@ public class ChatView extends RelativeLayout {
     }
 
     private void setListAdapter() {
-        chatViewListAdapter = new ChatViewListAdapter(context,bubbleBackgroundRcv,bubbleBackgroundSend,bubbleElevation);
+        chatViewListAdapter = new ChatViewListAdapter(context, new ViewBuilder(), bubbleBackgroundRcv,bubbleBackgroundSend,bubbleElevation);
         chatListView.setAdapter(chatViewListAdapter);
     }
 
