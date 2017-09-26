@@ -22,6 +22,12 @@ public class ItemRecvView extends MessageView {
 
     public void setMessage(String message) {
 
+        if (messageTextView == null) {
+
+            messageTextView = (TextView) findViewById(R.id.message_text_view);
+
+        }
+
         messageTextView.setText(message);
 
 
@@ -29,17 +35,35 @@ public class ItemRecvView extends MessageView {
 
     public void setTimestamp(String timestamp) {
 
+        if (timestampTextView == null) {
+
+            timestampTextView = (TextView) findViewById(R.id.timestamp_text_view);
+
+        }
+
         timestampTextView.setText(timestamp);
 
     }
 
     public void setBackground(@ColorInt int background) {
 
+        if (bubble == null) {
+
+            this.bubble = (CardView) findViewById(R.id.bubble);
+
+        }
+
         bubble.setCardBackgroundColor(background);
 
     }
 
     public void setElevation(float elevation) {
+
+        if (bubble == null) {
+
+            this.bubble = (CardView) findViewById(R.id.bubble);
+
+        }
 
         bubble.setCardElevation(elevation);
 
