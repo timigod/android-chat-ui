@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import co.intentservice.chatui.R;
+import co.intentservice.chatui.views.MessageView;
 
 /**
  * View Holder for the Chat UI. Interfaces with the Received and Sent views and sets them up
@@ -23,39 +24,32 @@ public class MessageViewHolder {
     View row;
     Context context;
     CardView bubble;
-    TextView messageTextView;
-    TextView timestampTextView;
+    private MessageView messageView;
     private int bubbleBackgroundRcv, bubbleBackgroundSend;
 
     public MessageViewHolder(View convertView, int bubbleBackgroundRcv, int bubbleBackgroundSend) {
         row = convertView;
-        bubble = (CardView) convertView.findViewById(R.id.bubble);
         context = row.getContext();
         this.bubbleBackgroundSend = bubbleBackgroundSend;
         this.bubbleBackgroundRcv = bubbleBackgroundRcv;
     }
 
-    public TextView getMessageTextView() {
-        if (messageTextView == null) {
-            messageTextView = (TextView) row.findViewById(R.id.message_text_view);
-        }
-        return messageTextView;
+    public void setMessage(String message) {
+
+        messageView.setMessage(message);
+
     }
 
-    public TextView getTimestampTextView() {
-        if (timestampTextView == null) {
-            timestampTextView = (TextView) row.findViewById(R.id.timestamp_text_view);
-        }
+    public void setTimestamp(String timestamp) {
 
-        return timestampTextView;
+        messageView.setTimestamp(timestamp);
+
     }
 
-    public CardView getChatBubble() {
-        if (bubble == null) {
-            bubble = (CardView) row.findViewById(R.id.bubble);
-        }
+    public void setElevation(float elevation) {
 
-        return bubble;
+        messageView.setElevation(elevation);
+
     }
 
     public void setBackground(int messageType) {
@@ -71,7 +65,8 @@ public class MessageViewHolder {
                 break;
         }
 
-        bubble.setCardBackgroundColor(background);
+        messageView.setBackgroundColor(background);
+
     }
 
 }
