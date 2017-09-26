@@ -30,6 +30,7 @@ public class MessageViewHolder {
     public MessageViewHolder(View convertView, int bubbleBackgroundRcv, int bubbleBackgroundSend) {
         row = convertView;
         context = row.getContext();
+        messageView = (MessageView) convertView;
         this.bubbleBackgroundSend = bubbleBackgroundSend;
         this.bubbleBackgroundRcv = bubbleBackgroundRcv;
     }
