@@ -2,9 +2,12 @@ package co.intentservice.chatui.views;
 
 import android.app.Service;
 import android.content.Context;
+import android.support.annotation.ColorInt;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import co.intentservice.chatui.R;
 
@@ -14,7 +17,35 @@ import co.intentservice.chatui.R;
  * Created by James Lendrem
  */
 
-public class ItemSentView extends FrameLayout {
+public class ItemSentView extends MessageView {
+
+    private CardView bubble;
+    private TextView messageTextView, timestampTextView;
+
+    public void setMessage(String message) {
+
+        messageTextView.setText(message);
+
+
+    }
+
+    public void setTimestamp(String timestamp) {
+
+        timestampTextView.setText(timestamp);
+
+    }
+
+    public void setBackground(@ColorInt int background) {
+
+        bubble.setCardBackgroundColor(background);
+
+    }
+
+    public void setElevation(float elevation) {
+
+        bubble.setCardElevation(elevation);
+
+    }
 
     public ItemSentView(Context context) {
 
@@ -29,11 +60,9 @@ public class ItemSentView extends FrameLayout {
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.chat_item_sent, this);
 
-    }
-
-    public static View buildView(Context context) {
-
-        return new ItemSentView(context);
+        this.bubble = (CardView) findViewById(R.id.bubble);
+        this.messageTextView = (TextView) findViewById(R.id.message_text_view);
+        this.timestampTextView = (TextView) findViewById(R.id.timestamp_text_view);
 
     }
 
