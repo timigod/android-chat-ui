@@ -4,7 +4,10 @@ import android.content.Context;
 import android.view.View;
 
 /**
- * Created by nemo on 12/08/17.
+ * Builder to create views for the Chat Client that are used to display sent and
+ * received messages.
+ *
+ * Created by James Lendrem
  */
 
 public class ViewBuilder implements ViewBuilderInterface {

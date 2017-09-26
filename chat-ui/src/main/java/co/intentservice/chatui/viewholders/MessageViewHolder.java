@@ -9,7 +9,10 @@ import android.widget.TextView;
 import co.intentservice.chatui.R;
 
 /**
- * Created by james.lendrem on 10/08/2017.
+ * View Holder for the Chat UI. Interfaces with the Received and Sent views and sets them up
+ * with any messages required.
+ *
+ * Created by James Lendrem, utilises code by Timi
  */
 
 public class MessageViewHolder {

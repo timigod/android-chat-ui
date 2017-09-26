@@ -9,7 +9,9 @@ import android.widget.FrameLayout;
 import co.intentservice.chatui.R;
 
 /**
- * Created by nemo on 12/08/17.
+ * View for sent item messages
+ *
+ * Created by James Lendrem
  */
 
 public class ItemSentView extends FrameLayout {

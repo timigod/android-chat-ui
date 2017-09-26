@@ -4,7 +4,8 @@ import android.content.Context;
 import android.view.View;
 
 /**
- * Created by nemo on 12/08/17.
+ * Interface for the viewbuilder, is used so that people can create their own
+ * viewbuilders to create custom views.
  */
 
 public interface ViewBuilderInterface {
