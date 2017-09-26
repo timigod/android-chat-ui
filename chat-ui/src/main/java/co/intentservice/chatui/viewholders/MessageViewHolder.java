@@ -23,7 +23,7 @@ public class MessageViewHolder {
 
     View row;
     Context context;
-    CardView bubble;
+
     private MessageView messageView;
     private int bubbleBackgroundRcv, bubbleBackgroundSend;
 
