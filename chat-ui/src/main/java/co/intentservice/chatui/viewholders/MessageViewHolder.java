@@ -13,7 +13,8 @@ import co.intentservice.chatui.views.MessageView;
  * View Holder for the Chat UI. Interfaces with the Received and Sent views and sets them up
  * with any messages required.
  *
- * Created by James Lendrem, utilises code by Timi
+ * Original Code by Timi
+ * Extended by James Lendrem
  */
 
 public class MessageViewHolder {

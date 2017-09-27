@@ -17,7 +17,8 @@ import co.intentservice.chatui.views.ViewBuilderInterface;
 /**
  * List Adapter for use in the recycler view to display messages using the Message View Holder
  *
- * Created by James Lendrem, utilises code by Timi
+ * Created by Timi
+ * Extended by James Lendrem
  */
 
 public class ChatViewListAdapter extends BaseAdapter {

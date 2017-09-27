@@ -4,6 +4,13 @@ import android.text.format.DateFormat;
 
 import java.util.concurrent.TimeUnit;
 
+
+/**
+ *
+ * Chat Message model used when ChatMessages are required, either to be sent or received,
+ * all messages that are to be shown in the chat-ui must be contained in this model.
+ *
+ */
 public class ChatMessage {
     private String message;
     private long timestamp;
