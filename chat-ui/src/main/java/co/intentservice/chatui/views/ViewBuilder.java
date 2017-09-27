@@ -9,19 +9,30 @@ import android.view.View;
  *
  * Created by James Lendrem
  */
-
 public class ViewBuilder implements ViewBuilderInterface {
 
-    public View buildRecvView(Context context) {
+    /**
+     * Returns a MessageView object which is used to display messages that the chat-ui
+     * has received.
+     * @param context A context that is used to instantiate the view.
+     * @return        MessageView object for displaying received messages.
+     */
+    public MessageView buildRecvView(Context context) {
 
-        View view = new ItemRecvView(context);
+        MessageView view = new ItemRecvView(context);
         return view;
 
     }
 
-    public View buildSentView(Context context) {
+    /**
+     * Returns a MessageView object which is used to display messages that the chat-ui
+     * has sent.
+     * @param context A context that is used to instantiate the view.
+     * @return        MessageView object for displaying sent messages.
+     */
+    public MessageView buildSentView(Context context) {
 
-        View view = new ItemSentView(context);
+        MessageView view = new ItemSentView(context);
         return view;
 
     }
