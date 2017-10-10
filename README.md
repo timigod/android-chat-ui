@@ -32,7 +32,7 @@ Drop the ChatView in your XML layout as is shown below:
 Remember to add this attribute to your root layout.
 
 ```
-xmlns:chatview="http://schemes.android.com/apk/res-auto"
+xmlns:chatview="http://schemas.android.com/apk/res-auto"
 ```
 
 And then in your Activity or Fragment you can get the instance of the ChatView by doing:
