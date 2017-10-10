@@ -13,9 +13,24 @@ v0.1.2
 
 ### Installation
 
-Add this to your build.gradle file's dependencies:
+Add this to your root build.gradle at the end of repositories:
 
-    compile 'co.intentservice.android-chat-ui:chat-ui:0.1.1'
+```
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}
+}
+```
+
+Then add the dependency
+
+```
+dependencies {
+	compile 'com.github.timigod:android-chat-ui:v0.1.3'
+}
+```
 
 ## Usage
 Drop the ChatView in your XML layout as is shown below:
