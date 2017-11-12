@@ -2,9 +2,7 @@ package co.intentservice.chatui.viewholders;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.view.View;
-import android.widget.TextView;
 
 import co.intentservice.chatui.R;
 import co.intentservice.chatui.views.MessageView;
@@ -12,9 +10,9 @@ import co.intentservice.chatui.views.MessageView;
 /**
  * View Holder for the Chat UI. Interfaces with the Received and Sent views and sets them up
  * with any messages required.
- *
+ * <p>
  * Original Code by Timi
- * Extended by James Lendrem
+ * Extended by James Lendrem, Michael Obi
  */
 
 public class MessageViewHolder {
@@ -52,6 +50,10 @@ public class MessageViewHolder {
 
         messageView.setElevation(elevation);
 
+    }
+
+    public void setSender(String sender) {
+        messageView.setSender(sender);
     }
 
     public void setBackground(int messageType) {
