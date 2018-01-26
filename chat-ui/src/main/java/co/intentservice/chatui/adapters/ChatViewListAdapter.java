@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
 
-import co.intentservice.chatui.R;
 import co.intentservice.chatui.models.ChatMessage;
 import co.intentservice.chatui.viewholders.MessageViewHolder;
 import co.intentservice.chatui.views.ViewBuilder;
@@ -16,7 +15,7 @@ import co.intentservice.chatui.views.ViewBuilderInterface;
 
 /**
  * List Adapter for use in the recycler view to display messages using the Message View Holder
- *
+ * <p>
  * Created by Timi
  * Extended by James Lendrem
  */
@@ -94,6 +93,10 @@ public class ChatViewListAdapter extends BaseAdapter {
         holder.setTimestamp(chatMessages.get(position).getFormattedTime());
         holder.setElevation(bubbleElevation);
         holder.setBackground(type);
+        String sender = chatMessages.get(position).getSender();
+        if (sender != null) {
+            holder.setSender(sender);
+        }
 
         return convertView;
     }
