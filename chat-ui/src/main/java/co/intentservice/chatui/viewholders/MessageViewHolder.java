@@ -12,7 +12,7 @@ import co.intentservice.chatui.views.MessageView;
  * with any messages required.
  * <p>
  * Original Code by Timi
- * Extended by James Lendrem, Michael Obi
+ * Extended by James Lendrem, Michael Obi, Samuel Ojo
  */
 
 public class MessageViewHolder {
@@ -24,12 +24,15 @@ public class MessageViewHolder {
     Context context;
 
     private MessageView messageView;
+    private int backgroundRcv, backgroundSend;
     private int bubbleBackgroundRcv, bubbleBackgroundSend;
 
-    public MessageViewHolder(View convertView, int bubbleBackgroundRcv, int bubbleBackgroundSend) {
+    public MessageViewHolder(View convertView, int backgroundRcv, int backgroundSend, int bubbleBackgroundRcv, int bubbleBackgroundSend) {
         row = convertView;
         context = row.getContext();
         messageView = (MessageView) convertView;
+        this.backgroundRcv = backgroundRcv;
+        this.backgroundSend = backgroundSend;
         this.bubbleBackgroundSend = bubbleBackgroundSend;
         this.bubbleBackgroundRcv = bubbleBackgroundRcv;
     }
@@ -58,18 +61,22 @@ public class MessageViewHolder {
 
     public void setBackground(int messageType) {
 
-        int background = ContextCompat.getColor(context, R.color.cardview_light_background);
+        int chatMessageBackground = ContextCompat.getColor(context, R.color.cardview_light_background);
+        int bubbleBackground = ContextCompat.getColor(context, R.color.cardview_light_background);
 
         switch (messageType) {
             case STATUS_RECEIVED:
-                background = bubbleBackgroundRcv;
+                chatMessageBackground = backgroundRcv;
+                bubbleBackground = bubbleBackgroundRcv;
                 break;
             case STATUS_SENT:
-                background = bubbleBackgroundSend;
+                chatMessageBackground = backgroundSend;
+                bubbleBackground = bubbleBackgroundSend;
                 break;
         }
 
-        messageView.setBackgroundColor(background);
+        messageView.setBackgroundColor(chatMessageBackground);
+        messageView.setBackground(bubbleBackground);
 
     }
 

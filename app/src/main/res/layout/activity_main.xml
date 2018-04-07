@@ -16,6 +16,8 @@
         android:layout_height="match_parent"
         chatview:backgroundColor="@color/off_white"
         chatview:bubbleElevation="elevated"
+        chatview:backgroundRcv="@color/whatsapp_green"
+        chatview:backgroundSend="@color/whatsapp_green"
         chatview:bubbleBackgroundRcv="@color/blue"
         chatview:bubbleBackgroundSend="@color/white" />
 
