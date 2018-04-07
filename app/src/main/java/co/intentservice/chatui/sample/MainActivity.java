@@ -1,7 +1,6 @@
 package co.intentservice.chatui.sample;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import co.intentservice.chatui.ChatView;
@@ -14,16 +13,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final ChatView chatView = (ChatView) findViewById(R.id.chat_view);
+        ChatView chatView = (ChatView) findViewById(R.id.chat_view);
         chatView.addMessage(new ChatMessage("Message received", System.currentTimeMillis(), ChatMessage.Type.RECEIVED));
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                chatView.addMessage(new ChatMessage("Message Sent", System.currentTimeMillis(), ChatMessage.Type.SENT));
-            }
-        }, 1500);
-
         chatView.setOnSentMessageListener(new ChatView.OnSentMessageListener() {
             @Override
             public boolean sendMessage(ChatMessage chatMessage) {
