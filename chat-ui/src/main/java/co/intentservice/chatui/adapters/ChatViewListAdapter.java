@@ -17,7 +17,7 @@ import co.intentservice.chatui.views.ViewBuilderInterface;
  * List Adapter for use in the recycler view to display messages using the Message View Holder
  * <p>
  * Created by Timi
- * Extended by James Lendrem
+ * Extended by James Lendrem, Samuel Ojo
  */
 
 public class ChatViewListAdapter extends BaseAdapter {
@@ -25,6 +25,7 @@ public class ChatViewListAdapter extends BaseAdapter {
     public final int STATUS_SENT = 0;
     public final int STATUS_RECEIVED = 1;
 
+    private int backgroundRcv, backgroundSend;
     private int bubbleBackgroundRcv, bubbleBackgroundSend;
     private float bubbleElevation;
     private ViewBuilderInterface viewBuilder = new ViewBuilder();
@@ -34,10 +35,12 @@ public class ChatViewListAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
 
-    public ChatViewListAdapter(Context context, ViewBuilderInterface viewBuilder, int bubbleBackgroundRcv, int bubbleBackgroundSend, float bubbleElevation) {
+    public ChatViewListAdapter(Context context, ViewBuilderInterface viewBuilder, int backgroundRcv, int backgroundSend, int bubbleBackgroundRcv, int bubbleBackgroundSend, float bubbleElevation) {
         this.chatMessages = new ArrayList<>();
         this.context = context;
         this.inflater = LayoutInflater.from(context);
+        this.backgroundRcv = backgroundRcv;
+        this.backgroundSend = backgroundSend;
         this.bubbleBackgroundRcv = bubbleBackgroundRcv;
         this.bubbleBackgroundSend = bubbleBackgroundSend;
         this.bubbleElevation = bubbleElevation;
@@ -83,7 +86,7 @@ public class ChatViewListAdapter extends BaseAdapter {
                     break;
             }
 
-            holder = new MessageViewHolder(convertView, bubbleBackgroundRcv, bubbleBackgroundSend);
+            holder = new MessageViewHolder(convertView, backgroundRcv, backgroundSend, bubbleBackgroundRcv, bubbleBackgroundSend);
             convertView.setTag(holder);
         } else {
             holder = (MessageViewHolder) convertView.getTag();

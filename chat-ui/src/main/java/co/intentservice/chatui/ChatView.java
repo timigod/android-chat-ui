@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -28,7 +27,6 @@ import java.util.ArrayList;
 import co.intentservice.chatui.fab.FloatingActionsMenu;
 import co.intentservice.chatui.models.ChatMessage;
 import co.intentservice.chatui.models.ChatMessage.Type;
-import co.intentservice.chatui.viewholders.MessageViewHolder;
 import co.intentservice.chatui.adapters.ChatViewListAdapter;
 import co.intentservice.chatui.views.ViewBuilder;
 import co.intentservice.chatui.views.ViewBuilderInterface;
@@ -68,6 +66,7 @@ public class ChatView extends RelativeLayout {
 
     private float bubbleElevation;
 
+    private int backgroundRcv, backgroundSend;
     private int bubbleBackgroundRcv, bubbleBackgroundSend; // Drawables cause cardRadius issues. Better to use background color
     private Drawable sendButtonIcon, buttonDrawable;
     private TypedArray attributes, textAppearanceAttributes;
@@ -75,7 +74,7 @@ public class ChatView extends RelativeLayout {
 
 
 
-     ChatView(Context context) {
+    ChatView(Context context) {
         this(context, null);
     }
 
@@ -118,6 +117,7 @@ public class ChatView extends RelativeLayout {
     private void getXMLAttributes(AttributeSet attrs, int defStyleAttr) {
         attributes = context.obtainStyledAttributes(attrs, R.styleable.ChatView, defStyleAttr, R.style.ChatViewDefault);
         getChatViewBackgroundColor();
+        getAttributesForChatMessageRow();
         getAttributesForBubbles();
         getAttributesForInputFrame();
         getAttributesForInputText();
@@ -127,7 +127,7 @@ public class ChatView extends RelativeLayout {
     }
 
     private void setListAdapter() {
-        chatViewListAdapter = new ChatViewListAdapter(context, new ViewBuilder(), bubbleBackgroundRcv,bubbleBackgroundSend,bubbleElevation);
+        chatViewListAdapter = new ChatViewListAdapter(context, new ViewBuilder(), backgroundRcv, backgroundSend, bubbleBackgroundRcv,bubbleBackgroundSend,bubbleElevation);
         chatListView.setAdapter(chatViewListAdapter);
     }
 
@@ -142,6 +142,11 @@ public class ChatView extends RelativeLayout {
 
     private void getChatViewBackgroundColor() {
         backgroundColor = attributes.getColor(R.styleable.ChatView_backgroundColor, -1);
+    }
+
+    private void getAttributesForChatMessageRow() {
+        backgroundRcv = attributes.getColor(R.styleable.ChatView_backgroundRcv, ContextCompat.getColor(context, R.color.default_chat_message_background_color_rcv));
+        backgroundSend = attributes.getColor(R.styleable.ChatView_backgroundSend, ContextCompat.getColor(context, R.color.default_chat_message_background_color_send));
     }
 
     private void getAttributesForBubbles() {
