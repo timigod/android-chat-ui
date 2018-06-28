@@ -18,6 +18,9 @@
         <item name="sendBtnIconTint">@color/white</item>
         <item name="sendBtnBackgroundTint">?attr/colorAccent</item>
 
+        <item name="backgroundRcv">@color/default_chat_message_background_color_rcv</item>
+        <item name="backgroundSend">@color/default_chat_message_background_color_send</item>
+
         <item name="bubbleElevation">elevated</item>
         <item name="bubbleBackgroundRcv">@color/default_bubble_color_rcv</item>
         <item name="bubbleBackgroundSend">@color/default_bubble_color_send</item>

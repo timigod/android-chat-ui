@@ -6,16 +6,31 @@ This library is still in it's very early stages, but improvements would come ove
 
 **Note**: This is merely a UI library, messages being actually sent and recieved by your application still needs to be implemented.
 
-![Image of Library in action] (http://res.cloudinary.com/duswj2lve/image/upload/v1479837904/chatui_k3diqq.png)
+![Image of Library in action](http://res.cloudinary.com/duswj2lve/image/upload/v1479837904/chatui_k3diqq.png)
 
 ### Version
-v0.1.1
+v0.1.2
 
 ### Installation
 
-Add this to your build.gradle file's dependencies:
+Add this to your root build.gradle at the end of repositories:
 
-    compile 'co.intentservice:android-chat-ui:0.1.1'
+```
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}
+}
+```
+
+Then add the dependency
+
+```
+dependencies {
+	compile 'com.github.timigod:android-chat-ui:v0.1.3'
+}
+```
 
 ## Usage
 Drop the ChatView in your XML layout as is shown below:
@@ -32,7 +47,7 @@ Drop the ChatView in your XML layout as is shown below:
 Remember to add this attribute to your root layout.
 
 ```
-xmlns:chatview="http://schemes.android.com/apk/res-auto"
+xmlns:chatview="http://schemas.android.com/apk/res-auto"
 ```
 
 And then in your Activity or Fragment you can get the instance of the ChatView by doing:
@@ -90,6 +105,10 @@ You can use the `chatView.addMessage(ChatMessage message)` to add a "received" m
 You can use this method or `chatView.addMessages(ArrayList<ChatMessage> messages)` to add messages to the UI. 
 
 The side the chat bubble will appear on is determined by the `Type` of the `ChatMessage`.
+
+### Deleting messages
+
+You can remove messages using `chatView.removeMessage(int position)` or `chatView.clearMessages()`
 
 ### The ChatMessage class
 

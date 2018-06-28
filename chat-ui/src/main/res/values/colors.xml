@@ -17,6 +17,9 @@
     <color name="facebook_blue">#3B5998</color>
     <color name="main_color_gray">#7d7d7d</color>
 
+    <color name="default_chat_message_background_color_rcv">@color/white</color>
+    <color name="default_chat_message_background_color_send">@color/white</color>
+
     <color name="default_bubble_color_rcv">@color/black</color>
     <color name="default_bubble_color_send">@color/white</color>
 

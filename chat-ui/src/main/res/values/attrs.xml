@@ -15,6 +15,9 @@
         <attr name="sendBtnIconTint" format="color" />
         <attr name="sendBtnBackgroundTint" format="color" />
 
+        <attr name="backgroundRcv" format="color" />
+        <attr name="backgroundSend" format="color" />
+
         <attr name="bubbleBackgroundRcv" format="color" />
         <attr name="bubbleBackgroundSend" format="color" />
         <attr name="bubbleElevation">
