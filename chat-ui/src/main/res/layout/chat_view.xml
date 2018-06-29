@@ -10,9 +10,10 @@
         android:id="@+id/chat_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/input_frame"
         android:clipToPadding="false"
         android:divider="@android:color/transparent"
-        android:paddingBottom="96dp"
+        android:paddingBottom="32dp"
         android:paddingTop="8dp"
         android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll" />
