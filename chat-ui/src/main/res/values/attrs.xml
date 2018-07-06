@@ -8,6 +8,7 @@
         <attr name="inputTextAppearance" format="reference" />
         <attr name="inputTextSize" format="dimension" />
         <attr name="inputTextColor" format="color" />
+        <attr name="inputHint" format="string" />
         <attr name="inputHintColor" format="color" />
 
         <attr name="sendBtnIcon" format="reference" />
