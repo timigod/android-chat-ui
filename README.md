@@ -9,7 +9,7 @@ This library is still in it's very early stages, but improvements would come ove
 ![Image of Library in action](http://res.cloudinary.com/duswj2lve/image/upload/v1479837904/chatui_k3diqq.png)
 
 ### Version
-v0.1.2
+v0.1.4
 
 ### Installation
 
@@ -28,7 +28,7 @@ Then add the dependency
 
 ```
 dependencies {
-	compile 'com.github.timigod:android-chat-ui:v0.1.3'
+	compile 'com.github.timigod:android-chat-ui:v0.1.4'
 }
 ```
 
