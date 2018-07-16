@@ -1,5 +1,6 @@
 package co.intentservice.chatui.models;
 
+import android.net.Uri;
 import android.text.format.DateFormat;
 
 import java.util.concurrent.TimeUnit;
@@ -14,6 +15,7 @@ public class ChatMessage {
     private long timestamp;
     private Type type;
     private String sender;
+    private Uri uri;
 
     public ChatMessage(String message, long timestamp, Type type) {
         this.message = message;
@@ -21,8 +23,20 @@ public class ChatMessage {
         this.type = type;
     }
 
+    public ChatMessage(String message, long timestamp, Type type, Uri uri) {
+        this.message = message;
+        this.timestamp = timestamp;
+        this.type = type;
+        this.uri = uri;
+    }
+
     public ChatMessage(String message, long timestamp, Type type, String sender) {
         this(message, timestamp, type);
+        this.sender = sender;
+    }
+
+    public ChatMessage(String message, long timestamp, Type type, String sender, Uri uri) {
+        this(message, timestamp, type, uri);
         this.sender = sender;
     }
 
@@ -50,6 +64,19 @@ public class ChatMessage {
         this.type = type;
     }
 
+
+    public String getUri() {
+        if(uri == null){
+            return "";
+        }else {
+            return uri.toString();
+        }
+
+    }
+
+    public void setUri(Uri uri) {
+        this.uri = uri;
+    }
 
     public String getFormattedTime() {
 

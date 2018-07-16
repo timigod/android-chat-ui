@@ -97,10 +97,13 @@ public class ChatViewListAdapter extends BaseAdapter {
         holder.setElevation(bubbleElevation);
         holder.setBackground(type);
         String sender = chatMessages.get(position).getSender();
+        String uri = chatMessages.get(position).getUri();
         if (sender != null) {
             holder.setSender(sender);
         }
-
+        if (uri != null && !uri.isEmpty()){
+            holder.setProfileIcon(uri);
+        }
         return convertView;
     }
 

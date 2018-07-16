@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import co.intentservice.chatui.R;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * View to display messages that have been received throught the chat-ui.
@@ -20,6 +21,7 @@ public class ItemRecvView extends MessageView {
 
     private CardView bubble;
     private TextView messageTextView, timestampTextView;
+    private CircleImageView profileIcon = (CircleImageView) findViewById(R.id.profile_icon);
 
     /**
      * Method to set the messages text in the view so it can be displayed on the screen.
@@ -124,6 +126,7 @@ public class ItemRecvView extends MessageView {
         this.bubble = (CardView) findViewById(R.id.bubble);
         this.messageTextView = (TextView) findViewById(R.id.message_text_view);
         this.timestampTextView = (TextView) findViewById(R.id.timestamp_text_view);
+        this.profileIcon = (CircleImageView) findViewById(R.id.profile_icon);
 
     }
 

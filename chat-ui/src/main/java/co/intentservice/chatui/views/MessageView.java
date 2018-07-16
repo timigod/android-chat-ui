@@ -1,11 +1,16 @@
 package co.intentservice.chatui.views;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import co.intentservice.chatui.R;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * MessageView is used to help support custom views without defining a custom viewholder,
@@ -17,6 +22,7 @@ import co.intentservice.chatui.R;
 public abstract class MessageView extends FrameLayout {
 
     private TextView senderTextView;
+    private CircleImageView circleImageView;
 
     /**
      * Method to set the messages text in the view so it can be displayed on the screen.
@@ -46,6 +52,18 @@ public abstract class MessageView extends FrameLayout {
      */
     public abstract void setElevation(float elevation);
 
+    /**
+     * Method to set sender's profile icon.
+     *
+     * @param uri The url of the pic that you want the view to be display.
+     */
+    public void setProfileIcon(String uri){
+        if(circleImageView == null){
+            this.circleImageView = (CircleImageView)findViewById(R.id.profile_icon);
+        }
+        circleImageView.setVisibility(VISIBLE);
+        Picasso.get().load(Uri.parse(uri)).into(circleImageView);
+    }
 
     /**
      * Method to set the message's sender name.

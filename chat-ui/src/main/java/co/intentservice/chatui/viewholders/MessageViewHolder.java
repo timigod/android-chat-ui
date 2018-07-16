@@ -55,6 +55,10 @@ public class MessageViewHolder {
 
     }
 
+    public void setProfileIcon(String uri){
+        messageView.setProfileIcon(uri);
+    }
+
     public void setSender(String sender) {
         messageView.setSender(sender);
     }
