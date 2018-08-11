@@ -71,7 +71,7 @@ public class ChatView extends RelativeLayout {
     private Drawable sendButtonIcon, buttonDrawable;
     private TypedArray attributes, textAppearanceAttributes;
     private Context context;
-    private Integer timeNotTyping = 500;
+    private long timeNotTyping = 500;
 
     ChatView(Context context) {
         this(context, null);
@@ -405,7 +405,7 @@ public class ChatView extends RelativeLayout {
     }
 
 
-    public void setTimeNotTyping(Integer timeNotTyping) {
+    public void setTimeNotTyping(long timeNotTyping) {
         this.timeNotTyping = timeNotTyping;
     }
 
