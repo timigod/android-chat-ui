@@ -51,6 +51,7 @@ public class ChatMessage {
     }
 
 
+    //TODO changes the date format
     public String getFormattedTime() {
 
         long oneDayInMillis = TimeUnit.DAYS.toMillis(1); // 24 * 60 * 60 * 1000;
