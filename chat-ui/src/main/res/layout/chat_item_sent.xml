@@ -53,9 +53,11 @@
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/image_view"
                 android:visibility="gone"
-                android:background="@color/main_color_gray"
-                android:layout_width="180dp"
-                android:layout_height="200dp" />
+                android:adjustViewBounds="true"
+                android:layout_width="wrap_content"
+                android:maxWidth="180dp"
+                android:maxHeight="200dp"
+                android:layout_height="wrap_content" />
 
             <android.support.v4.widget.Space
                 android:layout_width="match_parent"

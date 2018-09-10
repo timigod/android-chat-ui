@@ -18,6 +18,8 @@ public abstract class MessageView extends FrameLayout {
 
     private TextView senderTextView;
 
+    public abstract void setImageMessage(String url);
+
     /**
      * Method to set the messages text in the view so it can be displayed on the screen.
      *

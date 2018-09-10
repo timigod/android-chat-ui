@@ -8,8 +8,12 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import co.intentservice.chatui.ChatView;
 import co.intentservice.chatui.R;
 
 /**
@@ -21,7 +25,26 @@ public class ItemSentView extends MessageView {
 
     private CardView bubble;
     private TextView messageTextView, timestampTextView;
+    private ImageView imageView;
 
+    @Override public void setImageMessage(String url) {
+
+        if (messageTextView == null) {
+            messageTextView = (TextView) findViewById(R.id.message_text_view);
+        }
+
+        messageTextView.setVisibility(View.GONE);
+
+        if(imageView == null){
+            imageView = (ImageView)findViewById(R.id.image_view);
+        }
+
+        imageView.setVisibility(View.VISIBLE);
+
+        Glide.with(getContext())
+                .load(url)
+                .into(imageView);
+    }
 
     /**
      * Method to set the messages text in the view so it can be displayed on the screen.
@@ -29,15 +52,18 @@ public class ItemSentView extends MessageView {
      */
     public void setMessage(String message) {
 
+        if(imageView == null){
+            imageView = (ImageView)findViewById(R.id.image_view);
+        }
+
+        imageView.setVisibility(View.GONE);
+
         if (messageTextView == null) {
 
             messageTextView = (TextView) findViewById(R.id.message_text_view);
-
         }
 
         messageTextView.setText(message);
-
-
     }
 
     /**
@@ -49,9 +75,9 @@ public class ItemSentView extends MessageView {
         if (timestampTextView == null) {
 
             timestampTextView = (TextView) findViewById(R.id.timestamp_text_view);
-
         }
 
+        messageTextView.setVisibility(View.VISIBLE);
         timestampTextView.setText(timestamp);
 
     }
@@ -126,7 +152,7 @@ public class ItemSentView extends MessageView {
         this.bubble = (CardView) findViewById(R.id.bubble);
         this.messageTextView = (TextView) findViewById(R.id.message_text_view);
         this.timestampTextView = (TextView) findViewById(R.id.timestamp_text_view);
-
+        this.imageView = (ImageView)findViewById(R.id.image_view);
     }
 
 }

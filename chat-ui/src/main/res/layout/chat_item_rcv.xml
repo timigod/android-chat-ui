@@ -49,6 +49,15 @@
                 android:textSize="@dimen/default_message_text_size"
                 tools:text="My name is Timi and I am..." />
 
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/image_view"
+                android:visibility="gone"
+                android:adjustViewBounds="true"
+                android:layout_width="wrap_content"
+                android:maxWidth="180dp"
+                android:maxHeight="200dp"
+                android:layout_height="wrap_content" />
+
             <android.support.v4.widget.Space
                 android:layout_width="match_parent"
                 android:layout_height="4dp" />
