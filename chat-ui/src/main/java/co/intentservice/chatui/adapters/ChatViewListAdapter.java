@@ -35,7 +35,10 @@ public class ChatViewListAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
 
-    public ChatViewListAdapter(Context context, ViewBuilderInterface viewBuilder, int backgroundRcv, int backgroundSend, int bubbleBackgroundRcv, int bubbleBackgroundSend, float bubbleElevation) {
+    public ChatViewListAdapter(Context context, ViewBuilderInterface viewBuilder, int backgroundRcv,
+                               int backgroundSend, int bubbleBackgroundRcv, int bubbleBackgroundSend,
+                               float bubbleElevation) {
+
         this.chatMessages = new ArrayList<>();
         this.context = context;
         this.inflater = LayoutInflater.from(context);

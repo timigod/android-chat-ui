@@ -14,9 +14,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ChatView chatView = (ChatView) findViewById(R.id.chat_view);
-        chatView.addMessage(new ChatMessage("Message received", System.currentTimeMillis(), ChatMessage.Type.RECEIVED));
-        chatView.addMessage(new ChatMessage("A message with a sender name",
-                System.currentTimeMillis(), ChatMessage.Type.RECEIVED, "Ryan Java"));
+        chatView.addMessage(new ChatMessage("Message received", System.currentTimeMillis(), ChatMessage.Type.RECEIVED, ChatMessage.ContentType.TEXT));
+        chatView.addMessage(new ChatMessage("A message with a sender name", System.currentTimeMillis(), ChatMessage.Type.RECEIVED, ChatMessage.ContentType.TEXT, "Ryan Java"));
         chatView.setOnSentMessageListener(new ChatView.OnSentMessageListener() {
             @Override
             public boolean sendMessage(ChatMessage chatMessage) {

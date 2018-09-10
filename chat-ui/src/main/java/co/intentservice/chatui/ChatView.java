@@ -372,7 +372,7 @@ public class ChatView extends RelativeLayout {
 
     private void sendMessage(String message, long stamp) {
 
-        ChatMessage chatMessage = new ChatMessage(message, stamp, Type.SENT);
+        ChatMessage chatMessage = new ChatMessage(message, stamp, Type.SENT, ChatMessage.ContentType.TEXT);
         if (onSentMessageListener != null && onSentMessageListener.sendMessage(chatMessage)) {
             chatViewListAdapter.addMessage(chatMessage);
             inputEditText.setText("");
