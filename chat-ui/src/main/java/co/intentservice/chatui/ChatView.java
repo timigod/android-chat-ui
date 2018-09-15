@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -58,6 +59,8 @@ public class ChatView extends RelativeLayout {
             }
         }
     };
+
+    private OnAttachListener onAttachListener;
     private OnSentMessageListener onSentMessageListener;
     private ChatViewListAdapter chatViewListAdapter;
 
@@ -112,6 +115,13 @@ public class ChatView extends RelativeLayout {
         inputFrame = (CardView) findViewById(R.id.input_frame);
         inputEditText = (EditText) findViewById(R.id.input_edit_text);
         actionsMenu = (FloatingActionsMenu) findViewById(R.id.sendButton);
+
+        ImageView ivAttach = (ImageView)findViewById(R.id.iv_attach);
+        ivAttach.setOnClickListener(new OnClickListener() {
+            @Override public void onClick(View v) {
+                onAttachListener.attachFile();
+            }
+        });
     }
 
     private void getXMLAttributes(AttributeSet attrs, int defStyleAttr) {
@@ -368,6 +378,10 @@ public class ChatView extends RelativeLayout {
         this.typingListener = typingListener;
     }
 
+    public void setOnAttachListener(OnAttachListener onAttachListener){
+        this.onAttachListener = onAttachListener;
+    }
+
     public void setOnSentMessageListener(OnSentMessageListener onSentMessageListener) {
         this.onSentMessageListener = onSentMessageListener;
     }
@@ -417,6 +431,10 @@ public class ChatView extends RelativeLayout {
 
         void userStoppedTyping();
 
+    }
+
+    public interface OnAttachListener {
+        void attachFile();
     }
 
     public interface OnSentMessageListener {
