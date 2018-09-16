@@ -41,6 +41,7 @@ public class ItemRecvView extends MessageView {
         imageView.setVisibility(View.VISIBLE);
 
         Glide.with(getContext())
+                .asGif()
                 .load(url)
                 .into(imageView);
     }
