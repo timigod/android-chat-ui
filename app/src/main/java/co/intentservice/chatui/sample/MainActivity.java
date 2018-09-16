@@ -20,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //String [] permissions = { Manifest.permission.READ_EXTERNAL_STORAGE};
-        //ActivityCompat.requestPermissions(this, permissions, 1000);
+        String [] permissions = { Manifest.permission.READ_EXTERNAL_STORAGE};
+        ActivityCompat.requestPermissions(this, permissions, 1000);
 
         ChatView chatView = (ChatView) findViewById(R.id.chat_view);
 
@@ -35,12 +35,11 @@ public class MainActivity extends AppCompatActivity {
 
         chatView.addMessage(new ChatMessage("https://media.giphy.com/media/IRFQYGCokErS0/giphy.gif", System.currentTimeMillis(), ChatMessage.Type.RECEIVED, ChatMessage.ContentType.IMAGE));
 
+        chatView.addMessage(new ChatMessage("https://pbs.twimg.com/profile_images/972154872261853184/RnOg6UyU_400x400.jpg", System.currentTimeMillis(), ChatMessage.Type.RECEIVED, ChatMessage.ContentType.IMAGE));
 
         chatView.addMessage(new ChatMessage("file:///storage/emulated/0/Download/julito.gif", System.currentTimeMillis(), ChatMessage.Type.RECEIVED, ChatMessage.ContentType.IMAGE));
 
         chatView.addMessage(new ChatMessage("file:///storage/emulated/0/Download/hahaha.gif", System.currentTimeMillis(), ChatMessage.Type.RECEIVED, ChatMessage.ContentType.IMAGE));
-
-
 
         chatView.setOnSentMessageListener(new ChatView.OnSentMessageListener() {
             @Override public boolean sendMessage(ChatMessage chatMessage) {

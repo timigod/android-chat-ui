@@ -23,6 +23,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
 
+    implementation 'com.facebook.fresco:fresco:1.10.0'
+    implementation 'com.facebook.fresco:animated-gif:1.10.0'
+
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation project(':chat-ui')
 }

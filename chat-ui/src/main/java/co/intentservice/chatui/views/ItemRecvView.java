@@ -6,13 +6,13 @@ import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import co.intentservice.chatui.R;
+import co.intentservice.chatui.utils.ImageLoader;
 
 /**
  * View to display messages that have been received throught the chat-ui.
@@ -24,7 +24,7 @@ public class ItemRecvView extends MessageView {
 
     private CardView bubble;
     private TextView messageTextView, timestampTextView;
-    private ImageView imageView;
+    private SimpleDraweeView simpleDraweeView;
 
     @Override public void setImageMessage(String url) {
 
@@ -34,16 +34,13 @@ public class ItemRecvView extends MessageView {
 
         messageTextView.setVisibility(View.GONE);
 
-        if(imageView == null){
-            imageView = (ImageView)findViewById(R.id.image_view);
+        if(simpleDraweeView == null){
+            simpleDraweeView = (SimpleDraweeView)findViewById(R.id.image_view);
         }
 
-        imageView.setVisibility(View.VISIBLE);
+        simpleDraweeView.setVisibility(View.VISIBLE);
 
-        Glide.with(getContext())
-                .asGif()
-                .load(url)
-                .into(imageView);
+        ImageLoader.load(url, simpleDraweeView);
     }
 
     /**
@@ -52,11 +49,11 @@ public class ItemRecvView extends MessageView {
      */
     public void setMessage(String message) {
 
-        if(imageView == null){
-            imageView = (ImageView)findViewById(R.id.image_view);
+        if(simpleDraweeView == null){
+            simpleDraweeView = (SimpleDraweeView)findViewById(R.id.image_view);
         }
 
-        imageView.setVisibility(View.GONE);
+        simpleDraweeView.setVisibility(View.GONE);
 
         if (messageTextView == null) {
 
@@ -153,7 +150,7 @@ public class ItemRecvView extends MessageView {
         this.bubble = (CardView) findViewById(R.id.bubble);
         this.messageTextView = (TextView) findViewById(R.id.message_text_view);
         this.timestampTextView = (TextView) findViewById(R.id.timestamp_text_view);
-        this.imageView = (ImageView)findViewById(R.id.image_view);
+        this.simpleDraweeView = (SimpleDraweeView) findViewById(R.id.image_view);
     }
 
 }

@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="16dp"
@@ -49,14 +49,12 @@
                 android:textSize="@dimen/default_message_text_size"
                 tools:text="My name is Timi and I am..." />
 
-            <android.support.v7.widget.AppCompatImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/image_view"
-                android:visibility="gone"
-                android:adjustViewBounds="true"
-                android:layout_width="wrap_content"
-                android:maxWidth="180dp"
-                android:maxHeight="200dp"
-                android:layout_height="wrap_content" />
+                android:layout_width="180dp"
+                android:layout_height="200dp"
+                fresco:placeholderImage="@drawable/ic_send_white_24dp"
+                />
 
             <android.support.v4.widget.Space
                 android:layout_width="match_parent"

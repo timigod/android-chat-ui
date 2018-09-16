@@ -1,20 +1,15 @@
 package co.intentservice.chatui.views;
 
-import android.app.Service;
 import android.content.Context;
 import android.support.annotation.ColorInt;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-
-import co.intentservice.chatui.ChatView;
+import com.facebook.drawee.view.SimpleDraweeView;
 import co.intentservice.chatui.R;
+import co.intentservice.chatui.utils.ImageLoader;
 
 /**
  * View to display the messages that have been sent through the chat-ui.
@@ -25,7 +20,7 @@ public class ItemSentView extends MessageView {
 
     private CardView bubble;
     private TextView messageTextView, timestampTextView;
-    private ImageView imageView;
+    private SimpleDraweeView simpleDraweeView;
 
     @Override public void setImageMessage(String url) {
 
@@ -35,15 +30,13 @@ public class ItemSentView extends MessageView {
 
         messageTextView.setVisibility(View.GONE);
 
-        if(imageView == null){
-            imageView = (ImageView)findViewById(R.id.image_view);
+        if(simpleDraweeView == null){
+            simpleDraweeView = (SimpleDraweeView)findViewById(R.id.image_view);
         }
 
-        imageView.setVisibility(View.VISIBLE);
+        simpleDraweeView.setVisibility(View.VISIBLE);
 
-        Glide.with(getContext())
-                .load(url)
-                .into(imageView);
+        ImageLoader.load(url, simpleDraweeView);
     }
 
     /**
@@ -52,11 +45,11 @@ public class ItemSentView extends MessageView {
      */
     public void setMessage(String message) {
 
-        if(imageView == null){
-            imageView = (ImageView)findViewById(R.id.image_view);
+        if(simpleDraweeView == null){
+            simpleDraweeView = (SimpleDraweeView)findViewById(R.id.image_view);
         }
 
-        imageView.setVisibility(View.GONE);
+        simpleDraweeView.setVisibility(View.GONE);
 
         if (messageTextView == null) {
 
@@ -152,7 +145,7 @@ public class ItemSentView extends MessageView {
         this.bubble = (CardView) findViewById(R.id.bubble);
         this.messageTextView = (TextView) findViewById(R.id.message_text_view);
         this.timestampTextView = (TextView) findViewById(R.id.timestamp_text_view);
-        this.imageView = (ImageView)findViewById(R.id.image_view);
+        this.simpleDraweeView = (SimpleDraweeView) findViewById(R.id.image_view);
     }
 
 }
