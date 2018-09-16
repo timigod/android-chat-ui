@@ -51,23 +51,46 @@
         app:cardElevation="1dp"
         app:contentPadding="2dp">
 
-        <EditText
-            android:id="@+id/input_edit_text"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:weightSum="10"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:background="@null"
-            android:hint="@string/default_input_hint"
-            android:inputType="text"
-            android:maxLines="5"
-            android:minHeight="48dp"
-            android:paddingBottom="4dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="4dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/main_color_gray"
-            android:textSize="@dimen/default_input_text_size" />
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/input_edit_text"
+                android:layout_weight="8.5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@null"
+                android:hint="@string/default_input_hint"
+                android:inputType="text"
+                android:maxLines="5"
+                android:minHeight="48dp"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="4dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/main_color_gray"
+                android:textSize="@dimen/default_input_text_size" />
+
+            <RelativeLayout
+                android:layout_weight="1.5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/iv_attach"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_attach"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 

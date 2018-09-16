@@ -5,10 +5,14 @@ import android.support.annotation.ColorInt;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.FrameLayout;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+
 import co.intentservice.chatui.R;
+import co.intentservice.chatui.utils.ImageLoader;
 
 /**
  * View to display messages that have been received throught the chat-ui.
@@ -20,6 +24,24 @@ public class ItemRecvView extends MessageView {
 
     private CardView bubble;
     private TextView messageTextView, timestampTextView;
+    private SimpleDraweeView simpleDraweeView;
+
+    @Override public void setImageMessage(String url) {
+
+        if (messageTextView == null) {
+            messageTextView = (TextView) findViewById(R.id.message_text_view);
+        }
+
+        messageTextView.setVisibility(View.GONE);
+
+        if(simpleDraweeView == null){
+            simpleDraweeView = (SimpleDraweeView)findViewById(R.id.image_view);
+        }
+
+        simpleDraweeView.setVisibility(View.VISIBLE);
+
+        ImageLoader.load(url, simpleDraweeView);
+    }
 
     /**
      * Method to set the messages text in the view so it can be displayed on the screen.
@@ -27,15 +49,19 @@ public class ItemRecvView extends MessageView {
      */
     public void setMessage(String message) {
 
+        if(simpleDraweeView == null){
+            simpleDraweeView = (SimpleDraweeView)findViewById(R.id.image_view);
+        }
+
+        simpleDraweeView.setVisibility(View.GONE);
+
         if (messageTextView == null) {
 
             messageTextView = (TextView) findViewById(R.id.message_text_view);
-
         }
 
+        messageTextView.setVisibility(View.VISIBLE);
         messageTextView.setText(message);
-
-
     }
 
     /**
@@ -124,7 +150,7 @@ public class ItemRecvView extends MessageView {
         this.bubble = (CardView) findViewById(R.id.bubble);
         this.messageTextView = (TextView) findViewById(R.id.message_text_view);
         this.timestampTextView = (TextView) findViewById(R.id.timestamp_text_view);
-
+        this.simpleDraweeView = (SimpleDraweeView) findViewById(R.id.image_view);
     }
 
 }

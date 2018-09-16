@@ -18,12 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-
 import co.intentservice.chatui.fab.FloatingActionsMenu;
 import co.intentservice.chatui.models.ChatMessage;
 import co.intentservice.chatui.models.ChatMessage.Type;
@@ -56,6 +55,8 @@ public class ChatView extends RelativeLayout {
             }
         }
     };
+
+    private OnAttachListener onAttachListener;
     private OnSentMessageListener onSentMessageListener;
     private ChatViewListAdapter chatViewListAdapter;
 
@@ -71,6 +72,7 @@ public class ChatView extends RelativeLayout {
     private Drawable sendButtonIcon, buttonDrawable;
     private TypedArray attributes, textAppearanceAttributes;
     private Context context;
+    private long timeNotTyping = 500;
 
     ChatView(Context context) {
         this(context, null);
@@ -109,6 +111,13 @@ public class ChatView extends RelativeLayout {
         inputFrame = (CardView) findViewById(R.id.input_frame);
         inputEditText = (EditText) findViewById(R.id.input_edit_text);
         actionsMenu = (FloatingActionsMenu) findViewById(R.id.sendButton);
+
+        ImageView ivAttach = (ImageView)findViewById(R.id.iv_attach);
+        ivAttach.setOnClickListener(new OnClickListener() {
+            @Override public void onClick(View v) {
+                onAttachListener.attachFile();
+            }
+        });
     }
 
     private void getXMLAttributes(AttributeSet attrs, int defStyleAttr) {
@@ -328,7 +337,7 @@ public class ChatView extends RelativeLayout {
                     }
 
                     removeCallbacks(typingTimerRunnable);
-                    postDelayed(typingTimerRunnable, 1500);
+                    postDelayed(typingTimerRunnable, timeNotTyping);
                 }
             }
 
@@ -365,13 +374,17 @@ public class ChatView extends RelativeLayout {
         this.typingListener = typingListener;
     }
 
+    public void setOnAttachListener(OnAttachListener onAttachListener){
+        this.onAttachListener = onAttachListener;
+    }
+
     public void setOnSentMessageListener(OnSentMessageListener onSentMessageListener) {
         this.onSentMessageListener = onSentMessageListener;
     }
 
     private void sendMessage(String message, long stamp) {
 
-        ChatMessage chatMessage = new ChatMessage(message, stamp, Type.SENT);
+        ChatMessage chatMessage = new ChatMessage(message, stamp, Type.SENT, ChatMessage.ContentType.TEXT);
         if (onSentMessageListener != null && onSentMessageListener.sendMessage(chatMessage)) {
             chatViewListAdapter.addMessage(chatMessage);
             inputEditText.setText("");
@@ -404,12 +417,20 @@ public class ChatView extends RelativeLayout {
     }
 
 
+    public void setTimeNotTyping(long timeNotTyping) {
+        this.timeNotTyping = timeNotTyping;
+    }
+
     public interface TypingListener {
 
         void userStartedTyping();
 
         void userStoppedTyping();
 
+    }
+
+    public interface OnAttachListener {
+        void attachFile();
     }
 
     public interface OnSentMessageListener {

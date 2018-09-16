@@ -37,6 +37,11 @@ public class MessageViewHolder {
         this.bubbleBackgroundRcv = bubbleBackgroundRcv;
     }
 
+    public void setImageMessage(String url){
+
+        messageView.setImageMessage(url);
+    }
+
     public void setMessage(String message) {
 
         messageView.setMessage(message);
