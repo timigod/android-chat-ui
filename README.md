@@ -1,5 +1,5 @@
 # Android Chat UI
-
+//fix1
 This is meant to ease the life of any developer looking to add chat functionality into his/her Android application and wouldn't like to worry so much about setting up the UI.
 
 This library is still in it's very early stages, but improvements would come over time.
