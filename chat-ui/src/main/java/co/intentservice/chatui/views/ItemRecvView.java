@@ -1,12 +1,13 @@
 package co.intentservice.chatui.views;
 
 import android.content.Context;
-import android.support.annotation.ColorInt;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import androidx.annotation.ColorInt;
+import androidx.cardview.widget.CardView;
 
 import co.intentservice.chatui.R;
 
