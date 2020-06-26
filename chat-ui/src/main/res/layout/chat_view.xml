@@ -31,7 +31,7 @@
     </co.intentservice.chatui.fab.FloatingActionsMenu>
 
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/input_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,6 +69,6 @@
             android:textColorHint="@color/main_color_gray"
             android:textSize="@dimen/default_input_text_size" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 </merge>

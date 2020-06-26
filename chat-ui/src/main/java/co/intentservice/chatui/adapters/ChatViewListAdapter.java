@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import co.intentservice.chatui.models.ChatMessage;
 import co.intentservice.chatui.viewholders.MessageViewHolder;
@@ -106,6 +108,12 @@ public class ChatViewListAdapter extends BaseAdapter {
 
     public void addMessage(ChatMessage message) {
         chatMessages.add(message);
+        Collections.sort(chatMessages, new Comparator<ChatMessage>() {
+            @Override
+            public int compare(ChatMessage chatMessage, ChatMessage t1) {
+                return (int) (chatMessage.getTimestamp()-t1.getTimestamp());
+            }
+        });
         notifyDataSetChanged();
     }
 
