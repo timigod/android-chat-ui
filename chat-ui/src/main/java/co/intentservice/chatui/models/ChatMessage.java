@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class ChatMessage {
     private String message;
     private long timestamp;
+    private String timestampString;
     private Type type;
     private String sender;
 
@@ -25,7 +26,21 @@ public class ChatMessage {
         this(message, timestamp, type);
         this.sender = sender;
     }
-
+    
+    public ChatMessage(String message, String timestampString, Type type) {
+        this.message = message;
+        this.timestampString = timestampString;
+        this.type = type;
+    }
+    
+    public String getTimestampString() {
+        return timestampString;
+    }
+    
+    public void setTimestampString(String timestampString) {
+        this.timestampString = timestampString;
+    }
+    
     public long getTimestamp() {
         return timestamp;
     }
